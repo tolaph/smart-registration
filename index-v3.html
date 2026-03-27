@@ -2645,12 +2645,17 @@ function initDashScnGrid(){
   const cards=[...grid.querySelectorAll('.dash-scn-card')];
   if(!cards.length) return;
 
+  // Measure first row: find all cards whose top matches the first card
   const firstTop=cards[0].getBoundingClientRect().top;
   const rowOneCards=cards.filter(c=>Math.abs(c.getBoundingClientRect().top-firstTop)<4);
-  const hiddenCount=cards.length-rowOneCards.length;
-  const gridTop=grid.getBoundingClientRect().top;
-  const oneRowH=rowOneCards[rowOneCards.length-1].getBoundingClientRect().bottom-gridTop+1;
+  const rowCount=rowOneCards.length;
+  const hiddenCount=cards.length-rowCount;
 
+  // Clip grid to exactly the height of 1 row
+  // Use the bottom of the last first-row card relative to grid top
+  const gridTop=grid.getBoundingClientRect().top;
+  const lastFirstRowCard=rowOneCards[rowOneCards.length-1];
+  const oneRowH=lastFirstRowCard.getBoundingClientRect().bottom-gridTop+1;
   grid.style.maxHeight=oneRowH+'px';
   grid.style.overflow='hidden';
   btn.dataset.expanded='0';
@@ -2658,6 +2663,7 @@ function initDashScnGrid(){
   btn.dataset.hidden=hiddenCount;
   btn.querySelector('span:first-child').textContent='▼';
   label.textContent=`Show all 20 scenarios (${hiddenCount} more)`;
+  btn.style.display='flex';
 }
 
 function toggleDashScenarios(btn){
