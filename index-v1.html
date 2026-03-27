@@ -44,18 +44,15 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--surface);color:
 .tb-brand{color:#FFFFFF;font-size:15px;font-weight:600;letter-spacing:-0.01em}
 .tb-sub{color:rgba(255,255,255,0.8);font-size:11px;margin-top:1px}
 .tb-center{flex:1;display:flex;align-items:center;justify-content:center;gap:2px}
-/* ── TOPBAR STEPS ── */
 .tb-step{
   display:flex;align-items:center;gap:6px;
   font-size:11px;font-weight:600;
   color:#FFFFFF;
   padding:5px 10px;border-radius:20px;
-  transition:all 0.2s;cursor:pointer;opacity:0.6;
+  transition:all 0.2s;cursor:default;opacity:0.6;
 }
-.tb-step:hover{opacity:0.9;background:rgba(255,255,255,0.12)}
 .tb-step.active{color:#FFFFFF;background:rgba(255,255,255,0.22);opacity:1}
 .tb-step.done{color:#FFFFFF;opacity:0.85}
-.tb-step.done:hover{opacity:1;background:rgba(255,255,255,0.15)}
 .tb-step-dot{
   width:18px;height:18px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
@@ -234,9 +231,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--surface);color:
 
 .sb-section{margin-bottom:28px}
 .sb-title{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
-.sb-step{display:flex;align-items:flex-start;gap:10px;padding:8px 6px;position:relative;cursor:pointer;border-radius:var(--r);transition:background 0.15s}
-.sb-step:hover{background:var(--surface2)}
-.sb-step:not(:last-child)::after{content:'';position:absolute;left:18px;top:34px;width:1px;height:calc(100% - 10px);background:var(--border2)}
+.sb-step{display:flex;align-items:flex-start;gap:10px;padding:8px 0;position:relative}
+.sb-step:not(:last-child)::after{content:'';position:absolute;left:12px;top:34px;width:1px;height:calc(100% - 10px);background:var(--border2)}
 .ss-ind{
   width:24px;height:24px;border-radius:50%;flex-shrink:0;margin-top:1px;
   display:flex;align-items:center;justify-content:center;
@@ -375,48 +371,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--surface);color:
   display:flex;align-items:center;justify-content:center;gap:6px;
 }
 .see-more-btn:hover{background:var(--teal-pale);border-color:var(--navy);color:var(--navy3)}
-
-/* Owner choice tiles */
-.owner-choice{
-  border:2px solid var(--border2);border-radius:var(--r2);padding:18px 16px;
-  cursor:pointer;transition:all 0.18s;background:var(--white);text-align:center;
-}
-.owner-choice:hover{border-color:var(--navy2);background:var(--teal-pale)}
-.owner-choice.sel{border-color:var(--navy);background:var(--teal-pale);box-shadow:0 0 0 3px rgba(91,82,200,0.1)}
-
-/* ISIC chip */
-.isic-chip{
-  display:inline-flex;align-items:center;gap:5px;
-  background:var(--navy);color:#fff;
-  border-radius:20px;padding:4px 10px;font-size:11px;font-weight:600;
-  animation:fadeUp 0.15s ease;
-}
-.isic-chip-x{
-  background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.7);
-  font-size:14px;line-height:1;padding:0;transition:color 0.1s;
-}
-.isic-chip-x:hover{color:#fff}
-.isic-drop-item{
-  padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);
-  transition:background 0.12s;
-}
-.isic-drop-item:hover{background:var(--teal-pale)}
-.isic-drop-item:last-child{border-bottom:none}
-.isic-code{font-size:10px;font-weight:700;color:var(--navy2);margin-right:6px;font-family:monospace}
-.isic-label-kh{font-size:12px;color:var(--ink);font-weight:500;line-height:1.4}
-.isic-label-en{font-size:11px;color:var(--ink3);margin-top:2px}
-
-/* Predicted ISIC card */
-.isic-pred-item{
-  display:flex;align-items:flex-start;gap:10px;padding:10px 12px;
-  background:var(--white);border:1px solid var(--border);border-radius:var(--r);
-}
-.isic-pred-item .isic-code{font-size:11px;font-weight:700;color:var(--navy);background:var(--surface2);
-  padding:2px 8px;border-radius:6px;white-space:nowrap;font-family:monospace}
-.isic-pred-check{
-  margin-left:auto;font-size:11px;font-weight:600;color:#1A7A3A;
-  background:#DFF0D8;padding:2px 8px;border-radius:10px;white-space:nowrap;flex-shrink:0;
-}
 
 /* Activity chips */
 .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -706,19 +660,19 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--surface);color:
     <div class="tb-brand">OBR Smart Registration</div>
   </div>
   <div class="tb-center" id="topbar-steps" style="display:none">
-    <div class="tb-step active" id="ts0" onclick="setStep(0)"><div class="tb-step-dot">1</div>Intent</div>
+    <div class="tb-step active" id="ts0"><div class="tb-step-dot">1</div>Intent</div>
     <div class="tb-step-div"></div>
-    <div class="tb-step" id="ts1" onclick="setStep(1)"><div class="tb-step-dot">2</div>Activities</div>
+    <div class="tb-step" id="ts1"><div class="tb-step-dot">2</div>Activities</div>
     <div class="tb-step-div"></div>
-    <div class="tb-step" id="ts2" onclick="setStep(2)"><div class="tb-step-dot">3</div>Ownership</div>
+    <div class="tb-step" id="ts2"><div class="tb-step-dot">3</div>Ownership</div>
     <div class="tb-step-div"></div>
-    <div class="tb-step" id="ts3" onclick="setStep(3)"><div class="tb-step-dot">✓</div>Analysis</div>
+    <div class="tb-step" id="ts3"><div class="tb-step-dot">✓</div>Analysis</div>
     <div class="tb-step-div"></div>
-    <div class="tb-step" id="ts4" onclick="setStep(4)"><div class="tb-step-dot">5</div>Package</div>
+    <div class="tb-step" id="ts4"><div class="tb-step-dot">5</div>Package</div>
     <div class="tb-step-div"></div>
-    <div class="tb-step" id="ts5" onclick="setStep(5)"><div class="tb-step-dot">6</div>Form</div>
+    <div class="tb-step" id="ts5"><div class="tb-step-dot">6</div>Form</div>
     <div class="tb-step-div"></div>
-    <div class="tb-step" id="ts6" onclick="setStep(6)"><div class="tb-step-dot">7</div>Dashboard</div>
+    <div class="tb-step" id="ts6"><div class="tb-step-dot">7</div>Dashboard</div>
   </div>
   <div class="tb-right">
     <button class="lang-btn active">EN</button>
@@ -770,49 +724,49 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--surface);color:
 <div class="sidebar">
   <div class="sb-section">
     <div class="sb-title">Registration steps</div>
-    <div class="sb-step" onclick="setStep(0)">
+    <div class="sb-step">
       <div class="ss-ind active" id="si-0">1</div>
       <div class="ss-text">
         <div class="ss-label active" id="sl-0">Business intent</div>
         <div class="ss-detail" id="sd-0">Domain & description</div>
       </div>
     </div>
-    <div class="sb-step" onclick="setStep(1)">
+    <div class="sb-step">
       <div class="ss-ind" id="si-1">2</div>
       <div class="ss-text">
         <div class="ss-label" id="sl-1">Activities & scale</div>
         <div class="ss-detail" id="sd-1">What you will do</div>
       </div>
     </div>
-    <div class="sb-step" onclick="setStep(2)">
+    <div class="sb-step">
       <div class="ss-ind" id="si-2">3</div>
       <div class="ss-text">
         <div class="ss-label" id="sl-2">Ownership</div>
-        <div class="ss-detail" id="sd-2">Entity type & address</div>
+        <div class="ss-detail" id="sd-2">Shareholders & structure</div>
       </div>
     </div>
-    <div class="sb-step" onclick="setStep(3)">
+    <div class="sb-step">
       <div class="ss-ind" id="si-3">⚙</div>
       <div class="ss-text">
         <div class="ss-label" id="sl-3">Analysis engine</div>
         <div class="ss-detail" id="sd-3">Mapping requirements</div>
       </div>
     </div>
-    <div class="sb-step" onclick="setStep(4)">
+    <div class="sb-step">
       <div class="ss-ind" id="si-4">5</div>
       <div class="ss-text">
         <div class="ss-label" id="sl-4">Your package</div>
         <div class="ss-detail" id="sd-4">All licenses & chain</div>
       </div>
     </div>
-    <div class="sb-step" onclick="setStep(5)">
+    <div class="sb-step">
       <div class="ss-ind" id="si-5">6</div>
       <div class="ss-text">
         <div class="ss-label" id="sl-5">Unified form</div>
         <div class="ss-detail" id="sd-5">One form, all ministries</div>
       </div>
     </div>
-    <div class="sb-step" onclick="setStep(6)">
+    <div class="sb-step">
       <div class="ss-ind" id="si-6">7</div>
       <div class="ss-text">
         <div class="ss-label" id="sl-6">Dashboard</div>
@@ -982,96 +936,51 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--surface);color:
 <div id="step-2" style="display:none">
   <div class="card">
     <div class="card-head">
-      <div class="ch-icon" style="background:#F0EEFB">🧠</div>
+      <div class="ch-icon" style="background:#F0EEFB">👥</div>
       <div>
-        <div class="ch-title">Smart ownership detection</div>
-        <div class="ch-sub">Answer 3 simple questions — the system determines your legal entity type automatically. No legal knowledge required.</div>
+        <div class="ch-title">Ownership & company structure</div>
+        <div class="ch-sub">Module 1 continued — This data prepares the Articles of Incorporation for Ministry of Commerce. Entered once, shared with all ministries.</div>
       </div>
     </div>
     <div class="card-body">
-
-      <!-- Q1 -->
-      <div class="fsec" id="q1-section">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <div style="width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">1</div>
-          <div style="font-size:15px;font-weight:700;color:var(--ink)">How many people own this business?</div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div class="owner-choice" id="q1-one" onclick="setQ('q1','one',this)">
-            <div style="font-size:28px;margin-bottom:8px">👤</div>
-            <div style="font-size:14px;font-weight:700;color:var(--ink)">One person</div>
-            <div style="font-size:12px;color:var(--ink3);margin-top:4px">I am the sole owner</div>
-          </div>
-          <div class="owner-choice" id="q1-multi" onclick="setQ('q1','multi',this)">
-            <div style="font-size:28px;margin-bottom:8px">👥</div>
-            <div style="font-size:14px;font-weight:700;color:var(--ink)">Two or more people</div>
-            <div style="font-size:12px;color:var(--ink3);margin-top:4px">We are co-owners / investors</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Q2 -->
-      <div class="fsec" id="q2-section" style="opacity:0.35;pointer-events:none;transition:opacity 0.3s">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <div style="width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">2</div>
-          <div style="font-size:15px;font-weight:700;color:var(--ink)">Do you want to protect your personal assets?</div>
-        </div>
-        <div style="font-size:12px;color:var(--ink3);margin-bottom:12px;padding:8px 12px;background:var(--surface2);border-radius:var(--r);border-left:3px solid var(--border2)">
-          💡 <strong>Asset protection</strong> means if your business has debts, your personal money, house and property are protected — you only lose what you invested in the company.
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div class="owner-choice" id="q2-yes" onclick="setQ('q2','yes',this)">
-            <div style="font-size:28px;margin-bottom:8px">🛡️</div>
-            <div style="font-size:14px;font-weight:700;color:var(--ink)">Yes — protect my assets</div>
-            <div style="font-size:12px;color:var(--ink3);margin-top:4px">Recommended for most businesses</div>
-          </div>
-          <div class="owner-choice" id="q2-no" onclick="setQ('q2','no',this)">
-            <div style="font-size:28px;margin-bottom:8px">🤝</div>
-            <div style="font-size:14px;font-weight:700;color:var(--ink)">No — simple structure</div>
-            <div style="font-size:12px;color:var(--ink3);margin-top:4px">Lower formality, full personal liability</div>
-          </div>
+      <div class="fsec">
+        <div class="fsec-title">Company structure</div>
+        <div class="frow">
+          <div class="fg"><label>Company type <span class="req">*</span></label>
+            <select class="fselect" id="co-type">
+              <option value="">Select…</option>
+              <option value="llc-s">Single-member private LLC</option>
+              <option value="llc-m">Multi-member private LLC</option>
+              <option value="plc">Public limited company (PLC)</option>
+              <option value="branch">Branch of foreign company</option>
+              <option value="rep">Representative office</option>
+            </select></div>
+          <div class="fg"><label>Foreign ownership</label>
+            <select class="fselect" id="foreign-own">
+              <option value="kh">100% Cambodian owned</option>
+              <option value="partial">Partially foreign owned</option>
+              <option value="full">100% foreign owned</option>
+            </select></div>
         </div>
       </div>
-
-      <!-- Q3 -->
-      <div class="fsec" id="q3-section" style="opacity:0.35;pointer-events:none;transition:opacity 0.3s">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <div style="width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">3</div>
-          <div style="font-size:15px;font-weight:700;color:var(--ink)">Is this business registered outside Cambodia?</div>
+      <div class="fsec">
+        <div class="fsec-title">Shareholders (enter all)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 80px auto;gap:8px;margin-bottom:6px">
+          <div style="font-size:11px;font-weight:600;color:var(--ink3)">Full name</div>
+          <div style="font-size:11px;font-weight:600;color:var(--ink3)">Nationality</div>
+          <div style="font-size:11px;font-weight:600;color:var(--ink3)">Share %</div>
+          <div></div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div class="owner-choice" id="q3-yes" onclick="setQ('q3','yes',this)">
-            <div style="font-size:28px;margin-bottom:8px">🌐</div>
-            <div style="font-size:14px;font-weight:700;color:var(--ink)">Yes — foreign company</div>
-            <div style="font-size:12px;color:var(--ink3);margin-top:4px">Opening a branch or rep office in Cambodia</div>
-          </div>
-          <div class="owner-choice" id="q3-no" onclick="setQ('q3','no',this)">
-            <div style="font-size:28px;margin-bottom:8px">🇰🇭</div>
-            <div style="font-size:14px;font-weight:700;color:var(--ink)">No — Cambodian company</div>
-            <div style="font-size:12px;color:var(--ink3);margin-top:4px">Registered locally in Cambodia</div>
+        <div class="sh-list" id="sh-list">
+          <div class="sh-item" id="shi-0">
+            <input class="finput" placeholder="Full name" id="sh-nm-0">
+            <input class="finput" placeholder="Cambodian" id="sh-nat-0">
+            <input class="finput" placeholder="100%" id="sh-pct-0">
+            <button class="sh-remove" onclick="rmSh(0)">×</button>
           </div>
         </div>
+        <button class="add-sh" onclick="addSh()">+ Add shareholder</button>
       </div>
-
-      <!-- RESULT -->
-      <div id="entity-result" style="display:none;margin-bottom:24px">
-        <div style="background:var(--teal-pale);border:2px solid var(--navy);border-radius:var(--r2);padding:20px 22px">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-            <div id="entity-icon" style="font-size:28px;flex-shrink:0"></div>
-            <div>
-              <div style="font-size:11px;font-weight:700;color:var(--navy3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">✅ Recommended Business Type</div>
-              <div id="entity-name" style="font-size:18px;font-weight:700;color:var(--ink)"></div>
-            </div>
-          </div>
-          <div id="entity-why" style="font-size:13px;color:var(--ink2);line-height:1.7;padding:10px 14px;background:rgba(255,255,255,0.7);border-radius:var(--r);margin-bottom:12px"></div>
-          <div id="entity-legal" style="font-size:11px;color:var(--ink3);line-height:1.6"></div>
-        </div>
-        <div style="margin-top:10px;font-size:12px;color:var(--ink3);padding:8px 12px;background:var(--surface2);border-radius:var(--r)">
-          🔒 Based on your answers, the system will automatically fill the correct legal entity type in the Articles of Incorporation (MoC). You do not need to choose this manually.
-        </div>
-      </div>
-
-      <!-- REGISTERED OFFICE -->
       <div class="fsec">
         <div class="fsec-title">Registered office address</div>
         <div class="frow full"><div class="fg"><label>Full address <span class="req">*</span></label><input class="finput" id="address" placeholder="House No., Street, Sangkat, Khan, Province"></div></div>
@@ -1081,38 +990,9 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--surface);color:
           <div class="fg"><label>Province</label><input class="finput" id="prov2" value="" placeholder="Auto-filled"></div>
         </div>
       </div>
-
-      <!-- ISIC ACTIVITY PREDICTION -->
-      <div class="fsec">
-        <div class="fsec-title">Business objective & main activities
-          <span style="font-weight:400;font-size:11px;text-transform:none;letter-spacing:0;color:var(--navy2)"> — predicted from your domain selection</span>
-        </div>
-        <div id="isic-prediction-box" style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);padding:16px 18px;margin-bottom:14px">
-          <div style="font-size:12px;color:var(--ink3);margin-bottom:12px;display:flex;align-items:center;gap:6px">
-            <span style="font-size:16px">🔍</span> Auto-predicting from your selected domains and scenario…
-          </div>
-          <div id="isic-results" style="display:flex;flex-direction:column;gap:8px"></div>
-        </div>
-        <div class="frow full">
-          <div class="fg">
-            <label>Business objective (auto-generated — edit if needed)</label>
-            <textarea class="ftarea" id="biz-objective" rows="3" placeholder="e.g. To operate a restaurant providing Khmer cuisine and hospitality services to local and international customers in Phnom Penh."></textarea>
-          </div>
-        </div>
-        <div class="frow full">
-          <div class="fg">
-            <label>Main business activities — ISIC codes <span class="req">*</span></label>
-            <div id="isic-chips-selected" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;min-height:32px;padding:6px;background:var(--white);border:1.5px solid var(--border2);border-radius:var(--r);cursor:text" onclick="document.getElementById('isic-search').focus()"></div>
-            <input class="finput" id="isic-search" placeholder="Search activities in Khmer or English…" oninput="searchISIC(this.value)" style="margin-top:4px">
-            <div id="isic-dropdown" style="display:none;background:var(--white);border:1px solid var(--border2);border-radius:var(--r);max-height:220px;overflow-y:auto;margin-top:4px;box-shadow:var(--shadow)"></div>
-            <div class="fhint">Select all activities that apply. ISIC codes are required by MoC for company registration.</div>
-          </div>
-        </div>
-      </div>
-
       <div class="btn-row">
         <button class="btn-back" onclick="prev(2)">← Back</button>
-        <button class="btn-next green" onclick="runAnalysis()">Analyze &amp; build package →</button>
+        <button class="btn-next green" onclick="runAnalysis()">Analyze & build package →</button>
       </div>
     </div>
   </div>
@@ -1653,199 +1533,7 @@ const DEFAULT_PKG=SCENARIOS["s1_restaurant"];
 ACTS["Logistics & Transport"]=["Trucking / road freight","Warehouse & storage","Cross-border logistics","Port / sea freight","Last-mile delivery","SEZ logistics"];
 ACTS["Energy & Mining"]=["Gold / mineral extraction","Oil & gas exploration","Solar / renewable energy","Electricity supply","Water supply utility"];
 
-/* ── ISIC CODE DATABASE (Cambodia MoC standard, Khmer + English) ── */
-const ISIC_DB = [
-  {code:"56101",kh:"ភោជនីយដ្ឋាន និងកន្លែងស៊ីផឹករង្គសាល",en:"Restaurant and food hall"},
-  {code:"56102",kh:"កន្លែងលក់អាហាររហ័ស",en:"Fast food outlet"},
-  {code:"56103",kh:"ហាងលក់ការ៉េម",en:"Ice cream parlour"},
-  {code:"56301",kh:"តៀមស្រា រង្គសាល ឌីស្ត ហាងខារ៉ាអូខេ",en:"Bar, nightclub, karaoke"},
-  {code:"56302",kh:"ហាងតែ និងកាហ្វ",en:"Tea house and café"},
-  {code:"55101",kh:"សណ្ឋាគារ និងសណ្ឋាគាររីសត",en:"Hotel and resort"},
-  {code:"55104",kh:"ផ្ទះសំណាក់ ផ្ទះជួល",en:"Guesthouse, rental room"},
-  {code:"79110",kh:"ទីភ្នាក់ងារទេសចរណ៍",en:"Travel agency"},
-  {code:"79120",kh:"ប្រតិបត្តិករទេសចរណ៍",en:"Tour operator"},
-  {code:"86101",kh:"មន្ទីរពេទ្យ",en:"Hospital"},
-  {code:"86201",kh:"វេជ្ជគ្រឹះ ការព្យាបាលជំងឺទូទៅ",en:"General medical clinic"},
-  {code:"86202",kh:"ការព្យាបាលជំងឺដោយឯកទេស",en:"Specialist clinic"},
-  {code:"86203",kh:"ទន្តសាស្រ្ត",en:"Dental clinic"},
-  {code:"47721",kh:"ហាងលក់ឱសថ",en:"Pharmacy retail"},
-  {code:"46421",kh:"លក់ដុំឱសថ និងផលិតផលសុខាភិបាល",en:"Wholesale pharmaceuticals"},
-  {code:"10101",kh:"ផ្គត់ផ្គង់ស្ករ និងកែឆ្នៃអាហារ",en:"Food processing — meat"},
-  {code:"10301",kh:"ការកែច្នៃ និងរក្សាទុកផ្លែឈើ",en:"Food processing — fruit & vegetables"},
-  {code:"10761",kh:"កម្មន្តសាលកាហ្វេ",en:"Coffee processing factory"},
-  {code:"11041",kh:"ផលិតភេសជ្ជៈគ្មានជាតិអាកុល",en:"Non-alcoholic beverage factory"},
-  {code:"11050",kh:"ផលិតទឹកបរិសុទ្ធ និងទឹករ៉ែ",en:"Bottled water factory"},
-  {code:"21000",kh:"ផលិតឱសថ និងផលិតផលឱសថ",en:"Pharmaceutical manufacturing"},
-  {code:"20230",kh:"ផលិតសាប៊ូ គ្រឿងសម្អាង",en:"Cosmetics / soap manufacturing"},
-  {code:"10721",kh:"ផលិតស្ករ",en:"Sugar / food supplement production"},
-  {code:"13111",kh:"ការរវៃវាយនភណ្ឌ — ក្រណាត់",en:"Garment / textile production"},
-  {code:"14101",kh:"ផលិតសម្លៀកបំពាក់",en:"Clothing manufacturing"},
-  {code:"62010",kh:"ការបង្កើតកម្មវិធីកុំព្យូទ័រ",en:"Software development"},
-  {code:"61100",kh:"ទូរគមនាគមន៍មានខ្សែ — ISP",en:"Wired telecom / ISP"},
-  {code:"61200",kh:"ទូរគមនាគមន៍ប្រើប្រាស់វិទ្យុ",en:"Wireless telecom / mobile"},
-  {code:"63111",kh:"មជ្ឈមណ្ឌលទិន្នន័យ",en:"Data center / hosting"},
-  {code:"47911",kh:"ការលក់រាយតាមអ៊ីនធឺណិត",en:"E-commerce / online shop"},
-  {code:"64922",kh:"គ្រឹះស្ថានមីក្រូហិរញ្ញវត្ថុ",en:"Microfinance institution (MFI)"},
-  {code:"66191",kh:"ការផ្ទេរប្រាក់",en:"Money transfer / remittance"},
-  {code:"65110",kh:"ធានារ៉ាប់រងអាយុជីវិត",en:"Life insurance"},
-  {code:"65120",kh:"ធានារ៉ាប់រងទូទៅ",en:"General insurance"},
-  {code:"64924",kh:"ហាងទទួលបញ្ចាំ",en:"Pawnshop"},
-  {code:"68101",kh:"ការទិញ ការលក់ ជួល អចលនទ្រព្យ",en:"Real estate sales / rental"},
-  {code:"41001",kh:"សំណង់អាគារ — ភ្នាក់ងារអចលនទ្រព្យ",en:"Real estate developer / construction"},
-  {code:"68201",kh:"ភ្នាក់ងារអចលនទ្រព្យ",en:"Real estate agent"},
-  {code:"85101",kh:"មតេយ្យសិក្សា",en:"Pre-school / kindergarten"},
-  {code:"85102",kh:"បឋមសិក្សា",en:"Primary school"},
-  {code:"85211",kh:"មធ្យមសិក្សាបឋមភូមិ",en:"Lower secondary school"},
-  {code:"85212",kh:"មធ្យមសិក្សាទុតិយភូមិ",en:"Upper secondary school"},
-  {code:"85491",kh:"មជ្ឈមណ្ឌលសិក្សាឯកជន",en:"Private tutoring / language center"},
-  {code:"85301",kh:"ឧត្តមសិក្សា",en:"University / higher education"},
-  {code:"85220",kh:"វិជ្ជាជីវៈ — បណ្ដុះបណ្ដាល",en:"Vocational training center"},
-  {code:"01120",kh:"ការដាំដុះស្រូវ",en:"Rice farming"},
-  {code:"01131",kh:"ការដាំដុះបន្លែ",en:"Vegetable farming"},
-  {code:"03121",kh:"ការនេសាទត្រីទឹកសាប",en:"Freshwater fishing"},
-  {code:"46201",kh:"លក់ដុំវត្ថុធាតុដើមកសិកម្ម",en:"Agricultural wholesale"},
-  {code:"46900",kh:"ការលក់ដុំទំនិញទូទៅ",en:"General wholesale trading"},
-  {code:"47111",kh:"ហាងលក់គ្រឿងទេស",en:"Grocery / spice shop"},
-  {code:"47192",kh:"ការលក់រាយទូទៅ",en:"General retail store"},
-  {code:"49230",kh:"ការដឹកជញ្ជូនទំនិញតាមផ្លូវគោក",en:"Road freight / trucking"},
-  {code:"52100",kh:"ឃ្លាំងស្តុកទំនិញ",en:"Warehousing / storage"},
-  {code:"52293",kh:"ភ្នាក់ងាររៀបចំឯកសារគយ",en:"Customs agent / freight forwarder"},
-  {code:"07295",kh:"អាជីវកម្មរ៉ែមាស",en:"Gold / mineral mining"},
-  {code:"35101",kh:"ផលិតថាមពលអគ្គិសនី",en:"Electricity generation"},
-  {code:"36000",kh:"ប្រព័ន្ធទឹកស្អាត",en:"Water supply / treatment"},
-];
-
-/* Domain → ISIC code suggestions */
-const DOMAIN_ISIC = {
-  "Tourism & Hospitality":["56101","56102","56302","55101","55104","79110","79120","56301"],
-  "Health & Pharmacy":["86201","86203","86101","47721","86202","46421"],
-  "Manufacturing":["10301","10761","11041","13111","14101","11050","20230","21000"],
-  "Technology & Telecom":["62010","61100","61200","63111","47911","61200"],
-  "Real Estate & Construction":["68101","41001","68201","68102"],
-  "Finance & Insurance":["64922","66191","65110","65120","64924"],
-  "Education & Training":["85491","85101","85212","85301","85220","85102"],
-  "Agriculture & Food":["01120","01131","03121","46201","10101"],
-  "Trade & Import/Export":["46900","47192","47111","46421","47911"],
-  "Logistics & Transport":["49230","52100","52293"],
-  "Energy & Mining":["07295","35101","36000"],
-};
-
-/* Entity decision logic */
-const ENTITY_TYPES = {
-  foreign:   {icon:"🌐",name:"Branch / Representative Office of Foreign Company",why:"Because your company is already registered outside Cambodia, you will open a Branch Office or Representative Office — not a new Cambodian company. The system will route your application to MoC with the correct foreign entity registration form.",legal:"Legal basis: Law on Commercial Enterprises Art. 257–270. Foreign investment rules apply. CDC approval may be required."},
-  llc_s:     {icon:"👤",name:"Sole Proprietorship",why:"Because you are the only owner and chose not to use limited liability, this is the simplest structure. You and the business are legally one entity. Fastest to register, lowest cost.",legal:"Legal basis: Law on Commercial Enterprises. No minimum capital. Full personal liability. Suitable for small local businesses."},
-  llc_m:     {icon:"👥",name:"Partnership",why:"Because there are two or more owners and you chose not to use limited liability, this forms a General Partnership. All partners share responsibility for debts.",legal:"Legal basis: Law on Commercial Enterprises Art. 28–74. Each partner has unlimited liability. Suitable for small co-owned businesses."},
-  private_s: {icon:"🏢",name:"Private Limited Company — Single Member LLC",why:"Because you are the sole owner and want to protect your personal assets, a Single-Member Private Limited Company (Co., Ltd.) is recommended. Your personal property is protected — you can only lose your invested capital.",legal:"Legal basis: Law on Commercial Enterprises Art. 128–231. Minimum capital: USD 1,000. MoC registration required. Recommended for most sole-owner businesses."},
-  private_m: {icon:"🏛️",name:"Private Limited Company — Multi-Member LLC",why:"Because there are multiple owners and you want to protect personal assets, a Multi-Member Private Limited Company (Co., Ltd.) is the standard structure. Each shareholder's liability is limited to their investment.",legal:"Legal basis: Law on Commercial Enterprises Art. 128–231. Minimum capital: USD 1,000. Maximum 30 shareholders. Articles of Association required."},
-};
-
-let ownerQ={q1:null,q2:null,q3:null};
-let selectedISIC=[];
-
-function setQ(q, val, el){
-  ownerQ[q]=val;
-  // Highlight selected
-  el.closest('.fsec').querySelectorAll('.owner-choice').forEach(c=>c.classList.remove('sel'));
-  el.classList.add('sel');
-  // Unlock next question
-  if(q==='q1'){
-    document.getElementById('q2-section').style.opacity='1';
-    document.getElementById('q2-section').style.pointerEvents='auto';
-  }
-  if(q==='q2'){
-    document.getElementById('q3-section').style.opacity='1';
-    document.getElementById('q3-section').style.pointerEvents='auto';
-  }
-  if(q==='q3' || (q==='q2'&&ownerQ.q3)) resolveEntity();
-  if(q==='q3') resolveEntity();
-}
-
-function resolveEntity(){
-  if(!ownerQ.q1||!ownerQ.q2||!ownerQ.q3) return;
-  let key;
-  if(ownerQ.q3==='yes') key='foreign';
-  else if(ownerQ.q1==='one'&&ownerQ.q2==='yes') key='private_s';
-  else if(ownerQ.q1==='multi'&&ownerQ.q2==='yes') key='private_m';
-  else if(ownerQ.q1==='one'&&ownerQ.q2==='no') key='llc_s';
-  else key='llc_m';
-  const e=ENTITY_TYPES[key];
-  state.entityType=key;
-  state.entityName=e.name;
-  document.getElementById('entity-icon').textContent=e.icon;
-  document.getElementById('entity-name').textContent=e.name;
-  document.getElementById('entity-why').innerHTML=e.why;
-  document.getElementById('entity-legal').innerHTML='📋 '+e.legal;
-  document.getElementById('entity-result').style.display='block';
-  document.getElementById('entity-result').scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-
-function predictISIC(){
-  const results=document.getElementById('isic-results');
-  const domains=state.domains;
-  if(!domains.length){results.innerHTML='<div style="color:var(--ink4);font-size:12px">Select a domain in Step 1 first.</div>';return;}
-  const seen=new Set();
-  const predicted=[];
-  domains.forEach(d=>{
-    (DOMAIN_ISIC[d]||[]).forEach(code=>{
-      if(!seen.has(code)){
-        seen.add(code);
-        const item=ISIC_DB.find(x=>x.code===code);
-        if(item) predicted.push(item);
-      }
-    });
-  });
-  results.innerHTML=predicted.slice(0,6).map(item=>`
-    <div class="isic-pred-item">
-      <span class="isic-code">${item.code}</span>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:12px;font-weight:600;color:var(--ink)">${item.kh}</div>
-        <div style="font-size:11px;color:var(--ink3)">${item.en}</div>
-      </div>
-      <button class="isic-pred-check" onclick="addISIC('${item.code}','${item.kh.replace(/'/g,"\\'")}','${item.en.replace(/'/g,"\\'")}')">+ Add</button>
-    </div>`).join('');
-  // Auto-generate objective
-  const scenario=state.scenario;
-  const bizName=document.getElementById('biz-name')?.value||'';
-  const province=document.getElementById('biz-province')?.value||'Cambodia';
-  const domainLabel=scenario?scenario.label:domains.join(' and ');
-  const obj=document.getElementById('biz-objective');
-  if(obj&&!obj.value){
-    obj.value=`To ${scenario?'operate a '+domainLabel.toLowerCase()+' business':'conduct business activities in '+domainLabel.toLowerCase()} providing quality products and services to customers${province?' in '+province:''}, in full compliance with Cambodian laws and regulations.`;
-  }
-}
-
-function addISIC(code,kh,en){
-  if(selectedISIC.find(x=>x.code===code)) return;
-  selectedISIC.push({code,kh,en});
-  renderISICChips();
-}
-function removeISIC(code){
-  selectedISIC=selectedISIC.filter(x=>x.code!==code);
-  renderISICChips();
-}
-function renderISICChips(){
-  const wrap=document.getElementById('isic-chips-selected');
-  wrap.innerHTML=selectedISIC.map(x=>`
-    <span class="isic-chip">${x.code} · ${x.en}<button class="isic-chip-x" onclick="removeISIC('${x.code}')">×</button></span>`).join('');
-}
-function searchISIC(q){
-  const dd=document.getElementById('isic-dropdown');
-  if(!q||q.length<2){dd.style.display='none';return;}
-  const matches=ISIC_DB.filter(x=>x.kh.includes(q)||x.en.toLowerCase().includes(q.toLowerCase())||x.code.includes(q)).slice(0,12);
-  if(!matches.length){dd.innerHTML='<div style="padding:12px 14px;font-size:12px;color:var(--ink4)">No results found.</div>';dd.style.display='block';return;}
-  dd.innerHTML=matches.map(x=>`
-    <div class="isic-drop-item" onclick="addISIC('${x.code}','${x.kh.replace(/'/g,"\\'")}','${x.en.replace(/'/g,"\\'")}');document.getElementById('isic-search').value='';document.getElementById('isic-dropdown').style.display='none'">
-      <span class="isic-code">${x.code}</span><span class="isic-label-kh">${x.kh}</span>
-      <div class="isic-label-en">${x.en}</div>
-    </div>`).join('');
-  dd.style.display='block';
-}
-document.addEventListener('click',e=>{
-  if(!e.target.closest('#isic-search')&&!e.target.closest('#isic-dropdown'))
-    {const dd=document.getElementById('isic-dropdown');if(dd)dd.style.display='none';}
-});
-
-let state={domains:[],activities:[],shIdx:1,scenario:null,entityType:null,entityName:null};
+let state={domains:[],activities:[],shIdx:1,scenario:null};
 
 function startFlow(){
   document.getElementById('screen-hero').classList.remove('visible');
@@ -1858,15 +1546,34 @@ function startFlow(){
 function renderScenarioPicker(){
   const grid=document.getElementById('scenario-grid');
   const all=Object.values(SCENARIOS);
+  const INITIAL=4; // 2 rows × 2 columns
   grid.innerHTML=all.map((s,i)=>`
-    <div class="scenario-tile" id="st-${s.id}" onclick="selectScenario('${s.id}')">
+    <div class="scenario-tile${i>=INITIAL?' scn-hidden':''}" id="st-${s.id}" onclick="selectScenario('${s.id}')">
       <div class="st-em">${s.emoji}</div>
       <div class="st-body">
         <div class="st-label">${s.label}</div>
         <div class="st-hint">${s.description}</div>
         <span class="st-risk risk-${s.risk}">${s.risk==='critical'?'⚠ Critical':s.risk==='high'?'High reg.':'Normal'}</span>
       </div>
-    </div>`).join('');
+    </div>`).join('')+
+    `<button class="see-more-btn" id="see-more-btn" onclick="toggleScenarios(this)" style="grid-column:1/-1">
+      <span id="see-more-icon">▼</span> See all ${all.length} scenarios (${all.length-INITIAL} more)
+    </button>`;
+}
+
+function toggleScenarios(btn){
+  const INITIAL=4;
+  const isExpanded=btn.dataset.expanded==='1';
+  const all=document.querySelectorAll('.scenario-tile');
+  if(!isExpanded){
+    all.forEach(t=>t.classList.remove('scn-hidden'));
+    btn.innerHTML='<span>▲</span> Show less';
+    btn.dataset.expanded='1';
+  } else {
+    all.forEach((t,i)=>{if(i>=INITIAL) t.classList.add('scn-hidden');});
+    btn.innerHTML=`<span>▼</span> See all ${all.length} scenarios (${all.length-INITIAL} more)`;
+    btn.dataset.expanded='0';
+  }
 }
 
 function selectScenario(id){
@@ -1877,7 +1584,14 @@ function selectScenario(id){
   // Visually select this tile, deselect others
   document.querySelectorAll('.scenario-tile').forEach(t=>t.classList.remove('sel'));
   const selTile=document.getElementById('st-'+id);
-  if(selTile) selTile.classList.add('sel');
+  if(selTile){
+    selTile.classList.add('sel');
+    // If tile is hidden, expand to show it
+    if(selTile.classList.contains('scn-hidden')){
+      const btn=document.getElementById('see-more-btn');
+      if(btn&&btn.dataset.expanded!=='1'){toggleScenarios(btn);}
+    }
+  }
 
   // Pre-select domain tiles
   state.domains=[...s.domains];
@@ -1994,8 +1708,6 @@ function next(from){
     const prov=document.getElementById('biz-province').value;
     document.getElementById('prov2').value=prov;
     loadChips();
-    // Trigger ISIC prediction when moving to step 2
-    setTimeout(predictISIC, 200);
   }
   setStep(from+1);
 }
@@ -2175,23 +1887,23 @@ function buildUnifiedForm(){
   document.getElementById('uf-prov2').value=prov;
   document.getElementById('uf-addr').value=addr;
   document.getElementById('uf-desc').value=document.getElementById('biz-desc').value||'';
-  document.getElementById('uf-cotype').value=state.entityName||'Private Limited Company (Co., Ltd.)';
+  const coType=document.getElementById('co-type');
+  document.getElementById('uf-cotype').value=coType?coType.options[coType.selectedIndex].text:'';
 
-  // Shareholders — show ISIC-selected activities in the shareholders tab instead
+  // Shareholders
   const shListEl=document.getElementById('uf-sh-list');
-  shListEl.innerHTML=`
-    <div style="background:var(--teal-pale);border:1px solid var(--border2);border-radius:var(--r);padding:14px 16px;margin-bottom:12px">
-      <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px">🧠 Entity type (system-determined)</div>
-      <div style="font-size:13px;color:var(--navy3);font-weight:600">${state.entityName||'Private Limited Company'}</div>
-      <div style="font-size:11px;color:var(--ink3);margin-top:4px">Determined from your 3-question ownership wizard. The Articles of Incorporation will use this entity type automatically.</div>
-    </div>
-    <div style="font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:8px">Shareholder information</div>
-    <div style="font-size:12px;color:var(--ink3);padding:10px 14px;background:var(--surface2);border-radius:var(--r);border-left:3px solid var(--border2)">
-      In the live system, each shareholder completes their own identity verification via CamDigiKey. For this prototype, shareholder data will be collected via secure individual links sent after company name approval.
-    </div>
-    <div style="margin-top:12px">
-      <button style="padding:9px 16px;border:1.5px solid var(--border2);border-radius:var(--r);background:none;font-family:inherit;font-size:13px;color:var(--navy2);cursor:pointer;font-weight:600" onclick="alert('In the live system: each shareholder receives a CamDigiKey invite to complete their details securely.')">📧 Send shareholder invite links →</button>
+  let shHtml='';
+  document.querySelectorAll('.sh-item').forEach((row,i)=>{
+    const nm=row.querySelector('input:nth-child(1)').value||`Shareholder ${i+1}`;
+    const nat=row.querySelector('input:nth-child(2)').value||'';
+    const pct=row.querySelector('input:nth-child(3)').value||'';
+    shHtml+=`<div class="frow tri" style="margin-bottom:10px">
+      <div class="fg"><label>Full name</label><input class="finput" value="${nm}"></div>
+      <div class="fg"><label>Nationality</label><input class="finput" value="${nat}"></div>
+      <div class="fg"><label>Share % / ID number</label><input class="finput" value="${pct}" placeholder="Add ID/passport no."></div>
     </div>`;
+  });
+  shListEl.innerHTML=shHtml||'<div style="color:var(--ink4);font-size:13px;padding:12px 0">No shareholders added. Please go back to Step 3.</div>';
 
   // Sector fields — merge from all selected domains
   const sectorMap={
@@ -2379,44 +2091,38 @@ function buildDashboard(){
   }).join('');
 
   // All 20 scenarios overview grid
-  // Sort scenarios: active (in-progress) first, then rest
-  const allScenariosSorted=[...Object.values(SCENARIOS)].sort((a,b)=>{
-    const aActive=state.scenario?state.scenario.id===a.id:state.domains.some(d=>a.domains.includes(d));
-    const bActive=state.scenario?state.scenario.id===b.id:state.domains.some(d=>b.domains.includes(d));
-    return bActive-aActive;
-  });
-  const DASH_INITIAL=4; // 2 rows of 2 on most screens
-  const allScenariosHtml=allScenariosSorted.map((s,i)=>{
+  const allScenariosHtml=Object.values(SCENARIOS).map((s,i)=>{
     const isSelected=state.scenario?state.scenario.id===s.id:state.domains.some(d=>s.domains.includes(d));
-    const statusLabel=isSelected?'🔵 In Progress':'Not registered';
-    const statusBg=isSelected?'#E8F0FE':'var(--surface3)';
-    const statusColor=isSelected?'#1A3A8A':'var(--ink4)';
+    const scStatus=isSelected?'active':'idle';
+    const statusLabel=isSelected?'In Progress':'Not registered';
+    const statusBg=isSelected?'#FFF3CD':'var(--surface3)';
+    const statusColor=isSelected?'#7A5000':'var(--ink4)';
     const stepCount=s.steps.length;
     const licCount=s.steps.reduce((t,st)=>t+st.lics.length,0)+(s.conditional?s.conditional.length:0);
     return `
-      <div class="dash-scn-card" id="dsc-${i}" style="${i>=DASH_INITIAL?'display:none':''}background:var(--white);border:1.5px solid ${isSelected?'var(--navy)':'var(--border)'};border-radius:var(--r2);padding:14px 16px;transition:all 0.15s;${isSelected?'box-shadow:0 2px 12px rgba(91,82,200,0.14);':''}">
+      <div style="background:var(--white);border:1.5px solid ${isSelected?'var(--navy)':'var(--border)'};border-radius:var(--r2);padding:14px 16px;transition:all 0.15s;cursor:default;${isSelected?'box-shadow:0 2px 12px rgba(91,82,200,0.12)':''}">
         <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px">
           <span style="font-size:22px;flex-shrink:0">${s.emoji}</span>
           <div style="flex:1;min-width:0">
             <div style="font-size:13px;font-weight:700;color:var(--ink);word-break:break-word">${s.label}</div>
             <div style="font-size:11px;color:var(--ink3);margin-top:2px">${s.domains.join(' · ')}</div>
           </div>
-          <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:${statusBg};color:${statusColor};flex-shrink:0;white-space:nowrap;border:1px solid ${isSelected?'rgba(91,82,200,0.2)':'var(--border2)'}">${statusLabel}</span>
+          <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:${statusBg};color:${statusColor};flex-shrink:0;white-space:nowrap">${statusLabel}</span>
         </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+        <div style="display:flex;gap:12px;margin-bottom:10px">
           <div style="font-size:11px;color:var(--ink3)">📋 <strong style="color:var(--ink)">${licCount}</strong> licenses</div>
           <div style="font-size:11px;color:var(--ink3)">🔗 <strong style="color:var(--ink)">${stepCount}</strong> steps</div>
-          <span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;background:${s.risk==='critical'?'#FDECEA':s.risk==='high'?'#FFF3CD':'#DFF0D8'};color:${s.risk==='critical'?'#7A1A0A':s.risk==='high'?'#7A5000':'#1A5020'}">${s.risk}</span>
+          <div style="font-size:11px;color:var(--ink3)"><span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;background:${s.risk==='critical'?'#FDECEA':s.risk==='high'?'#FFF3CD':'#DFF0D8'};color:${s.risk==='critical'?'#7A1A0A':s.risk==='high'?'#7A5000':'#1A5020'}">${s.risk}</span></div>
         </div>
         ${isSelected?`
-        <div style="background:var(--surface2);border-radius:6px;height:6px;overflow:hidden;margin-bottom:6px">
-          <div style="background:var(--navy);height:100%;width:${progressPct}%;border-radius:6px"></div>
+        <div style="background:var(--surface2);border-radius:6px;height:6px;overflow:hidden;margin-bottom:8px">
+          <div style="background:var(--navy);height:100%;width:${progressPct}%;transition:width 0.6s;border-radius:6px"></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink3)">
-          <span style="color:var(--navy3);font-weight:700">${progressPct}% complete</span>
-          <span>${approvedLics}/${totalLics} approved</span>
+          <span style="color:var(--navy3);font-weight:600">${progressPct}% complete</span>
+          <span>${approvedLics}/${totalLics} licenses approved</span>
         </div>`:`
-        <div style="background:var(--surface3);border-radius:6px;height:5px;overflow:hidden;margin-bottom:5px"></div>
+        <div style="background:var(--surface3);border-radius:6px;height:6px;overflow:hidden;margin-bottom:8px"><div style="background:var(--border2);height:100%;width:0%;border-radius:6px"></div></div>
         <div style="font-size:10px;color:var(--ink4)">Not started</div>`}
       </div>`;
   }).join('');
@@ -2578,27 +2284,17 @@ function buildDashboard(){
 
     <!-- ALL 20 SCENARIOS OVERVIEW -->
     <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-bottom:16px">
-      <div style="padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;gap:10px">
         <span style="font-size:18px">🗂️</span>
-        <div style="flex:1;min-width:120px">
+        <div style="flex:1">
           <div style="font-size:14px;font-weight:700;color:var(--ink)">All 20 business scenarios — registration overview</div>
-          <div style="font-size:11px;color:var(--ink3)">Active registration shown first · highlighted in blue</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <span style="font-size:11px;font-weight:700;color:var(--navy3);background:var(--teal-pale);padding:3px 10px;border-radius:20px;border:1px solid var(--border2)">1 In Progress</span>
-          <span style="font-size:11px;color:var(--ink4)">· 19 Available</span>
+          <div style="font-size:11px;color:var(--ink3)">Your active registration is highlighted. Other scenarios can be added to your bundle.</div>
         </div>
       </div>
       <div style="padding:16px 18px">
-        <div id="dash-scn-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">
           ${allScenariosHtml}
         </div>
-        <button id="dash-scn-toggle" onclick="toggleDashScenarios(this)"
-          style="margin-top:14px;width:100%;padding:10px;border:1.5px dashed var(--border2);border-radius:var(--r);background:var(--surface2);font-family:inherit;font-size:12px;font-weight:600;color:var(--navy2);cursor:pointer;transition:all 0.15s"
-          onmouseover="this.style.background='var(--teal-pale)';this.style.borderColor='var(--navy)'"
-          onmouseout="this.style.background='var(--surface2)';this.style.borderColor='var(--border2)'">
-          ▼ Show all 20 scenarios (${20-4} more)
-        </button>
       </div>
     </div>
 
@@ -2636,21 +2332,6 @@ function buildDashboard(){
       <button class="btn-next" style="flex:1;justify-content:center" onclick="alert('Generate shareable link for inspectors, banks or partners.')">🔗 Share bundle link</button>
       <button class="btn-next" style="background:var(--navy3)" onclick="alert('Export full registration bundle as PDF report.')">📥 Export PDF</button>
     </div>`;
-}
-
-function toggleDashScenarios(btn){
-  const INITIAL=4;
-  const cards=document.querySelectorAll('.dash-scn-card');
-  const isExpanded=btn.dataset.expanded==='1';
-  if(!isExpanded){
-    cards.forEach(c=>c.style.display='');
-    btn.innerHTML='▲ Show less';
-    btn.dataset.expanded='1';
-  } else {
-    cards.forEach((c,i)=>{c.style.display=i<INITIAL?'':'none';});
-    btn.innerHTML=`▼ Show all 20 scenarios (${cards.length-INITIAL} more)`;
-    btn.dataset.expanded='0';
-  }
 }
 
 // Override showStep(6) to also build dashboard
