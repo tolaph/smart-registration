@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Smart Unified Business Registration — OBR Cambodia</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* OBR Portal purple palette */
+  --navy:#5B52C8;--navy2:#6B63D4;--navy3:#4A42B0;
+  --gold:#7B73E0;--gold2:#A09AEC;--gold3:#EEEDFA;
+  --teal:#5B52C8;--teal2:#6B63D4;--teal-pale:#EEEDFA;
+  --coral:#C03060;--coral-pale:#FBF0F4;
+  /* Clear, high-contrast text colors */
+  --ink:#0D0D0D;
+  --ink2:#1E1E2E;
+  --ink3:#3D3D55;
+  --ink4:#6B6B88;
+  --surface:#F7F7FB;--surface2:#F0EFFA;--surface3:#E8E6F5;
+  --white:#FFFFFF;
+  --border:rgba(91,82,200,0.12);--border2:rgba(91,82,200,0.22);
+  --r:10px;--r2:14px;--r3:20px;
+  --shadow:0 1px 3px rgba(91,82,200,0.10),0 4px 16px rgba(91,82,200,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--surface);color:var(--ink);font-size:14px;line-height:1.6;min-height:100vh}
+
+/* ── NAV ── */
+.topbar{
+  position:sticky;top:0;z-index:200;
+  background:var(--navy);
+  display:flex;align-items:center;gap:14px;
+  padding:0 28px;height:60px;
+  border-bottom:2px solid rgba(255,255,255,0.15);
+}
+.tb-logo{
+  width:34px;height:34px;background:#fff;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:16px;color:var(--navy);flex-shrink:0;
+  font-family:'Instrument Serif',serif;
+}
+.tb-brand{color:#FFFFFF;font-size:15px;font-weight:600;letter-spacing:-0.01em}
+.tb-sub{color:rgba(255,255,255,0.8);font-size:11px;margin-top:1px}
+.tb-center{flex:1;display:flex;align-items:center;justify-content:center;gap:2px}
+.tb-step{
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:600;
+  color:#FFFFFF;
+  padding:5px 10px;border-radius:20px;
+  transition:all 0.2s;cursor:default;opacity:0.6;
+}
+.tb-step.active{color:#FFFFFF;background:rgba(255,255,255,0.22);opacity:1}
+.tb-step.done{color:#FFFFFF;opacity:0.85}
+.tb-step-dot{
+  width:18px;height:18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;flex-shrink:0;
+  border:1.5px solid rgba(255,255,255,0.5);color:#FFFFFF;
+}
+.tb-step.active .tb-step-dot{border-color:#fff;color:#fff;background:rgba(255,255,255,0.3)}
+.tb-step.done .tb-step-dot{background:rgba(255,255,255,0.4);border-color:#fff;color:#fff}
+.tb-step-div{width:14px;height:1px;background:rgba(255,255,255,0.3);flex-shrink:0}
+.tb-right{display:flex;gap:8px;align-items:center}
+.lang-btn{
+  padding:4px 10px;border:1px solid rgba(255,255,255,0.5);border-radius:6px;
+  color:#FFFFFF;font-size:11px;cursor:pointer;font-family:inherit;background:none;
+  transition:all 0.15s;font-weight:500;
+}
+.lang-btn:hover,.lang-btn.active{color:#fff;border-color:#fff;background:rgba(255,255,255,0.18)}
+
+/* ── SCREENS ── */
+.screen{display:none;animation:fadeUp 0.35s ease}
+.screen.visible{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── HERO ── */
+.hero{
+  background:var(--navy);padding:56px 28px 60px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
+.hero-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.15);
+  color:#fff;font-size:11px;font-weight:600;letter-spacing:0.07em;
+  padding:5px 14px;border-radius:20px;text-transform:uppercase;margin-bottom:22px;
+}
+.h-pulse{width:7px;height:7px;border-radius:50%;background:#fff;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+.hero h1{
+  font-family:'Instrument Serif',serif;
+  font-size:42px;color:#fff;line-height:1.2;margin-bottom:14px;font-weight:400;
+}
+.hero h1 em{color:rgba(255,255,255,0.8);font-style:italic}
+.hero-sub{color:rgba(255,255,255,0.88);font-size:15px;max-width:520px;margin:0 auto 36px;line-height:1.7}
+.compare{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;max-width:680px;margin:0 auto 36px;border-radius:var(--r2);overflow:hidden;border:1px solid rgba(255,255,255,0.15)}
+.cmp{padding:18px 20px}
+.cmp.old{background:rgba(0,0,0,0.25);border-right:1px solid rgba(255,255,255,0.1)}
+.cmp.arr{background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:22px;color:rgba(255,255,255,0.5)}
+.cmp.new{background:rgba(255,255,255,0.12)}
+.cmp-lbl{font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:10px}
+.cmp.old .cmp-lbl{color:#FFB0A0}
+.cmp.new .cmp-lbl{color:#C0FFE0}
+.cmp-row{display:flex;align-items:center;gap:7px;font-size:12px;color:rgba(255,255,255,0.88);margin-bottom:5px}
+.cmp-row:last-child{margin-bottom:0}
+.crd{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.crd.bad{background:#FF9080}
+.crd.good{background:#80FFC0}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#fff;color:var(--navy);font-weight:700;font-size:14px;
+  padding:14px 32px;border-radius:var(--r2);border:none;cursor:pointer;
+  font-family:inherit;transition:all 0.2s;letter-spacing:0.01em;
+}
+.hero-cta:hover{background:var(--surface2);transform:translateY(-1px)}
+.hero-cta svg{width:16px;height:16px}
+
+/* ── LAYOUT ── */
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 60px)}
+.sidebar{
+  background:var(--white);border-right:1px solid var(--border);
+  position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;
+  padding:24px 18px;
+}
+.main-col{
+  padding:24px 20px;
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+}
+
+/* ── LARGE DESKTOP (>1400px) ── */
+@media(min-width:1400px){
+  .main-col{padding:24px 20px}
+  .domain-grid{grid-template-columns:repeat(4,1fr)}
+  #scenario-grid{grid-template-columns:repeat(3,1fr) !important}
+  .pkg-stats{grid-template-columns:repeat(4,1fr)}
+  .dash-grid{grid-template-columns:repeat(4,1fr)}
+}
+
+/* ── MEDIUM DESKTOP (1000px–1400px) ── */
+@media(min-width:1000px) and (max-width:1399px){
+  .domain-grid{grid-template-columns:repeat(3,1fr)}
+  #scenario-grid{grid-template-columns:repeat(2,1fr) !important}
+  .pkg-stats{grid-template-columns:repeat(4,1fr)}
+  .frow{grid-template-columns:1fr 1fr}
+}
+
+/* ── TABLET LANDSCAPE (700px–999px) ── */
+@media(max-width:999px){
+  .layout{grid-template-columns:230px 1fr}
+  .main-col{padding:20px 20px}
+  .domain-grid{grid-template-columns:repeat(3,1fr)}
+  #scenario-grid{grid-template-columns:1fr 1fr !important}
+  .pkg-stats{grid-template-columns:repeat(2,1fr)}
+  .dash-grid{grid-template-columns:1fr 1fr}
+  .frow.tri{grid-template-columns:1fr 1fr}
+  .sh-item{grid-template-columns:1fr 1fr auto}
+  .uf-tabs{flex-wrap:wrap}
+  .uf-tab{flex:0 0 calc(33.33% - 1px);font-size:11px;padding:9px 6px}
+}
+
+/* ── TABLET PORTRAIT (560px–700px) ── */
+@media(max-width:700px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .main-col{padding:16px 14px}
+  .domain-grid{grid-template-columns:repeat(2,1fr)}
+  #scenario-grid{grid-template-columns:1fr 1fr !important}
+  .pkg-stats{grid-template-columns:1fr 1fr}
+  .dash-grid{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr}
+  .frow.tri{grid-template-columns:1fr}
+  .sh-item{grid-template-columns:1fr auto;gap:8px}
+  .sh-item input:nth-child(2){display:none}
+  .compare{grid-template-columns:1fr;gap:0}
+  .cmp.arr{transform:rotate(90deg);padding:8px}
+  .hero{padding:36px 16px 40px}
+  .hero h1{font-size:26px}
+  .hero-sub{font-size:13px}
+  .tb-center{display:none}
+  .uf-tabs{flex-wrap:wrap}
+  .uf-tab{flex:0 0 calc(50% - 0.5px);font-size:11px;padding:9px 4px}
+  .cert-grid{grid-template-columns:1fr}
+  .pkg-header{flex-direction:column;gap:10px;padding:16px 18px}
+  .chain-track{gap:4px}
+  .mc-head{flex-wrap:wrap;gap:8px}
+  .mc-badge{font-size:9px;padding:3px 8px}
+  .card-head{flex-direction:column;gap:8px}
+  .btn-row{flex-direction:column-reverse;gap:10px}
+  .btn-back,.btn-next{width:100%;justify-content:center}
+  .progress-tabs{display:none}
+  .fsec-title{font-size:10px}
+}
+
+/* ── MOBILE (< 480px) ── */
+@media(max-width:480px){
+  .main-col{padding:12px 10px}
+  .domain-grid{grid-template-columns:1fr 1fr}
+  .scenario-grid{grid-template-columns:1fr 1fr !important}
+  .dt-hint{display:none}
+  .st-hint{display:none}
+  .pkg-stats{grid-template-columns:1fr 1fr}
+  .dash-grid{grid-template-columns:1fr 1fr}
+  .pstat-n{font-size:20px}
+  .pkg-title{font-size:16px}
+  .hero h1{font-size:22px;line-height:1.3}
+  .hero-sub{font-size:12px}
+  .cc-title{font-size:14px}
+  .ch-title{font-size:15px}
+  .uf-tab{flex:0 0 calc(50% - 0.5px);font-size:10px;padding:8px 3px}
+  .mc-min{font-size:10px}
+  .lic-row2{gap:8px}
+  .lr-name{font-size:12px}
+  .compare{display:none}
+  .cert-grid{grid-template-columns:1fr}
+  .info-box{padding:10px}
+  .card-body{padding:16px}
+  .cc-body{padding:16px}
+  .fsec{margin-bottom:20px}
+}
+
+.sb-section{margin-bottom:28px}
+.sb-title{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
+.sb-step{display:flex;align-items:flex-start;gap:10px;padding:8px 0;position:relative}
+.sb-step:not(:last-child)::after{content:'';position:absolute;left:12px;top:34px;width:1px;height:calc(100% - 10px);background:var(--border2)}
+.ss-ind{
+  width:24px;height:24px;border-radius:50%;flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;border:1.5px solid var(--border2);
+  color:var(--ink3);background:var(--surface2);transition:all 0.3s;
+}
+.ss-ind.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.ss-ind.done{background:var(--teal);border-color:var(--teal);color:#fff}
+.ss-text{flex:1}
+.ss-label{font-size:13px;font-weight:600;color:var(--ink2);line-height:1.3;transition:color 0.2s}
+.ss-label.active{color:var(--ink)}
+.ss-label.done{color:var(--ink2)}
+.ss-detail{font-size:11px;color:var(--ink4);margin-top:2px}
+.ss-detail.filled{color:var(--teal);font-weight:500}
+
+.info-box{
+  background:var(--surface2);border-radius:var(--r);padding:14px;
+  border:1px solid var(--border);
+}
+.ib-title{font-size:11px;font-weight:700;color:var(--navy3);margin-bottom:6px}
+.ib-text{font-size:12px;color:var(--ink2);line-height:1.7}
+.ib-text strong{color:var(--ink);font-weight:600}
+
+/* ── CARD ── */
+.card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r2);overflow:hidden;margin-bottom:20px;
+  box-shadow:var(--shadow);
+}
+.card-head{
+  padding:20px 24px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;
+}
+.ch-icon{
+  width:44px;height:44px;border-radius:var(--r);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.ch-title{font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-0.01em}
+.ch-sub{font-size:13px;color:var(--ink3);margin-top:3px}
+.card-body{padding:clamp(16px,3vw,28px)}
+
+/* ── FORM ── */
+.fsec{margin-bottom:26px}
+.fsec:last-child{margin-bottom:0}
+.fsec-title{
+  font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:14px;padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+}
+.frow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:14px}
+.frow.full{grid-template-columns:1fr}
+.frow.tri{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:14px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:12px;font-weight:600;color:var(--ink2)}
+.fg label .req{color:var(--coral)}
+.finput,.fselect,.ftarea{
+  width:100%;border:1.5px solid var(--border2);border-radius:var(--r);
+  padding:9px 12px;font-family:inherit;font-size:13px;color:var(--ink);
+  background:var(--white);outline:none;transition:all 0.2s;
+}
+.finput::placeholder,.ftarea::placeholder{color:var(--ink4)}
+.finput:focus,.fselect:focus,.ftarea:focus{
+  border-color:var(--teal);background:#fff;
+  box-shadow:0 0 0 3px rgba(91,82,200,0.10);
+}
+.fselect{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%233D3D55' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;padding-right:32px}
+.ftarea{resize:vertical;min-height:72px;line-height:1.6}
+.fhint{font-size:11px;color:var(--ink4);margin-top:3px}
+
+/* Domain tiles — multi-select */
+.domain-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.dtile{
+  border:1.5px solid var(--border2);border-radius:var(--r2);padding:14px 12px 12px;
+  cursor:pointer;transition:all 0.18s;background:var(--white);text-align:center;
+  position:relative;
+}
+.dtile:hover{border-color:var(--navy2);background:var(--teal-pale)}
+.dtile.sel{border-color:var(--navy);background:var(--teal-pale);border-width:2px}
+.dtile.sel .dt-label{color:var(--navy3)}
+.dt-check{
+  position:absolute;top:7px;right:7px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--surface3);border:1.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:transparent;transition:all 0.18s;font-weight:700;
+}
+.dtile.sel .dt-check{background:var(--navy);border-color:var(--navy);color:#fff}
+.dt-em{font-size:22px;margin-bottom:6px;display:block}
+.dt-label{font-size:12px;font-weight:600;color:var(--ink2);line-height:1.3}
+.dt-hint{font-size:11px;color:var(--ink3);margin-top:3px}
+
+.domain-notice{
+  font-size:12px;color:var(--ink3);margin-top:10px;
+  padding:9px 14px;background:var(--surface2);border-radius:var(--r);
+  border:1px solid var(--border);display:flex;align-items:center;gap:8px;
+  display:none;
+}
+.domain-notice.show{display:flex}
+.domain-notice strong{color:var(--navy3)}
+.domain-selected-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ds-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--teal-pale);border:1.5px solid var(--navy2);
+  border-radius:20px;padding:4px 10px;font-size:12px;font-weight:600;color:var(--navy3);
+  animation:fadeUp 0.2s ease;
+}
+.ds-pill-x{
+  background:none;border:none;cursor:pointer;color:var(--navy3);font-size:14px;
+  line-height:1;padding:0 0 0 3px;opacity:0.5;transition:opacity 0.15s;
+}
+.ds-pill-x:hover{opacity:1;color:var(--coral)}
+
+/* Scenario picker */
+.scenario-tile{
+  border:1.5px solid var(--border2);border-radius:var(--r);padding:10px 12px;
+  cursor:pointer;transition:all 0.18s;background:var(--white);
+  display:flex;align-items:flex-start;gap:8px;
+}
+.scenario-tile:hover{border-color:var(--navy2);background:var(--teal-pale)}
+.scenario-tile.sel{border-color:var(--navy);background:var(--teal-pale);border-width:2px}
+.st-em{font-size:20px;flex-shrink:0;margin-top:1px}
+.st-body{flex:1;min-width:0}
+.st-label{font-size:12px;font-weight:600;color:var(--ink2);line-height:1.3}
+.st-hint{font-size:10px;color:var(--ink3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.st-risk{font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;margin-top:4px;display:inline-block;letter-spacing:0.04em;text-transform:uppercase}
+.risk-normal{background:#DFF0D8;color:#1A5020}
+.risk-high{background:#FFF3CD;color:#7A5000}
+.risk-critical{background:#FDECEA;color:#7A1A0A}
+.scenario-tile.scn-hidden{display:none}
+.see-more-btn{
+  grid-column:1/-1;
+  border:1.5px dashed var(--border2);border-radius:var(--r);
+  background:var(--surface2);padding:10px;
+  font-family:inherit;font-size:12px;font-weight:600;
+  color:var(--navy2);cursor:pointer;transition:all 0.15s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.see-more-btn:hover{background:var(--teal-pale);border-color:var(--navy);color:var(--navy3)}
+
+/* Activity chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  border:1.5px solid var(--border2);border-radius:20px;padding:6px 14px;
+  font-size:12px;font-weight:500;cursor:pointer;transition:all 0.15s;
+  background:var(--white);color:var(--ink2);font-family:inherit;
+}
+.chip:hover{border-color:var(--teal);color:var(--navy3)}
+.chip.sel{border-color:var(--teal);background:var(--teal-pale);color:var(--navy3)}
+
+/* Yes/No toggle */
+.yn-row{display:flex;gap:8px}
+.yn-btn{
+  flex:1;padding:9px;border-radius:var(--r);text-align:center;
+  border:1.5px solid var(--border2);cursor:pointer;font-size:13px;font-weight:500;
+  transition:all 0.15s;background:var(--white);color:var(--ink2);font-family:inherit;
+}
+.yn-btn.sel-y{border-color:var(--teal);background:var(--teal-pale);color:var(--navy3)}
+.yn-btn.sel-n{border-color:var(--ink3);background:var(--surface3);color:var(--ink)}
+
+/* Shareholder */
+.sh-list{display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
+.sh-item{display:grid;grid-template-columns:1fr 1fr 80px auto;gap:8px;align-items:end;flex-wrap:wrap}
+.sh-remove{
+  width:34px;height:34px;border-radius:var(--r);border:1.5px solid var(--border2);
+  background:none;cursor:pointer;color:var(--ink3);font-size:16px;
+  display:flex;align-items:center;justify-content:center;transition:all 0.15s;
+}
+.sh-remove:hover{background:var(--coral-pale);color:var(--coral);border-color:var(--coral)}
+.add-sh{
+  width:100%;padding:10px;border:1.5px dashed var(--border2);border-radius:var(--r);
+  background:none;font-family:inherit;font-size:13px;color:var(--navy2);cursor:pointer;
+  transition:all 0.15s;font-weight:600;
+}
+.add-sh:hover{background:var(--teal-pale);border-color:var(--teal);color:var(--navy3)}
+
+/* Buttons */
+.btn-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:26px;gap:10px;flex-wrap:wrap;
+}
+.btn-back{
+  padding:10px 20px;border:1.5px solid var(--border2);border-radius:var(--r);
+  background:none;font-family:inherit;font-size:13px;font-weight:500;
+  color:var(--ink2);cursor:pointer;transition:all 0.15s;
+}
+.btn-back:hover{background:var(--surface2);color:var(--ink)}
+.btn-next{
+  padding:11px 30px;border:none;border-radius:var(--r);
+  background:var(--navy);font-family:inherit;font-size:13px;font-weight:700;
+  color:#fff;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:8px;
+}
+.btn-next:hover{background:var(--navy2)}
+.btn-next.green{background:var(--teal)}
+.btn-next.green:hover{background:var(--teal2)}
+
+/* ── ANALYSIS ── */
+.analysis-wrap{padding:48px 24px;text-align:center}
+.spin-ring{
+  width:64px;height:64px;border-radius:50%;
+  border:3px solid var(--surface3);border-top-color:var(--navy);
+  animation:spin 0.9s linear infinite;margin:0 auto 28px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.an-title{font-family:'Instrument Serif',serif;font-size:26px;color:var(--ink);margin-bottom:8px}
+.an-sub{font-size:14px;color:var(--ink3)}
+.an-steps{display:flex;flex-direction:column;gap:8px;max-width:400px;margin:28px auto 0}
+.an-item{
+  display:flex;align-items:center;gap:10px;
+  background:var(--surface2);border-radius:var(--r);padding:10px 14px;
+  font-size:12px;color:var(--ink3);text-align:left;
+  border:1px solid transparent;transition:all 0.3s;
+}
+.an-item.active{background:var(--teal-pale);border-color:rgba(91,82,200,0.15);color:var(--teal)}
+.an-item.done{background:#fff;border-color:var(--border);color:var(--ink2)}
+.an-dot{width:8px;height:8px;border-radius:50%;background:var(--surface3);flex-shrink:0;transition:background 0.3s}
+.an-item.active .an-dot{background:var(--gold);animation:pulse 1s infinite}
+.an-item.done .an-dot{background:var(--teal)}
+
+/* ── PACKAGE RESULT ── */
+.pkg-header{
+  background:var(--navy);border-radius:var(--r2);
+  padding:clamp(16px,3vw,28px);
+  margin-bottom:18px;display:flex;align-items:flex-start;
+  gap:16px;flex-wrap:wrap;
+}
+.pkg-em{font-size:40px;flex-shrink:0}
+.pkg-title{font-family:'Instrument Serif',serif;font-size:clamp(17px,3vw,22px);color:#fff;font-weight:400;word-break:break-word}
+.pkg-sub{font-size:13px;color:rgba(255,255,255,0.85);margin-top:4px}
+.pkg-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:18px}
+.pstat{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:center}
+.pstat-n{font-size:26px;font-weight:700;color:var(--ink);font-family:'Instrument Serif',serif}
+.pstat-l{font-size:11px;color:var(--ink3);margin-top:2px;font-weight:500}
+
+.chain-track{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  background:var(--surface2);border-radius:var(--r);padding:12px 16px;margin-bottom:18px;
+}
+.ct-pill{
+  font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;white-space:nowrap;
+}
+.ct-arrow{color:var(--ink3);font-size:14px}
+.ct-parallel{
+  font-size:11px;color:var(--ink3);margin-left:4px;
+  display:flex;align-items:center;gap:4px;
+}
+
+.ministry-card{
+  background:var(--white);border:1px solid var(--border);border-radius:var(--r2);
+  overflow:hidden;margin-bottom:12px;
+}
+.mc-head{
+  padding:14px 18px;display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;
+  border-bottom:1px solid var(--border);background:var(--surface2);
+}
+.mc-num{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;margin-top:2px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;
+}
+.mc-info{flex:1;min-width:160px}
+.mc-name{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;word-break:break-word}
+.mc-min{font-size:12px;color:var(--ink3);margin-top:2px;font-weight:500;word-break:break-word}
+.mc-badge{
+  font-size:10px;font-weight:700;letter-spacing:0.04em;padding:4px 10px;
+  border-radius:20px;white-space:nowrap;text-transform:uppercase;flex-shrink:0;margin-top:2px;
+}
+.badge-par{background:#DFF0D8;color:#1A5020}
+.badge-seq{background:#FDECEA;color:#7A1A0A}
+.badge-chain{background:#E8E6FC;color:#2E2880}
+
+.mc-body{padding:clamp(10px,2.5vw,18px)}
+.lic-row2{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:9px 0;border-bottom:1px solid var(--border);
+}
+.lic-row2:last-child{border-bottom:none}
+.lic-check2{
+  width:20px;height:20px;border-radius:5px;flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:11px;
+}
+.lic-check2.y{background:var(--teal);color:#fff}
+.lic-check2.n{background:var(--surface3);border:1.5px dashed var(--border2);color:transparent}
+.lr-info{flex:1}
+.lr-name{font-size:13px;font-weight:600;color:var(--ink)}
+.lr-detail{font-size:12px;color:var(--ink3);margin-top:2px}
+.lr-dep{
+  display:inline-block;margin-top:5px;font-size:11px;font-weight:600;
+  padding:2px 8px;border-radius:10px;
+}
+.dep-go{background:#DFF0D8;color:#1A5020}
+.dep-wait{background:#FDECEA;color:#7A1A0A}
+.dep-cond{background:#E8E6FC;color:#2E2880}
+
+.dep-note{
+  display:flex;gap:8px;align-items:flex-start;padding:10px 14px;
+  background:#FFF8E6;border:1px solid #E8D080;border-radius:var(--r);margin-top:10px;
+  font-size:12px;color:#5A3A00;line-height:1.6;font-weight:500;
+}
+
+.alert-banner{
+  background:var(--teal-pale);border:1px solid rgba(91,82,200,0.2);
+  border-left:3px solid var(--navy);
+  border-radius:var(--r);padding:14px 16px;margin-bottom:18px;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.alert-text{font-size:13px;color:var(--ink2);line-height:1.7}
+.alert-text strong{font-weight:700;color:var(--navy3)}
+
+/* ── UNIFIED FORM ── */
+.uf-tabs{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-bottom:20px;background:var(--surface2)}
+.uf-tab{
+  flex:1;min-width:80px;padding:11px 6px;text-align:center;cursor:pointer;
+  border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+  font-size:11px;font-weight:600;color:var(--ink2);transition:all 0.2s;
+}
+.uf-tab:last-child{border-right:none}
+.uf-tab.active{background:var(--navy);color:#fff}
+.uf-tab.filled{background:var(--teal-pale);color:var(--navy3)}
+
+.form-section-block{display:none}
+.form-section-block.visible{display:block}
+
+.doc-required{
+  display:flex;align-items:flex-start;gap:10px;
+  background:var(--surface2);border-radius:var(--r);padding:12px 14px;
+  margin-bottom:8px;border:1px solid var(--border);
+}
+.doc-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.doc-info{flex:1}
+.doc-name{font-size:13px;font-weight:600;color:var(--ink)}
+.doc-note{font-size:12px;color:var(--ink3);margin-top:2px}
+.doc-status{
+  font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;flex-shrink:0;
+}
+.doc-req{background:#FDECEA;color:#7A1A0A}
+.doc-opt{background:var(--surface3);color:var(--ink3);border:1px solid var(--border2)}
+.doc-done{background:#DFF0D8;color:#1A5020}
+
+.fee-table{width:100%;border-collapse:collapse}
+.fee-table th{font-size:12px;font-weight:700;color:#fff;text-align:left;padding:10px 12px;background:var(--navy);border:1px solid var(--border)}
+.fee-table td{font-size:13px;padding:10px 12px;border:1px solid var(--border);color:var(--ink2)}
+.fee-table tr:nth-child(even) td{background:var(--surface)}
+.fee-table .total td{font-weight:700;color:var(--ink);background:var(--surface2)}
+
+/* ── DASHBOARD ── */
+.dash-header{
+  background:var(--navy);border-radius:var(--r2);padding:24px 26px;
+  display:flex;align-items:center;gap:18px;margin-bottom:20px;
+}
+.dash-title{font-size:18px;font-weight:700;color:#fff;letter-spacing:-0.01em}
+.dash-ref{font-size:12px;color:rgba(255,255,255,0.75);margin-top:3px;font-family:monospace}
+.dash-status-pill{
+  margin-left:auto;font-size:12px;font-weight:700;padding:6px 16px;border-radius:20px;
+  background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.35);
+}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:20px}
+.dstat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r2);padding:16px 18px}
+.dstat-num{font-size:28px;font-weight:700;color:var(--ink);font-family:'Instrument Serif',serif}
+.dstat-label{font-size:12px;color:var(--ink3);margin-top:3px;font-weight:500}
+
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:14px;padding:14px 0;position:relative}
+.tl-item:not(:last-child)::after{
+  content:'';position:absolute;left:16px;top:42px;
+  width:1.5px;bottom:0;background:var(--border2);
+}
+.tl-left{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0}
+.tl-dot{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+  border:2px solid var(--border2);background:var(--surface2);
+}
+.tl-dot.done{background:var(--teal);border-color:var(--teal);color:#fff}
+.tl-dot.active{background:var(--teal-pale);border-color:var(--navy);color:var(--navy)}
+.tl-dot.wait{background:var(--surface2);border-color:var(--border2)}
+.tl-content{flex:1;padding-top:4px}
+.tl-ministry{font-size:13px;font-weight:700;color:var(--ink)}
+.tl-lic{font-size:12px;color:var(--ink3);margin-top:2px}
+.tl-status{
+  display:inline-block;margin-top:6px;font-size:11px;font-weight:600;
+  padding:3px 8px;border-radius:10px;
+}
+.tl-s-done{background:#DFF0D8;color:#1A5020}
+.tl-s-active{background:#FFF8E6;color:#5A3A00}
+.tl-s-wait{background:var(--surface3);color:var(--ink3)}
+.tl-days{font-size:11px;color:var(--ink4);margin-top:4px}
+.tl-action{
+  margin-top:8px;font-size:12px;font-weight:600;color:var(--navy3);
+  background:var(--teal-pale);border:none;border-radius:6px;
+  padding:6px 12px;cursor:pointer;font-family:inherit;
+}
+
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}
+.cert-card{
+  background:var(--surface2);border-radius:var(--r);padding:12px 14px;
+  border:1px solid var(--border);display:flex;align-items:center;gap:10px;
+}
+.cert-icon{font-size:20px;flex-shrink:0}
+.cert-name{font-size:12px;font-weight:600;color:var(--ink)}
+.cert-id{font-size:11px;color:var(--ink4);margin-top:2px;font-family:monospace}
+.cert-dl{
+  margin-left:auto;font-size:11px;color:var(--navy2);font-weight:700;
+  background:none;border:none;cursor:pointer;font-family:inherit;flex-shrink:0;
+}
+
+.submit-full{
+  width:100%;padding:16px;border:none;border-radius:var(--r2);
+  background:var(--teal);color:#fff;font-family:inherit;
+  font-size:15px;font-weight:700;cursor:pointer;letter-spacing:-0.01em;
+  transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-top:20px;
+}
+.submit-full:hover{background:var(--teal2);transform:translateY(-1px)}
+
+/* ── SCENARIO GRID base ── */
+#scenario-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="tb-logo">O</div>
+  <div>
+    <div class="tb-brand">OBR Smart Registration</div>
+  </div>
+  <div class="tb-center" id="topbar-steps" style="display:none">
+    <div class="tb-step active" id="ts0"><div class="tb-step-dot">1</div>Intent</div>
+    <div class="tb-step-div"></div>
+    <div class="tb-step" id="ts1"><div class="tb-step-dot">2</div>Activities</div>
+    <div class="tb-step-div"></div>
+    <div class="tb-step" id="ts2"><div class="tb-step-dot">3</div>Ownership</div>
+    <div class="tb-step-div"></div>
+    <div class="tb-step" id="ts3"><div class="tb-step-dot">✓</div>Analysis</div>
+    <div class="tb-step-div"></div>
+    <div class="tb-step" id="ts4"><div class="tb-step-dot">5</div>Package</div>
+    <div class="tb-step-div"></div>
+    <div class="tb-step" id="ts5"><div class="tb-step-dot">6</div>Form</div>
+    <div class="tb-step-div"></div>
+    <div class="tb-step" id="ts6"><div class="tb-step-dot">7</div>Dashboard</div>
+  </div>
+  <div class="tb-right">
+    <button class="lang-btn active">EN</button>
+    <button class="lang-btn">ខ្មែរ</button>
+  </div>
+</div>
+
+<!-- ════ HERO SCREEN ════ -->
+<div class="screen visible" id="screen-hero">
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div class="hero-chip"><div class="h-pulse"></div>Proposed — Extended OBR Platform</div>
+      <h1>One form.<br><em>Every license.</em><br>One journey.</h1>
+      <p class="hero-sub">Answer plain-language questions about your business. The Smart Registration Engine determines every license, every ministry, and the correct approval sequence — then bundles everything into one unified application.</p>
+      <div class="compare">
+        <div class="cmp old">
+          <div class="cmp-lbl">Today — 3 separate journeys</div>
+          <div class="cmp-row"><div class="crd bad"></div>Register company on Single Portal</div>
+          <div class="cmp-row"><div class="crd bad"></div>Wait for MEF / MoC / GDT approval</div>
+          <div class="cmp-row"><div class="crd bad"></div>Receive certificates (8+ days)</div>
+          <div class="cmp-row"><div class="crd bad"></div>Discover specialized license needed</div>
+          <div class="cmp-row"><div class="crd bad"></div>Navigate to specialized system</div>
+          <div class="cmp-row"><div class="crd bad"></div>Re-enter all information again</div>
+          <div class="cmp-row"><div class="crd bad"></div>Apply — wait again</div>
+        </div>
+        <div class="cmp arr">→</div>
+        <div class="cmp new">
+          <div class="cmp-lbl">Proposed — one package</div>
+          <div class="cmp-row"><div class="crd good"></div>Answer guided questions once</div>
+          <div class="cmp-row"><div class="crd good"></div>System identifies all requirements</div>
+          <div class="cmp-row"><div class="crd good"></div>One master form — data shared</div>
+          <div class="cmp-row"><div class="crd good"></div>Auto-routing to all ministries</div>
+          <div class="cmp-row"><div class="crd good"></div>Parallel & chained approvals run automatically</div>
+          <div class="cmp-row"><div class="crd good"></div>One dashboard tracks everything</div>
+          <div class="cmp-row"><div class="crd good"></div>All certificates in one bundle</div>
+        </div>
+      </div>
+      <button class="hero-cta" onclick="startFlow()">Start smart registration <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ MAIN FLOW ════ -->
+<div class="screen" id="screen-flow">
+<div class="layout">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sb-section">
+    <div class="sb-title">Registration steps</div>
+    <div class="sb-step">
+      <div class="ss-ind active" id="si-0">1</div>
+      <div class="ss-text">
+        <div class="ss-label active" id="sl-0">Business intent</div>
+        <div class="ss-detail" id="sd-0">Domain & description</div>
+      </div>
+    </div>
+    <div class="sb-step">
+      <div class="ss-ind" id="si-1">2</div>
+      <div class="ss-text">
+        <div class="ss-label" id="sl-1">Activities & scale</div>
+        <div class="ss-detail" id="sd-1">What you will do</div>
+      </div>
+    </div>
+    <div class="sb-step">
+      <div class="ss-ind" id="si-2">3</div>
+      <div class="ss-text">
+        <div class="ss-label" id="sl-2">Ownership</div>
+        <div class="ss-detail" id="sd-2">Shareholders & structure</div>
+      </div>
+    </div>
+    <div class="sb-step">
+      <div class="ss-ind" id="si-3">⚙</div>
+      <div class="ss-text">
+        <div class="ss-label" id="sl-3">Analysis engine</div>
+        <div class="ss-detail" id="sd-3">Mapping requirements</div>
+      </div>
+    </div>
+    <div class="sb-step">
+      <div class="ss-ind" id="si-4">5</div>
+      <div class="ss-text">
+        <div class="ss-label" id="sl-4">Your package</div>
+        <div class="ss-detail" id="sd-4">All licenses & chain</div>
+      </div>
+    </div>
+    <div class="sb-step">
+      <div class="ss-ind" id="si-5">6</div>
+      <div class="ss-text">
+        <div class="ss-label" id="sl-5">Unified form</div>
+        <div class="ss-detail" id="sd-5">One form, all ministries</div>
+      </div>
+    </div>
+    <div class="sb-step">
+      <div class="ss-ind" id="si-6">7</div>
+      <div class="ss-text">
+        <div class="ss-label" id="sl-6">Dashboard</div>
+        <div class="ss-detail" id="sd-6">Track all approvals</div>
+      </div>
+    </div>
+  </div>
+  <div class="info-box">
+    <div class="ib-title">Key principle</div>
+    <div class="ib-text">The system asks users about their <strong>business in plain language</strong>, then translates that into legal, regulatory, and administrative requirements automatically. Users never need to know which ministry to contact.</div>
+  </div>
+  <div class="info-box" style="margin-top:12px">
+    <div class="ib-title">Powered by</div>
+    <div class="ib-text">Business Rules Engine · CamDX data exchange · 21 integrated ministries · CamDigiKey authentication</div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-col">
+
+<!-- ── STEP 0: Intent ── -->
+<div id="step-0">
+  <div class="card">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#EAF3DE">🏢</div>
+      <div>
+        <div class="ch-title">What business do you want to start?</div>
+        <div class="ch-sub">Module 1 — Business intent collection · Answer in plain language. No legal knowledge needed.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="fsec">
+        <div class="fsec-title">Quick select — choose a pre-built scenario <span style="font-weight:400;text-transform:none;font-size:11px;color:var(--ink3);letter-spacing:0">(20 scenarios across all sectors)</span></div>
+        <div id="scenario-grid"></div>
+        <div id="scenario-selected-banner" style="display:none;background:var(--teal-pale);border:1.5px solid var(--navy);border-radius:var(--r);padding:12px 16px;margin-top:10px;display:none;align-items:center;gap:12px">
+          <div id="ssb-emoji" style="font-size:26px;flex-shrink:0"></div>
+          <div style="flex:1">
+            <div id="ssb-title" style="font-size:14px;font-weight:700;color:var(--ink)"></div>
+            <div id="ssb-desc" style="font-size:12px;color:var(--ink3);margin-top:2px"></div>
+          </div>
+          <div id="ssb-risk" style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0"></div>
+          <button onclick="clearScenario()" style="background:none;border:1px solid var(--border2);border-radius:var(--r);padding:4px 10px;font-size:12px;color:var(--ink3);cursor:pointer;flex-shrink:0;font-family:inherit">Change ×</button>
+        </div>
+        <div id="scenario-alert" style="display:none;background:#FDECEA;border:1.5px solid #E05050;border-left:4px solid #C03030;border-radius:var(--r);padding:12px 16px;margin-top:10px;font-size:13px;color:#5A0000;line-height:1.7;font-weight:500"></div>
+      </div>
+
+      <div class="fsec">
+        <div class="fsec-title">Step 1 — Choose your business domain <span style="font-weight:400;text-transform:none;font-size:11px;color:var(--ink3);letter-spacing:0">(select all that apply — multiple allowed)</span></div>
+        <div class="domain-grid" id="domain-grid">
+          <div class="dtile" data-v="Tourism & Hospitality" onclick="togDomain(this)"><div class="dt-check">✓</div><span class="dt-em">🏨</span><div class="dt-label">Tourism & Hospitality</div><div class="dt-hint">Hotel, restaurant, tour, travel</div></div>
+          <div class="dtile" data-v="Manufacturing" onclick="togDomain(this)"><div class="dt-check">✓</div><span class="dt-em">🏭</span><div class="dt-label">Manufacturing</div><div class="dt-hint">Factory, production, handicraft</div></div>
+          <div class="dtile" data-v="Health & Pharmacy" onclick="togDomain(this)"><div class="dt-check">✓</div><span class="dt-em">🏥</span><div class="dt-label">Health & Pharmacy</div><div class="dt-hint">Clinic, pharmacy, hospital</div></div>
+          <div class="dtile" data-v="Technology & Telecom" onclick="togDomain(this)"><div class="dt-check">✓</div><span class="dt-em">📡</span><div class="dt-label">Technology & Telecom</div><div class="dt-hint">ISP, software, FinTech</div></div>
+          <div class="dtile" data-v="Real Estate & Construction" onclick="togDomain(this)"><div class="dt-check">✓</div><span class="dt-em">🏗️</span><div class="dt-label">Real Estate & Construction</div><div class="dt-hint">Developer, agent, contractor</div></div>
+          <div class="dtile" data-v="Finance & Insurance" onclick="togDomain(this)"><div class="dt-check">✓</div><span class="dt-em">🏦</span><div class="dt-label">Finance & Insurance</div><div class="dt-hint">MFI, pawnshop, insurance</div></div>
+          <div class="dtile" data-v="Education & Training" onclick="togDomain(this)"><div class="dt-check">✓</div><span class="dt-em">🎓</span><div class="dt-label">Education & Training</div><div class="dt-hint">School, training center</div></div>
+          <div class="dtile" data-v="Agriculture & Food" onclick="togDomain(this)"><div class="dt-check">✓</div><span class="dt-em">🌾</span><div class="dt-label">Agriculture & Food</div><div class="dt-hint">Farming, processing, export</div></div>
+          <div class="dtile" data-v="Trade & Import/Export" onclick="togDomain(this)"><div class="dt-check">✓</div><span class="dt-em">📦</span><div class="dt-label">Trade & Import/Export</div><div class="dt-hint">Wholesale, retail, trading</div></div>
+          <div class="dtile" data-v="Logistics & Transport" onclick="togDomain(this)"><div class="dt-check">✓</div><span class="dt-em">🚛</span><div class="dt-label">Logistics & Transport</div><div class="dt-hint">Trucking, warehouse, freight</div></div>
+          <div class="dtile" data-v="Energy & Mining" onclick="togDomain(this)"><div class="dt-check">✓</div><span class="dt-em">⛏️</span><div class="dt-label">Energy & Mining</div><div class="dt-hint">Mining, energy, utilities</div></div>
+        </div>
+        <div class="domain-notice" id="domain-notice">
+          <span style="font-size:16px">💡</span>
+          <span>You selected <strong id="domain-count">0</strong> domain(s). The system will merge all required licenses from each domain into one unified package.</span>
+        </div>
+        <div class="domain-selected-pills" id="domain-pills"></div>
+      </div>
+      <div class="fsec">
+        <div class="fsec-title">Step 2 — Describe your business</div>
+        <div class="frow full"><div class="fg"><label>What do you plan to do? (describe freely) <span class="req">*</span></label><textarea class="ftarea" id="biz-desc" placeholder="e.g. I want to open a restaurant that serves Khmer food with a small bar area, about 100 seats, in Phnom Penh. I will hire around 15 staff."></textarea><div class="fhint">Write naturally. The system will extract what it needs.</div></div></div>
+        <div class="frow">
+          <div class="fg"><label>Proposed company name <span class="req">*</span></label><input class="finput" id="biz-name" placeholder="e.g. Angkor Taste Co., Ltd."></div>
+          <div class="fg"><label>Province / municipality <span class="req">*</span></label>
+            <select class="fselect" id="biz-province">
+              <option value="">Select…</option>
+              <option>Phnom Penh</option><option>Siem Reap</option><option>Sihanoukville</option>
+              <option>Battambang</option><option>Kampot</option><option>Kandal</option><option>Other province</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="fsec">
+        <div class="fsec-title">Step 3 — Key questions</div>
+        <div class="frow">
+          <div class="fg"><label>Will you provide products, services, or both?</label>
+            <select class="fselect" id="biz-type"><option>Services only</option><option>Products only</option><option>Both products and services</option></select></div>
+          <div class="fg"><label>Do you need a physical premises?</label>
+            <select class="fselect" id="premises-q">
+              <option value="existing">Yes — existing building (rent/own)</option>
+              <option value="new">Yes — new construction required</option>
+              <option value="none">No physical premises needed</option>
+              <option value="online">Online / digital only</option>
+            </select></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Will your business involve regulated goods or services?</label>
+            <select class="fselect" id="regulated">
+              <option value="no">No regulated goods or services</option>
+              <option value="food">Food and beverage</option>
+              <option value="health">Health / medical / pharmaceutical</option>
+              <option value="finance">Financial / banking services</option>
+              <option value="education">Education</option>
+              <option value="telecom">Telecommunications</option>
+              <option value="construction">Construction / real estate</option>
+            </select></div>
+          <div class="fg"><label>Do you plan to import or export goods?</label>
+            <select class="fselect" id="import-export">
+              <option value="no">No import or export</option>
+              <option value="import">Import only</option>
+              <option value="export">Export only</option>
+              <option value="both">Both import and export</option>
+            </select></div>
+        </div>
+      </div>
+      <div class="btn-row"><div></div><button class="btn-next" onclick="next(0)">Continue to activities →</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STEP 1: Activities ── -->
+<div id="step-1" style="display:none">
+  <div class="card">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#EBF2FB">⚙️</div>
+      <div>
+        <div class="ch-title">Business activities & scale</div>
+        <div class="ch-sub">Module 1 continued — Select all activities. Each one may trigger different licensing requirements.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="fsec">
+        <div class="fsec-title">Primary business activities (select all that apply)</div>
+        <div class="chips" id="chips-wrap"></div>
+      </div>
+      <div class="fsec">
+        <div class="fsec-title">Scale of operations</div>
+        <div class="frow">
+          <div class="fg"><label>Estimated number of employees</label>
+            <select class="fselect" id="emp"><option value="0">No employees (solo)</option><option value="1-7">1–7 employees</option><option value="8-50">8–50 employees</option><option value="51-200">51–200 employees</option><option value="200+">More than 200</option></select></div>
+          <div class="fg"><label>Approximate capital investment</label>
+            <select class="fselect" id="capital"><option value="small">Under USD 50,000</option><option value="medium">USD 50,000 – 500,000</option><option value="large">USD 500,000 – 5,000,000</option><option value="major">Over USD 5,000,000</option></select></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Will you serve alcohol?</label>
+            <div class="yn-row">
+              <button class="yn-btn" onclick="yn(this,'alcohol-yn','y')">Yes</button>
+              <button class="yn-btn" onclick="yn(this,'alcohol-yn','n')">No</button>
+            </div><input type="hidden" id="alcohol-yn" value="">
+          </div>
+          <div class="fg"><label>Will you produce or manufacture food?</label>
+            <div class="yn-row">
+              <button class="yn-btn" onclick="yn(this,'food-yn','y')">Yes</button>
+              <button class="yn-btn" onclick="yn(this,'food-yn','n')">No</button>
+            </div><input type="hidden" id="food-yn" value="">
+          </div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prev(1)">← Back</button>
+        <button class="btn-next" onclick="next(1)">Continue to ownership →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STEP 2: Ownership ── -->
+<div id="step-2" style="display:none">
+  <div class="card">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#F0EEFB">👥</div>
+      <div>
+        <div class="ch-title">Ownership & company structure</div>
+        <div class="ch-sub">Module 1 continued — This data prepares the Articles of Incorporation for Ministry of Commerce. Entered once, shared with all ministries.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="fsec">
+        <div class="fsec-title">Company structure</div>
+        <div class="frow">
+          <div class="fg"><label>Company type <span class="req">*</span></label>
+            <select class="fselect" id="co-type">
+              <option value="">Select…</option>
+              <option value="llc-s">Single-member private LLC</option>
+              <option value="llc-m">Multi-member private LLC</option>
+              <option value="plc">Public limited company (PLC)</option>
+              <option value="branch">Branch of foreign company</option>
+              <option value="rep">Representative office</option>
+            </select></div>
+          <div class="fg"><label>Foreign ownership</label>
+            <select class="fselect" id="foreign-own">
+              <option value="kh">100% Cambodian owned</option>
+              <option value="partial">Partially foreign owned</option>
+              <option value="full">100% foreign owned</option>
+            </select></div>
+        </div>
+      </div>
+      <div class="fsec">
+        <div class="fsec-title">Shareholders (enter all)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 80px auto;gap:8px;margin-bottom:6px">
+          <div style="font-size:11px;font-weight:600;color:var(--ink3)">Full name</div>
+          <div style="font-size:11px;font-weight:600;color:var(--ink3)">Nationality</div>
+          <div style="font-size:11px;font-weight:600;color:var(--ink3)">Share %</div>
+          <div></div>
+        </div>
+        <div class="sh-list" id="sh-list">
+          <div class="sh-item" id="shi-0">
+            <input class="finput" placeholder="Full name" id="sh-nm-0">
+            <input class="finput" placeholder="Cambodian" id="sh-nat-0">
+            <input class="finput" placeholder="100%" id="sh-pct-0">
+            <button class="sh-remove" onclick="rmSh(0)">×</button>
+          </div>
+        </div>
+        <button class="add-sh" onclick="addSh()">+ Add shareholder</button>
+      </div>
+      <div class="fsec">
+        <div class="fsec-title">Registered office address</div>
+        <div class="frow full"><div class="fg"><label>Full address <span class="req">*</span></label><input class="finput" id="address" placeholder="House No., Street, Sangkat, Khan, Province"></div></div>
+        <div class="frow tri">
+          <div class="fg"><label>Sangkat / Commune</label><input class="finput" id="sangkat" placeholder="Sangkat name"></div>
+          <div class="fg"><label>Khan / District</label><input class="finput" id="khan" placeholder="Khan name"></div>
+          <div class="fg"><label>Province</label><input class="finput" id="prov2" value="" placeholder="Auto-filled"></div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prev(2)">← Back</button>
+        <button class="btn-next green" onclick="runAnalysis()">Analyze & build package →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STEP 3: Analysis ── -->
+<div id="step-3" style="display:none">
+  <div class="card">
+    <div class="card-body">
+      <div class="analysis-wrap">
+        <div class="spin-ring" id="spin"></div>
+        <div class="an-title" id="an-title">Module 2 — Business Rules Engine running…</div>
+        <div class="an-sub" id="an-sub">Mapping your answers to Cambodia's licensing requirements</div>
+        <div class="an-steps">
+          <div class="an-item active" id="an0"><div class="an-dot"></div>Reading business domain &amp; activities</div>
+          <div class="an-item" id="an1"><div class="an-dot"></div>Classifying legal company structure</div>
+          <div class="an-item" id="an2"><div class="an-dot"></div>Matching Cambodia license database</div>
+          <div class="an-item" id="an3"><div class="an-dot"></div>Resolving ministry dependency chains</div>
+          <div class="an-item" id="an4"><div class="an-dot"></div>Building unified application package</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STEP 4: Package ── -->
+<div id="step-4" style="display:none">
+  <div id="pkg-render"></div>
+</div>
+
+<!-- ── STEP 5: Unified Form ── -->
+<div id="step-5" style="display:none">
+  <div class="card">
+    <div class="card-head">
+      <div class="ch-icon" style="background:var(--gold3)">📋</div>
+      <div>
+        <div class="ch-title">Module 3 — Unified master form</div>
+        <div class="ch-sub">One form. All ministries. Data entered once is shared automatically across MoC, GDT, MLVT, and all specialized ministries.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="uf-tabs">
+        <div class="uf-tab active filled" onclick="ufTab(0,this)">Business profile</div>
+        <div class="uf-tab" onclick="ufTab(1,this)">Shareholders</div>
+        <div class="uf-tab" onclick="ufTab(2,this)">Premises</div>
+        <div class="uf-tab" onclick="ufTab(3,this)">Sector compliance</div>
+        <div class="uf-tab" onclick="ufTab(4,this)">Documents</div>
+        <div class="uf-tab" onclick="ufTab(5,this)">Fees</div>
+      </div>
+
+      <!-- Tab 0: Business profile -->
+      <div class="form-section-block visible" id="uft-0">
+        <div class="alert-banner">
+          <div class="alert-icon">💡</div>
+          <div class="alert-text"><strong>Pre-filled from your intake answers.</strong> Review and complete any missing fields. This data will be shared with all ministries — you will not be asked to re-enter it.</div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Company name <span class="req">*</span></label><input class="finput" id="uf-name" placeholder="Company name"></div>
+          <div class="fg"><label>Business domain</label><input class="finput" id="uf-domain" readonly style="background:var(--surface3)"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Primary business activity (SIC code)</label><input class="finput" id="uf-sic" placeholder="Auto-suggested by system"></div>
+          <div class="fg"><label>Company type</label><input class="finput" id="uf-cotype" readonly style="background:var(--surface3)"></div>
+        </div>
+        <div class="frow full"><div class="fg"><label>Business description</label><textarea class="ftarea" id="uf-desc" rows="3"></textarea></div></div>
+        <div class="frow">
+          <div class="fg"><label>Province</label><input class="finput" id="uf-prov" readonly style="background:var(--surface3)"></div>
+          <div class="fg"><label>Phone number <span class="req">*</span></label><input class="finput" placeholder="+855 …"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Email address <span class="req">*</span></label><input class="finput" type="email" placeholder="company@email.com"></div>
+          <div class="fg"><label>Website (optional)</label><input class="finput" placeholder="https://"></div>
+        </div>
+      </div>
+
+      <!-- Tab 1: Shareholders -->
+      <div class="form-section-block" id="uft-1">
+        <div class="alert-banner">
+          <div class="alert-icon">👥</div>
+          <div class="alert-text"><strong>Pre-filled from your ownership answers.</strong> Add passport/ID numbers and upload identity documents for each shareholder.</div>
+        </div>
+        <div id="uf-sh-list"></div>
+        <div class="frow">
+          <div class="fg"><label>Authorized representative (director)</label><input class="finput" placeholder="Full name of company director"></div>
+          <div class="fg"><label>Director nationality</label><input class="finput" placeholder="Cambodian / Foreign"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Company secretary (required from 2022) <span class="req">*</span></label><input class="finput" placeholder="Full name"></div>
+          <div class="fg"><label>Registered agent</label><input class="finput" placeholder="Full name (Cambodian resident)"></div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Premises -->
+      <div class="form-section-block" id="uft-2">
+        <div class="frow full"><div class="fg"><label>Full registered address <span class="req">*</span></label><input class="finput" id="uf-addr" placeholder="Full address"></div></div>
+        <div class="frow tri">
+          <div class="fg"><label>Sangkat</label><input class="finput" placeholder=""></div>
+          <div class="fg"><label>Khan</label><input class="finput" placeholder=""></div>
+          <div class="fg"><label>Province</label><input class="finput" id="uf-prov2" readonly style="background:var(--surface3)"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Premises type</label>
+            <select class="fselect"><option>Rented commercial space</option><option>Owned property</option><option>New construction</option><option>Home-based</option><option>Online only</option></select></div>
+          <div class="fg"><label>Lease / ownership document</label><input class="finput" type="file" style="padding:6px 12px;font-size:12px"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Floor area (sqm)</label><input class="finput" placeholder="e.g. 150"></div>
+          <div class="fg"><label>Number of floors</label><input class="finput" placeholder="e.g. 2"></div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Sector compliance -->
+      <div class="form-section-block" id="uft-3">
+        <div class="alert-banner">
+          <div class="alert-icon">⚙️</div>
+          <div class="alert-text"><strong>Sector-specific fields shown based on your domain.</strong> These fields are required by your specialized ministries only — they do not appear in the standard OBR form.</div>
+        </div>
+        <div id="sector-fields"></div>
+      </div>
+
+      <!-- Tab 4: Documents -->
+      <div class="form-section-block" id="uft-4">
+        <div class="alert-banner">
+          <div class="alert-icon">📂</div>
+          <div class="alert-text"><strong>Upload once, shared with all ministries.</strong> Documents uploaded here are stored in the CamDX shared repository. Each ministry accesses only the documents relevant to their review.</div>
+        </div>
+        <div id="doc-list"></div>
+      </div>
+
+      <!-- Tab 5: Fees -->
+      <div class="form-section-block" id="uft-5">
+        <div id="fees-table"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="showStep(4)">← Back to package</button>
+        <button class="btn-next green" onclick="showStep(6)">Submit unified application →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STEP 6: Dashboard ── -->
+<div id="step-6" style="display:none">
+  <div id="dashboard-render"></div>
+</div>
+
+</div><!-- /main-col -->
+</div><!-- /layout -->
+</div><!-- /screen-flow -->
+
+<script>
+const ACTS = {
+  "Tourism & Hospitality":["Dine-in restaurant","Bar / drinks service","Hotel accommodation","Guesthouse / boutique hotel","Large hotel & resort","Tour operator (inbound)","Tour operator (outbound)","Travel agent","Spa & wellness center","Swimming pool facility","Event / conference venue","Karaoke / entertainment"],
+  "Manufacturing":["Small/medium factory production","Handicraft production","Food & beverage manufacturing","Garment / textile manufacturing","Chemical production","Packaging production","Electronics assembly","Mining / mineral extraction"],
+  "Health & Pharmacy":["Outpatient clinic / polyclinic","Hospital","Pharmacy retail","Pharmaceutical import & distribution","Medical device supply","Dental clinic","Laboratory / diagnostic center","Spa medical services"],
+  "Technology & Telecom":["Internet Service Provider (ISP)","Mobile / telecom service","Digital payment / e-wallet / FinTech","Software development","E-commerce platform","Digital media & content","Data center / hosting","Broadcast / streaming","Cybersecurity services"],
+  "Real Estate & Construction":["Real estate sales agency","Borey / residential developer","Condo / commercial developer","Construction contractor","Property appraisal","Land subdivision / development","Facility management","Large infrastructure project"],
+  "Finance & Insurance":["Microfinance institution (MFI)","Money transfer / remittance","Insurance products","Leasing / hire-purchase","Pawnshop","Foreign exchange","Digital payment / e-wallet","Securities / investment"],
+  "Education & Training":["Private school (K-12)","University / higher education","Vocational training center","Language / tutoring school","Online learning platform","Childcare / kindergarten"],
+  "Agriculture & Food":["Crop farming / agribusiness","Livestock / fisheries","Agri-processing / food factory","Fertilizer or pesticide import","Agricultural equipment","Food wholesale / export","Food manufacturing & export"],
+  "Trade & Import/Export":["General wholesale trading","Retail store / shop","Consumer goods import","Local product export","Distribution / logistics","Online shop / marketplace"],
+  "Logistics & Transport":["Trucking / road freight","Warehouse & storage","Cross-border logistics","Port / sea freight","Last-mile delivery","SEZ logistics"],
+  "Energy & Mining":["Gold / mineral extraction","Oil & gas exploration","Solar / renewable energy","Electricity supply","Water supply utility"],
+};
+
+/* ─────────────────────────────────────────────
+   SCENARIO DATABASE — 12 pre-built scenarios
+   Each has: id, label, emoji, description,
+   risk (normal/high/critical), domains[],
+   ministries[], steps[], conditional[], docs[], fees[]
+───────────────────────────────────────────── */
+const SCENARIOS = {
+  "s1_restaurant":{
+    id:"s1_restaurant",label:"Restaurant / Food service",emoji:"🍽️",
+    description:"Khmer restaurant, café or food outlet operating on-site",
+    risk:"normal",
+    domains:["Tourism & Hospitality"],
+    alert:null,
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","General Dept. of Taxation (GDT)","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT Registration","Enterprise Declaration"],status:"par",badge:"Start immediately — all 3 in parallel",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Tourism license — restaurant",mins:["Ministry of Tourism (MoT)"],lics:["Tourism operating license (restaurant / canteen)"],status:"seq",badge:"After Step 1",dep:"Requires MoC Certificate of Incorporation",bg:"#E6F5F2",color:"#085041",days:"15–20"},
+      {n:"Safety & location clearances",mins:["Ministry of Health (MoH)","National Police — Fire Dept.","Sangkat / Municipality"],lics:["Health safety letter","Fire safety certificate","Location approval certificate"],status:"par",badge:"After Step 2 · all 3 in parallel",dep:"Required by Tourism license conditions (Law on Tourism Art. 39)",bg:"#FBF0EE",color:"#8A2A1A",days:"10–14"},
+    ],
+    conditional:[{cond:"If serving alcohol",n:"Alcohol service license",min:"Ministry of Commerce (MoC)"}],
+    docs:[["📄","Articles of Incorporation (Khmer + English)","MoC — auto-generated","req","done"],["🪪","Valid IDs / passports — all shareholders","MoC + MoT","req",""],["📍","Premises lease or ownership proof","All ministries","req",""],["📐","Restaurant floor plan (seating layout)","MoT + Fire Dept","req",""],["🥗","Food safety compliance checklist","Ministry of Health","req",""],["🚒","Fire exit & equipment layout","Fire Dept inspection","req",""]],
+    fees:[["Ministry of Tourism","Restaurant license (≤100 seats)","USD 150–300"],["Ministry of Health","Health safety letter","USD 170"],["National Police","Fire safety certificate","USD 170"],["Municipality / Sangkat","Location certificate","USD 50–100"]],
+  },
+
+  "s2_clinic":{
+    id:"s2_clinic",label:"Private Clinic / Dental",emoji:"🏥",
+    description:"Private medical or dental clinic with licensed professionals",
+    risk:"high",
+    domains:["Health & Pharmacy"],
+    alert:"⚠ High-regulation sector. Professional qualifications (medical degree + CMC registration) are mandatory before MoH license can be granted.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Health facility license",mins:["Ministry of Health (MoH)"],lics:["Clinic / medical facility operating license"],status:"seq",badge:"After Step 1",dep:"Requires MoC cert + doctor/dentist CMC registration + premises inspection",bg:"#FBEAF0",color:"#8A2060",days:"21–30"},
+      {n:"Professional compliance",mins:["Cambodian Medical Council (CMC)","Local Authority"],lics:["Doctor / dentist practice registration","Premises health inspection certificate"],status:"par",badge:"After Step 2 · in parallel",dep:"Each licensed professional must be individually registered with CMC",bg:"#FBF0EE",color:"#8A2A1A",days:"14"},
+    ],
+    conditional:[{cond:"If dispensing medicines",n:"Pharmacy dispensing permit",min:"Ministry of Health (MoH)"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs / passports","MoC + MoH","req",""],["🎓","Medical / dental degree certificates","MoH — mandatory","req",""],["🏥","CMC registration card (per doctor)","Cambodian Medical Council","req",""],["📐","Clinic premises & room layout plan","MoH inspection","req",""],["🔧","Medical equipment inventory list","MoH review","req",""]],
+    fees:[["Ministry of Health","Clinic operating license","USD 300–600"],["CMC","Doctor practice registration","USD 50–100 per doctor"]],
+  },
+
+  "s3_garment":{
+    id:"s3_garment",label:"Garment / Manufacturing Factory",emoji:"🏭",
+    description:"Garment, textile, or industrial manufacturing factory",
+    risk:"high",
+    domains:["Manufacturing"],
+    alert:"⚠ Industrial license + environmental impact assessment required before factory can operate. Labour inspection is also triggered for factories with 8+ workers.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Factory establishment permit",mins:["MISTI — General Directorate of SME & Handicraft"],lics:["Factory establishment permit (pre-build)"],status:"seq",badge:"After Step 1",dep:"Requires MoC certificate",bg:"#F0EEFF",color:"#3C3489",days:"14–21"},
+      {n:"Environmental impact assessment",mins:["Ministry of Environment (MoE)"],lics:["Environmental compliance certificate (EIA)"],status:"par",badge:"After Step 1 · parallel with Step 2",dep:"Required for factories >50 workers or chemical use",bg:"#E8F5E8",color:"#1A5020",days:"21–45"},
+      {n:"Factory operating license",mins:["MISTI"],lics:["Factory operating license (post site inspection)"],status:"chain",badge:"After Steps 2 + 3 both approved",dep:"Cannot operate factory without both establishment permit AND environmental clearance",bg:"#F0EEFF",color:"#3C3489",days:"14"},
+    ],
+    conditional:[{cond:"If exporting goods",n:"Export permit + GDCE registration",min:"Ministry of Commerce + GDCE"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MISTI","req",""],["📍","Factory land lease / title","MISTI + MoE","req",""],["📐","Factory floor plan (full layout)","MISTI establishment permit","req",""],["⚗️","List of raw materials, chemicals, process","MISTI + MoE","req",""],["🌿","Environmental impact study","Ministry of Environment","req",""],["👷","Labour safety compliance plan","MLVT inspection","req",""]],
+    fees:[["MISTI","Factory establishment permit","USD 100–200"],["MISTI","Factory operating license","USD 100–300"],["Ministry of Environment","EIA review fee","USD 200–500"]],
+  },
+
+  "s4_fintech":{
+    id:"s4_fintech",label:"FinTech / Digital Payment",emoji:"💳",
+    description:"Digital wallet, e-payment, mobile banking or financial technology",
+    risk:"critical",
+    domains:["Finance & Insurance","Technology & Telecom"],
+    alert:"🚨 CRITICAL REGULATION: Operating a digital payment or e-wallet service without NBC license is illegal. The system will flag and route to NBC immediately. Do NOT launch before approval.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"NBC payment service license",mins:["National Bank of Cambodia (NBC)"],lics:["Payment Service Provider (PSP) license","E-money issuer license (if applicable)"],status:"seq",badge:"After Step 1",dep:"Requires MoC cert + business plan + capital proof + compliance framework",bg:"#FBF0EE",color:"#8A1A1A",days:"60–90"},
+      {n:"Telecom compliance (if using mobile network)",mins:["Telecommunication Regulator of Cambodia (TRC)","MPTC"],lics:["Telecom value-added service license"],status:"par",badge:"After Step 1 · parallel with Step 2",dep:"Required only if service uses mobile network / USSD",bg:"#E6F1FB",color:"#0C447C",days:"30–45"},
+      {n:"Cybersecurity & data compliance",mins:["Ministry of Interior (MoI)","Ministry of Digital Economy (MDE)"],lics:["Data processing registration","Cybersecurity compliance declaration"],status:"par",badge:"After Step 2",dep:"Required before going live with customer data",bg:"#F0F8FF",color:"#0A3060",days:"14–21"},
+    ],
+    conditional:[{cond:"If cross-border transactions",n:"Foreign exchange operating license",min:"National Bank of Cambodia (NBC)"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs + background check","NBC KYC requirement","req",""],["💼","Business plan with financial projections","NBC","req",""],["🏦","Proof of minimum capital deposit (USD 1M+)","NBC requirement","req",""],["🔐","AML/CFT compliance framework","NBC anti-money laundering","req",""],["📡","Technical architecture document","TRC / MPTC","req",""],["🛡️","Cybersecurity audit report","MoI / MDE","req",""]],
+    fees:[["National Bank of Cambodia","PSP / e-money license","USD 5,000–50,000+"],["TRC","Telecom value-added service","USD 1,000–5,000"],["NBC","Annual supervisory fee","Based on transaction volume"]],
+  },
+
+  "s5_school":{
+    id:"s5_school",label:"Private School / Training Center",emoji:"🎓",
+    description:"Private school, language center, university or vocational training",
+    risk:"normal",
+    domains:["Education & Training"],
+    alert:null,
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Education operating license",mins:["Ministry of Education, Youth & Sport (MoEYS)"],lics:["Private school / training center operating license"],status:"seq",badge:"After Step 1",dep:"Requires MoC cert + curriculum approval + qualified teachers + premises inspection",bg:"#FFF8E0",color:"#6A4400",days:"30–45"},
+      {n:"Premises & safety clearance",mins:["Local Authority","National Police — Fire Dept."],lics:["Building safety certificate","Fire safety inspection"],status:"par",badge:"After Step 2 · in parallel",dep:"School premises must pass safety inspection",bg:"#FBF0EE",color:"#8A2A1A",days:"7–14"},
+    ],
+    conditional:[{cond:"University / higher education",n:"Accreditation from ACC (Accreditation Committee of Cambodia)",min:"Accreditation Committee of Cambodia (ACC)"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MoEYS","req",""],["📚","Proposed curriculum and study program","MoEYS","req",""],["🎓","Teacher qualifications / degree certificates","MoEYS — per teacher","req",""],["📐","School premises floor plan","MoEYS + Fire Dept","req",""],["🏫","Furniture & equipment list","MoEYS inspection","req",""]],
+    fees:[["Ministry of Education (MoEYS)","School operating license","USD 200–500"],["National Police","Fire safety certificate","USD 170"],["Local Authority","Location permit","USD 50–100"]],
+  },
+
+  "s6_hotel_resort":{
+    id:"s6_hotel_resort",label:"Large Hotel & Resort",emoji:"🏨",
+    description:"4–5 star hotel, resort with restaurant, spa and pool — mega tourism project",
+    risk:"high",
+    domains:["Tourism & Hospitality","Real Estate & Construction"],
+    alert:"⚠ Large hotel projects require 8+ ministry approvals. Construction cannot begin before land and environmental approvals. Utilities (EAC, Water) must be applied separately.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Land & zoning approval",mins:["Ministry of Land Management (MLMUPC)","Local Authority (City/Province)"],lics:["Construction permit","Zoning / land use approval"],status:"par",badge:"After Step 1 · both in parallel",dep:"Cannot begin construction without both approvals",bg:"#E6F1FB",color:"#0C447C",days:"30–60"},
+      {n:"Environmental impact assessment",mins:["Ministry of Environment (MoE)"],lics:["Large-scale EIA certificate"],status:"seq",badge:"After Step 2 — zoning must be approved first",dep:"EIA requires confirmed land location & project plan",bg:"#E8F5E8",color:"#1A5020",days:"45–90"},
+      {n:"Hotel & tourism license",mins:["Ministry of Tourism (MoT)"],lics:["Hotel operating license (graded)","Restaurant license","Spa license"],status:"seq",badge:"After Steps 2 + 3",dep:"Hotel must be built and pass inspection before license",bg:"#E6F5F2",color:"#085041",days:"21–30"},
+      {n:"Safety & operational clearances",mins:["Ministry of Health (MoH)","Ministry of Interior (MoI) — Security","National Police — Fire Dept."],lics:["Health & sanitation certificate","Security registration","Fire safety certificate"],status:"par",badge:"After Step 4 · all 3 in parallel",dep:"Required as conditions of Tourism license (Art. 39)",bg:"#FBF0EE",color:"#8A2A1A",days:"14–21"},
+      {n:"Utility connections",mins:["Electricity Authority of Cambodia (EAC)","Water Supply Authority","Ministry of Public Works (MPWT)"],lics:["Power connection permit","Water connection permit","Road access approval"],status:"par",badge:"After Step 2 · can run parallel",dep:"Utility applications require confirmed location and approved construction",bg:"#FFF8E0",color:"#6A4400",days:"30–60"},
+    ],
+    conditional:[{cond:"If >200 rooms or 5-star",n:"QIP (Qualified Investment Project) status from CDC",min:"Council for Development of Cambodia (CDC)"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs / passports","All ministries","req",""],["🗺️","Land title / ownership document","MLMUPC","req",""],["📐","Full architectural building plan","MLMUPC + MoT","req",""],["🌿","Environmental impact study (large EIA)","Ministry of Environment","req",""],["🏨","Hotel classification application","Ministry of Tourism","req",""],["🚒","Fire safety layout & equipment plan","Fire Dept","req",""],["💧","Utility connection application","EAC + Water Authority","req",""]],
+    fees:[["MLMUPC","Construction permit","Based on project size"],["Ministry of Environment","Large EIA review","USD 1,000–5,000"],["Ministry of Tourism","Hotel license (4-star)","USD 500–2,000"],["EAC","Power connection permit","Based on capacity"],["Ministry of Interior","Security registration","USD 100–300"]],
+  },
+
+  "s7_pharma":{
+    id:"s7_pharma",label:"Pharmaceutical Import & Distribution",emoji:"💊",
+    description:"Import, distribute and sell pharmaceutical products or medicines",
+    risk:"critical",
+    domains:["Health & Pharmacy","Trade & Import/Export"],
+    alert:"🚨 CRITICAL: Pharmaceutical import is one of the most regulated activities in Cambodia. Incorrect filing or missing certifications can result in license refusal, product seizure, or criminal liability. The system will enforce all pre-conditions.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Pharmacy facility license",mins:["Ministry of Health (MoH)"],lics:["Pharmaceutical wholesale / distribution license"],status:"seq",badge:"After Step 1",dep:"Applicant must hold pharmacy degree recognized by MoH AND be a Cambodian national",bg:"#FBEAF0",color:"#8A2060",days:"30–45"},
+      {n:"Medicine import approval",mins:["Ministry of Health (MoH) — Drug Dept.","General Dept. of Customs & Excise (GDCE)"],lics:["Drug registration certificate (per product)","Import permit (per product category)"],status:"chain",badge:"After Step 2 — per product",dep:"Cannot import any medicine without approved facility license + product registration",bg:"#FBF0EE",color:"#8A2A1A",days:"30–60"},
+      {n:"Distribution compliance",mins:["Ministry of Industry (MISTI)","CamControl / CCF (Consumer protection)","Ministry of Interior (MoI) — controlled substances"],lics:["Distribution compliance certificate","Consumer protection registration","Controlled substance permit (if applicable)"],status:"par",badge:"After Step 2 · in parallel",dep:"Required before selling to pharmacies or hospitals",bg:"#F0EEFF",color:"#3C3489",days:"14–21"},
+    ],
+    conditional:[{cond:"If importing controlled substances",n:"Controlled substance special permit",min:"Ministry of Interior (MoI) + MoH"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MoH","req",""],["🎓","Pharmacist degree certificate (Cambodian national)","MoH — mandatory","req",""],["📋","Full product list with supplier details","MoH drug dept","req",""],["🏭","Supplier GMP certification (WHO standard)","MoH product review","req",""],["🌡️","Storage conditions documentation (cold chain etc.)","MoH","req",""],["📦","Product samples for lab testing","MoH drug registration","req",""],["📜","Country of origin certificates","GDCE import clearance","req",""]],
+    fees:[["Ministry of Health","Pharmacy distribution license","USD 300–600"],["Ministry of Health","Drug registration (per product)","USD 200–500 per product"],["GDCE","Import permit processing","Based on shipment value"],["CamControl","Consumer protection registration","USD 50–150"]],
+  },
+
+  "s8_mining":{
+    id:"s8_mining",label:"Mining / Mineral Extraction",emoji:"⛏️",
+    description:"Gold, mineral, or natural resource extraction company",
+    risk:"critical",
+    domains:["Energy & Mining"],
+    alert:"🚨 CRITICAL: Mining is a sovereign resource sector. Concession approval from MME + MEF can take 6–24 months. Environmental and land approvals are mandatory before any extraction. The system will generate a full multi-year workflow.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Mineral concession application",mins:["Ministry of Mines & Energy (MME)","Ministry of Economy & Finance (MEF)"],lics:["Mining exploration license","Mineral extraction concession"],status:"seq",badge:"After Step 1",dep:"Requires feasibility study + financial capacity proof + MoC certificate",bg:"#FFF3E0",color:"#7A4200",days:"90–180"},
+      {n:"Land & forestry clearance",mins:["Ministry of Land Management (MLMUPC)","Forestry Administration (FA)","Local Authority"],lics:["Land concession agreement","Forestry clearance (if forested area)","Community consultation record"],status:"par",badge:"After Step 2 · in parallel",dep:"Land title and community rights must be verified before extraction begins",bg:"#E8F5E8",color:"#1A5020",days:"60–120"},
+      {n:"Environmental impact assessment",mins:["Ministry of Environment (MoE)"],lics:["Large-scale mining EIA certificate","Waste management approval"],status:"seq",badge:"After Steps 2 + 3",dep:"EIA must assess land already confirmed in concession",bg:"#E8F5E8",color:"#1A5020",days:"60–120"},
+      {n:"Operational safety & water",mins:["Ministry of Interior (MoI)","Water Resource & Meteorology Ministry"],lics:["Mining safety compliance certificate","Water usage permit"],status:"par",badge:"After Step 4",dep:"Cannot commence operations without safety and water approvals",bg:"#FBF0EE",color:"#8A2A1A",days:"30–45"},
+    ],
+    conditional:[{cond:"If foreign-owned mining company",n:"Investment approval from Council for Development of Cambodia (CDC)",min:"CDC — mandatory for foreign mining investors"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs + background verification","MME + MoI","req",""],["📊","Mineral resource feasibility study","MME concession review","req",""],["🗺️","Surveyed land / concession area map","MLMUPC + FA","req",""],["🌿","Environmental baseline study","Ministry of Environment","req",""],["💰","Proof of financial capacity","MEF + MME","req",""],["👥","Community consultation report","Local Authority","req",""],["🔧","Mining safety plan","MoI","req",""]],
+    fees:[["MME","Mining exploration license","USD 5,000–50,000+"],["Ministry of Environment","Large EIA review","USD 2,000–10,000"],["MLMUPC","Land concession processing","Based on area"],["Water Resources Ministry","Water usage permit","Based on usage volume"]],
+  },
+
+  "s9_isp":{
+    id:"s9_isp",label:"Telecom / Internet Provider (ISP)",emoji:"📡",
+    description:"Internet Service Provider, mobile network, or telecom operator",
+    risk:"critical",
+    domains:["Technology & Telecom"],
+    alert:"🚨 CRITICAL: Telecom is national infrastructure. TRC + MPTC dual approval required. Cybersecurity plan mandatory. Operations without license are illegal and subject to shutdown.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"TRC telecom license",mins:["Telecommunication Regulator of Cambodia (TRC)"],lics:["ISP / telecom service operating license","Frequency spectrum allocation (if wireless)"],status:"seq",badge:"After Step 1",dep:"Requires technical architecture, network plan, and capital proof",bg:"#E6F1FB",color:"#0C447C",days:"45–90"},
+      {n:"MPTC authorization",mins:["Ministry of Posts & Telecommunications (MPTC)"],lics:["Telecom service authorization certificate"],status:"par",badge:"After Step 1 · parallel with Step 2",dep:"Both TRC + MPTC approvals are required simultaneously",bg:"#E6F1FB",color:"#0C447C",days:"30–60"},
+      {n:"Security & compliance",mins:["Ministry of Interior (MoI)","Ministry of Digital Economy (MDE)","Cybersecurity units"],lics:["Security registration","Data center / network compliance certificate","Cybersecurity audit approval"],status:"seq",badge:"After Steps 2 + 3",dep:"Security clearance required before network goes live",bg:"#FBF0EE",color:"#8A2A1A",days:"21–30"},
+      {n:"Local authority & infrastructure",mins:["Local Authority","Ministry of Public Works (MPWT)"],lics:["Tower / antenna installation permit","Road works / cable laying permit"],status:"par",badge:"After Step 3 · in parallel",dep:"Physical infrastructure requires local and MPWT permits",bg:"#FFF8E0",color:"#6A4400",days:"14–30"},
+    ],
+    conditional:[{cond:"If foreign-owned",n:"Foreign investment approval and ownership cap compliance",min:"Ministry of Commerce + TRC"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + TRC","req",""],["📡","Network technical architecture document","TRC + MPTC","req",""],["🗺️","Service coverage area map","TRC","req",""],["🔐","Cybersecurity compliance plan","MoI / MDE","req",""],["💰","Proof of capital investment","TRC","req",""],["🏗️","Tower / antenna site plans","Local Authority + MPWT","req",""]],
+    fees:[["TRC","ISP license","USD 5,000–100,000+"],["MPTC","Service authorization","USD 1,000–10,000"],["Ministry of Interior","Security registration","USD 200–500"],["Local Authority","Infrastructure permits","Based on project"]],
+  },
+
+  "s10_realestate":{
+    id:"s10_realestate",label:"Borey / Condo Development",emoji:"🏙️",
+    description:"Large residential or commercial property development (Borey, condo, mixed-use)",
+    risk:"high",
+    domains:["Real Estate & Construction"],
+    alert:"⚠ Multi-stage sequential approvals. Cannot build before land is approved. Cannot sell units before completion certificate. Environmental review mandatory for large developments.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Real estate developer license",mins:["NBFSA — Non-Bank Financial Services Authority"],lics:["Real estate developer license (Prakas No. 089 Type A)"],status:"seq",badge:"After Step 1",dep:"Requires MoC cert + capital proof + qualified developer credentials",bg:"#E6F1FB",color:"#0C447C",days:"21–30"},
+      {n:"Land & construction approval",mins:["Ministry of Land Management (MLMUPC)","Local Authority / City Hall"],lics:["Construction permit","Zoning approval","Land subdivision plan approval"],status:"par",badge:"After Steps 1 + 2 · both in parallel",dep:"Both NBFSA license and construction permit required before any building work",bg:"#E6F1FB",color:"#0C447C",days:"30–60"},
+      {n:"Environmental & infrastructure",mins:["Ministry of Environment (MoE)","Ministry of Public Works (MPWT)","EAC — Electricity Authority","Water Supply Authority"],lics:["EIA certificate","Road access approval","Utility connection permits"],status:"par",badge:"After Step 3 · all in parallel",dep:"Infrastructure approvals require confirmed building permit and site location",bg:"#E8F5E8",color:"#1A5020",days:"30–60"},
+      {n:"Completion & sales clearance",mins:["MLMUPC","National Police — Fire Dept.","Ministry of Economy & Finance (MEF)"],lics:["Building completion / occupancy certificate","Fire safety certificate","Sales / off-plan escrow compliance"],status:"seq",badge:"After construction complete",dep:"Cannot sell units before occupancy certificate + fire clearance",bg:"#FBF0EE",color:"#8A2A1A",days:"14–21"},
+    ],
+    conditional:[{cond:"If off-plan sales (selling before completion)",n:"NBFSA escrow account requirement + off-plan sales approval",min:"NBFSA"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + NBFSA","req",""],["🗺️","Land title (hard title preferred)","MLMUPC","req",""],["📐","Full architectural & structural plans","MLMUPC + MPWT","req",""],["🌿","Environmental impact study","Ministry of Environment","req",""],["💰","Proof of development capital","NBFSA","req",""],["🏗️","Construction safety plan","Fire Dept + MPWT","req",""],["💧","Utility infrastructure plan","EAC + Water Authority","req",""]],
+    fees:[["NBFSA","Developer license","USD 500–2,000"],["MLMUPC","Construction permit","Based on project value"],["Ministry of Environment","EIA review","USD 500–3,000"],["EAC","Power connection","Based on capacity"],["MLMUPC","Occupancy certificate","USD 100–500"]],
+  },
+
+  "s11_food_export":{
+    id:"s11_food_export",label:"Food Manufacturing & Export",emoji:"🌾",
+    description:"Processed food factory producing for domestic sale and international export",
+    risk:"high",
+    domains:["Manufacturing","Agriculture & Food","Trade & Import/Export"],
+    alert:"⚠ Dual compliance: domestic food safety (MoH) + international export standards (MAFF, MoC). Products must be tested and certified before export is allowed.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Factory establishment & operation",mins:["MISTI — General Directorate of SME & Handicraft"],lics:["Factory establishment permit","Factory operating license"],status:"seq",badge:"After Step 1",dep:"Requires MoC cert + factory premises + inspection",bg:"#F0EEFF",color:"#3C3489",days:"21–35"},
+      {n:"Domestic food safety compliance",mins:["Ministry of Health (MoH)","Institute of Standards of Cambodia (ISC)"],lics:["Food production health certificate","Food safety license","Cambodia Standards (CS) product mark"],status:"seq",badge:"After Step 2",dep:"Cannot sell food products without MoH certification",bg:"#FBF0EE",color:"#8A2A1A",days:"14–21"},
+      {n:"Agriculture & export compliance",mins:["Ministry of Agriculture, Forestry & Fisheries (MAFF)","Ministry of Commerce (MoC) — export division"],lics:["Agri-product export permit","Phytosanitary / food safety certificate (international)","Export license"],status:"par",badge:"After Step 3 · in parallel",dep:"Export compliance requires domestic safety certification first",bg:"#E8F5E8",color:"#1A5020",days:"21–30"},
+      {n:"Customs & quality inspection",mins:["GDCE — Customs & Excise","CamControl / CCF (Quality inspection)"],lics:["ASYCUDA export registration","Quality inspection approval"],status:"seq",badge:"After Step 4",dep:"GDCE registration requires export license from MoC",bg:"#E6F1FB",color:"#0C447C",days:"7–14"},
+    ],
+    conditional:[{cond:"If exporting to EU or regulated markets",n:"HACCP / ISO 22000 food safety certification",min:"ISC / accredited certification body"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MISTI","req",""],["📍","Factory premises lease / title","MISTI","req",""],["📐","Factory & production line layout","MISTI + MoH","req",""],["🧪","Product lab test results","MoH + ISC","req",""],["🌿","Ingredient / raw material sourcing list","MAFF","req",""],["📦","Export product catalog with HS codes","MoC + GDCE","req",""],["🏆","Quality standard certificates (CS / HACCP)","ISC","req",""]],
+    fees:[["MISTI","Factory licenses","USD 200–500"],["Ministry of Health","Food safety certification","USD 100–300"],["MAFF","Export phytosanitary certificate","USD 50–200 per shipment"],["CamControl","Quality inspection","USD 50–200"],["GDCE","Export registration","Based on value"]],
+  },
+
+  "s12_logistics":{
+    id:"s12_logistics",label:"Logistics & Transport Company",emoji:"🚛",
+    description:"Trucking, warehousing, cross-border logistics or freight forwarding",
+    risk:"normal",
+    domains:["Trade & Import/Export","Logistics & Transport"],
+    alert:null,
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Transport & logistics license",mins:["Ministry of Public Works & Transport (MPWT)"],lics:["Transport operator license","Vehicle fleet registration"],status:"seq",badge:"After Step 1",dep:"Requires MoC certificate + vehicle documentation",bg:"#FFF8E0",color:"#6A4400",days:"14–21"},
+      {n:"Customs & cross-border compliance",mins:["GDCE — Customs & Excise","Ministry of Commerce (MoC) — trade division"],lics:["ASYCUDA customs broker registration","Cross-border transport permit","Freight forwarder license"],status:"par",badge:"After Step 1 · parallel with Step 2",dep:"ASYCUDA registration requires MoC certificate",bg:"#E6F1FB",color:"#0C447C",days:"14–21"},
+      {n:"Warehouse & safety",mins:["Ministry of Interior (MoI)","National Police — Fire Dept.","Local Authority"],lics:["Warehouse operating permit","Fire safety certificate","Location approval"],status:"par",badge:"After Step 2 · in parallel",dep:"Warehouse requires physical inspection",bg:"#FBF0EE",color:"#8A2A1A",days:"10–14"},
+    ],
+    conditional:[{cond:"If operating in SEZ",n:"SEZ operating permit",min:"SEZ Authority / CDC"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MPWT","req",""],["🚛","Vehicle registration documents (fleet list)","MPWT","req",""],["🏭","Warehouse lease / ownership proof","Local Authority","req",""],["📐","Warehouse floor plan","Fire Dept inspection","req",""],["🔖","Driver / operator licenses","MPWT","req",""],["🌐","ASYCUDA registration documents","GDCE","req",""]],
+    fees:[["MPWT","Transport operator license","USD 100–500"],["GDCE","Customs broker registration","USD 100–300"],["Ministry of Interior","Security/warehouse permit","USD 50–200"],["National Police","Fire safety certificate","USD 170"]],
+  },
+
+  "s13_food_processing":{
+    id:"s13_food_processing",label:"Food Processing Factory (Local)",emoji:"🍶",
+    description:"Packaged Khmer food — fish sauce, chili paste, condiments for local distribution",
+    risk:"high",
+    domains:["Manufacturing","Agriculture & Food"],
+    alert:"⚠ Food products must receive MoH food safety approval and CamControl product inspection BEFORE selling begins. The system ensures these are initiated at the same time as the factory license.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Factory establishment permit",mins:["MISTI — General Directorate of SME & Handicraft"],lics:["Factory establishment permit"],status:"seq",badge:"After Step 1",dep:"Requires MoC certificate + factory premises",bg:"#F0EEFF",color:"#3C3489",days:"14–21"},
+      {n:"Factory operating license",mins:["MISTI"],lics:["Factory operating license (post site inspection)"],status:"seq",badge:"After Step 2 + inspection",dep:"Premises inspection required before license issued",bg:"#F0EEFF",color:"#3C3489",days:"14"},
+      {n:"Food safety approval",mins:["Ministry of Health (MoH)"],lics:["Food production health certificate","Food safety license"],status:"par",badge:"After Step 2 · runs in parallel with Step 3",dep:"Can start MoH review once factory permit issued",bg:"#FBF0EE",color:"#8A2A1A",days:"14–21"},
+      {n:"Product inspection & quality mark",mins:["CamControl / CCF (Consumer Protection)","Institute of Standards Cambodia (ISC)"],lics:["Product inspection approval","CS Cambodia Standard mark (if applicable)"],status:"seq",badge:"After Step 4",dep:"CamControl inspects product after MoH food safety approved",bg:"#E8F5E8",color:"#1A5020",days:"7–14"},
+    ],
+    conditional:[{cond:"If exporting products",n:"MAFF export phytosanitary certificate + GDCE registration",min:"MAFF + GDCE"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MISTI","req",""],["🏭","Factory premises lease / title","MISTI","req",""],["📐","Factory & production line layout","MISTI + MoH","req",""],["🧪","Product recipe / formula + ingredient list","MoH","req",""],["🌡️","Production hygiene & safety plan","MoH + CamControl","req",""],["📦","Product label & packaging design","CamControl","req",""],["🔬","Lab test results for product samples","ISC","req",""]],
+    fees:[["MISTI","Factory establishment permit","USD 100–200"],["MISTI","Factory operating license","USD 100–300"],["Ministry of Health","Food safety certification","USD 100–300"],["CamControl","Product inspection","USD 50–200"],["ISC","CS standard mark (optional)","USD 100–300"]],
+  },
+
+  "s14_cosmetics":{
+    id:"s14_cosmetics",label:"Cosmetic Manufacturing",emoji:"💄",
+    description:"Produce skincare, soap, lotion, or cosmetic products under a local brand",
+    risk:"high",
+    domains:["Manufacturing","Health & Pharmacy"],
+    alert:"⚠ Cosmetic products MUST be registered and approved by the Ministry of Health before any sale. Producing or selling unregistered cosmetics is illegal. The system will enforce MoH product registration before factory goes live.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Factory establishment & operating license",mins:["MISTI — General Directorate of SME & Handicraft"],lics:["Factory establishment permit","Factory operating license"],status:"seq",badge:"After Step 1",dep:"Requires MoC certificate + premises inspection",bg:"#F0EEFF",color:"#3C3489",days:"21–35"},
+      {n:"Cosmetic product registration",mins:["Ministry of Health (MoH) — Drug & Cosmetic Dept."],lics:["Cosmetic product registration certificate (per product)"],status:"par",badge:"After Step 1 · can start in parallel",dep:"Product formula and safety data required — submit early to avoid delays",bg:"#FBEAF0",color:"#8A2060",days:"30–60"},
+      {n:"Product quality & labeling inspection",mins:["CamControl / CCF","Institute of Standards Cambodia (ISC)"],lics:["Product quality inspection certificate","Label compliance approval"],status:"seq",badge:"After Steps 2 + 3",dep:"Inspection requires approved product registration and working factory",bg:"#E8F5E8",color:"#1A5020",days:"14–21"},
+    ],
+    conditional:[{cond:"If importing raw chemical ingredients",n:"Chemical import permit",min:"Ministry of Industry (MISTI) + Customs (GDCE)"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MISTI","req",""],["🧪","Product formula / ingredient list (INCI names)","MoH — per product","req",""],["🌿","Safety Data Sheet (SDS) for each ingredient","MoH","req",""],["📦","Product label + packaging design","MoH + CamControl","req",""],["📐","Factory premises layout","MISTI","req",""],["🔬","Stability test results","MoH product review","req",""]],
+    fees:[["MISTI","Factory licenses","USD 200–500"],["Ministry of Health","Cosmetic product registration (per product)","USD 100–300"],["CamControl","Quality inspection","USD 50–200"]],
+  },
+
+  "s15_supplement":{
+    id:"s15_supplement",label:"Health Supplement / Vitamins",emoji:"💊",
+    description:"Produce vitamins, herbal supplements, or health food products",
+    risk:"critical",
+    domains:["Manufacturing","Health & Pharmacy"],
+    alert:"🚨 CRITICAL: Health supplements and nutraceuticals are regulated as health products under MoH. Any product making health claims without registration is illegal. The system flags all health claims and requires safety documentation before production begins.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Factory & production facility",mins:["MISTI — General Directorate of SME & Handicraft"],lics:["Factory establishment permit","Factory operating license"],status:"seq",badge:"After Step 1",dep:"Requires MoC certificate + premises",bg:"#F0EEFF",color:"#3C3489",days:"21–35"},
+      {n:"Health product registration",mins:["Ministry of Health (MoH) — Drug & Food Dept."],lics:["Health supplement / nutraceutical registration","Health claim approval"],status:"seq",badge:"After Step 1 · start early — long review",dep:"Clinical or safety data required. Health claims strictly reviewed. Submit as early as possible.",bg:"#FBEAF0",color:"#8A2060",days:"45–90"},
+      {n:"Product safety & quality inspection",mins:["CamControl / CCF","ISC — Institute of Standards"],lics:["Product safety inspection certificate","Quality standard compliance"],status:"seq",badge:"After Steps 2 + 3",dep:"Cannot sell without passing safety inspection",bg:"#E8F5E8",color:"#1A5020",days:"14–21"},
+      {n:"Raw material import (if needed)",mins:["GDCE — Customs & Excise","MISTI"],lics:["Import permit for raw health ingredients","Ingredient safety certification"],status:"par",badge:"After Step 1 · parallel track",dep:"Import permit required if sourcing ingredients internationally",bg:"#E6F1FB",color:"#0C447C",days:"14–21"},
+    ],
+    conditional:[{cond:"If product contains controlled herbs or substances",n:"Traditional medicine controlled substance review",min:"Ministry of Health — special committee"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MISTI","req",""],["🧪","Ingredient list with scientific names","MoH","req",""],["🔬","Lab analysis / safety test results","MoH — mandatory","req",""],["📋","Product claims document","MoH health claims review","req",""],["🌿","Supplier certificates for raw materials","GDCE + MISTI","req",""],["📦","Product label + dosage instructions","MoH + CamControl","req",""]],
+    fees:[["MISTI","Factory licenses","USD 200–500"],["Ministry of Health","Health product registration","USD 200–500"],["CamControl","Product inspection","USD 50–200"],["ISC","Quality certification","USD 100–300"]],
+  },
+
+  "s16_beverage":{
+    id:"s16_beverage",label:"Beverage Factory (Juice / Soft Drinks)",emoji:"🥤",
+    description:"Produce bottled juice, soft drinks, or packaged water",
+    risk:"high",
+    domains:["Manufacturing","Agriculture & Food"],
+    alert:"⚠ Beverage production requires hygiene and water source compliance from MoH before production begins. All bottles must pass product inspection before entering the market.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Factory establishment & operation",mins:["MISTI — General Directorate of SME & Handicraft"],lics:["Factory establishment permit","Factory operating license"],status:"seq",badge:"After Step 1",dep:"Requires MoC certificate + factory premises inspection",bg:"#F0EEFF",color:"#3C3489",days:"21–35"},
+      {n:"Food & beverage safety certification",mins:["Ministry of Health (MoH)"],lics:["Food safety license","Beverage production health certificate","Water source hygiene approval"],status:"par",badge:"After Step 1 · parallel with Step 2",dep:"MoH reviews water source, hygiene system, and production process simultaneously",bg:"#FBF0EE",color:"#8A2A1A",days:"14–21"},
+      {n:"Product inspection & labeling",mins:["CamControl / CCF","ISC — Institute of Standards Cambodia"],lics:["Product quality inspection","Label & nutritional info compliance"],status:"seq",badge:"After Steps 2 + 3",dep:"Cannot distribute without passing CamControl inspection",bg:"#E8F5E8",color:"#1A5020",days:"7–14"},
+    ],
+    conditional:[{cond:"If producing alcoholic beverages",n:"Alcohol production license",min:"Ministry of Commerce (MoC) — specialized"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MISTI","req",""],["💧","Water source test results","MoH — water quality standard","req",""],["🧪","Beverage formula / ingredient list","MoH","req",""],["📐","Factory hygiene layout","MISTI + MoH","req",""],["📦","Product label + nutritional information","CamControl","req",""]],
+    fees:[["MISTI","Factory licenses","USD 200–500"],["Ministry of Health","Food safety certification","USD 100–300"],["CamControl","Product inspection","USD 50–200"]],
+  },
+
+  "s17_import_repack":{
+    id:"s17_import_repack",label:"Import & Repackage Food Products",emoji:"📦",
+    description:"Import snacks or food → repackage under local brand → sell domestically",
+    risk:"high",
+    domains:["Trade & Import/Export","Manufacturing","Agriculture & Food"],
+    alert:"⚠ This business involves BOTH import compliance (GDCE + MoH) AND local manufacturing compliance (MISTI). The system integrates both tracks — missing either one results in product seizure.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Import registration & food import approval",mins:["GDCE — Customs & Excise","Ministry of Health (MoH) — food import"],lics:["ASYCUDA import registration","Food product import permit (per category)"],status:"par",badge:"After Step 1 · both in parallel",dep:"Both GDCE and MoH food import approval required before any goods can enter Cambodia",bg:"#E6F1FB",color:"#0C447C",days:"14–21"},
+      {n:"Repackaging facility license",mins:["MISTI — General Directorate of SME & Handicraft"],lics:["Small factory / repackaging facility permit"],status:"seq",badge:"After Step 1",dep:"Repackaging counted as light manufacturing under MISTI",bg:"#F0EEFF",color:"#3C3489",days:"14–21"},
+      {n:"Domestic food safety & labeling",mins:["Ministry of Health (MoH)","CamControl / CCF"],lics:["Domestic food safety approval (repackaged product)","Khmer-language label compliance","Product inspection approval"],status:"seq",badge:"After Steps 2 + 3",dep:"Repackaged product must pass MoH and CamControl before local sale",bg:"#FBF0EE",color:"#8A2A1A",days:"14–21"},
+    ],
+    conditional:[{cond:"If selling under a registered brand",n:"Trademark registration",min:"Ministry of Commerce — IP Department"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MISTI","req",""],["📋","Original product certificates from supplier","MoH import review","req",""],["📦","Packaging & labeling design (Khmer)","CamControl","req",""],["🏭","Repackaging facility layout","MISTI","req",""],["🌐","Supplier country-of-origin certificate","GDCE","req",""],["🧪","Product lab test (locally tested)","MoH + ISC","req",""]],
+    fees:[["GDCE","Import registration","Based on value"],["Ministry of Health","Food import permit","USD 100–300"],["MISTI","Repackaging facility permit","USD 100–200"],["CamControl","Product inspection","USD 50–200"]],
+  },
+
+  "s18_herbal_medicine":{
+    id:"s18_herbal_medicine",label:"Herbal / Traditional Medicine",emoji:"🌿",
+    description:"Produce Khmer traditional herbal medicine or folk remedy products",
+    risk:"critical",
+    domains:["Manufacturing","Health & Pharmacy"],
+    alert:"🚨 CRITICAL: Traditional herbal medicines are regulated as pharmaceutical products under MoH. Scientific safety evidence is required. Unregistered products cannot be sold, advertised, or distributed. The system requires all documentation before production begins.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Traditional medicine product review",mins:["Ministry of Health (MoH) — Traditional Medicine Dept."],lics:["Traditional medicine product registration","Safety & efficacy review approval"],status:"seq",badge:"After Step 1 — long review — start early",dep:"Requires ingredient origin, safety evidence, and traditional use documentation. This is the longest step.",bg:"#FBEAF0",color:"#8A2060",days:"60–120"},
+      {n:"Production facility licensing",mins:["MISTI — General Directorate of SME & Handicraft"],lics:["Manufacturing establishment permit","Production facility operating license"],status:"par",badge:"After Step 1 · parallel with Step 2",dep:"Factory approval can proceed while MoH product review is underway",bg:"#F0EEFF",color:"#3C3489",days:"21–35"},
+      {n:"Product safety & inspection",mins:["CamControl / CCF","Research / certification bodies"],lics:["Product safety inspection certificate","Traditional medicine quality certification"],status:"seq",badge:"After Steps 2 + 3",dep:"Cannot sell without passing inspection post-MoH approval",bg:"#E8F5E8",color:"#1A5020",days:"21–30"},
+    ],
+    conditional:[{cond:"If ingredients sourced from forests or protected plants",n:"Forestry Administration permit for plant collection",min:"Forestry Administration (FA)"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MISTI","req",""],["🌿","Ingredient origin & sourcing documentation","MoH — mandatory","req",""],["📜","Traditional use evidence / historical records","MoH traditional medicine dept","req",""],["🔬","Safety & toxicology test results","MoH product review","req",""],["📋","Production method description","MISTI + MoH","req",""],["📦","Product label — no false health claims","CamControl","req",""]],
+    fees:[["Ministry of Health","Traditional medicine registration","USD 200–500"],["MISTI","Production facility licenses","USD 200–500"],["CamControl","Product inspection","USD 50–200"]],
+  },
+
+  "s19_slaughterhouse":{
+    id:"s19_slaughterhouse",label:"Slaughterhouse / Meat Processing",emoji:"🥩",
+    description:"Meat processing facility — slaughter, packaging, cold chain distribution",
+    risk:"critical",
+    domains:["Manufacturing","Agriculture & Food"],
+    alert:"🚨 CRITICAL: Slaughterhouses are among the highest-risk food facilities. Animal source verification (MAFF), cold chain compliance, and hygiene certification (MoH) must ALL be approved before any operation begins. Failure can cause public health emergency.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"Animal source & agriculture compliance",mins:["Ministry of Agriculture, Forestry & Fisheries (MAFF)"],lics:["Animal source verification","Veterinary health certificate","Livestock import/movement permit (if applicable)"],status:"seq",badge:"After Step 1",dep:"Animal source must be verified and certified before slaughter operations begin",bg:"#E8F5E8",color:"#1A5020",days:"14–30"},
+      {n:"Slaughterhouse facility license",mins:["MISTI — General Directorate of SME & Handicraft","Ministry of Health (MoH)"],lics:["Slaughterhouse establishment permit","Meat processing facility hygiene certificate"],status:"par",badge:"After Step 1 · parallel",dep:"MISTI facility permit + MoH hygiene certification required simultaneously",bg:"#F0EEFF",color:"#3C3489",days:"21–45"},
+      {n:"Cold chain & food safety",mins:["Ministry of Health (MoH) — Food Safety Dept.","CamControl / CCF"],lics:["Cold chain compliance certificate","Meat product inspection approval","HACCP certification (for export)"],status:"seq",badge:"After Steps 2 + 3",dep:"Cold chain system must pass inspection before meat distribution",bg:"#FBF0EE",color:"#8A2A1A",days:"14–21"},
+      {n:"Environmental & waste management",mins:["Ministry of Environment (MoE)","Local Authority"],lics:["Waste treatment / disposal permit","Environmental compliance certificate"],status:"par",badge:"After Step 2 · parallel",dep:"Slaughterhouse waste is regulated — disposal system required",bg:"#E8F5E8",color:"#1A5020",days:"21–30"},
+    ],
+    conditional:[{cond:"If exporting meat products",n:"SPS certificate + MAFF export approval",min:"MAFF + Ministry of Commerce"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MISTI","req",""],["🐄","Animal source certification (MAFF vet cert)","MAFF — mandatory","req",""],["📐","Slaughterhouse facility layout","MISTI + MoH","req",""],["🌡️","Cold chain equipment & process documentation","MoH food safety","req",""],["♻️","Waste treatment system plan","Ministry of Environment","req",""],["🏥","HACCP food safety system plan","MoH + CamControl","req",""]],
+    fees:[["MISTI","Facility establishment + operating licenses","USD 200–500"],["Ministry of Health","Hygiene + food safety certification","USD 200–500"],["MAFF","Veterinary / animal source certification","USD 100–300"],["Ministry of Environment","Waste management permit","USD 100–300"],["CamControl","Product inspection","USD 50–200"]],
+  },
+
+  "s20_pharma_mfg":{
+    id:"s20_pharma_mfg",label:"Pharmaceutical Manufacturing",emoji:"🏭",
+    description:"Produce medicines or pharmaceutical products locally — highest regulated sector",
+    risk:"critical",
+    domains:["Manufacturing","Health & Pharmacy"],
+    alert:"🚨 CRITICAL — HIGHEST REGULATION: Pharmaceutical manufacturing requires WHO Good Manufacturing Practice (GMP) certification, MoH drug approval per product, and international-standard lab certification. This is the most complex registration in Cambodia. Estimated timeline: 12–24 months. Do NOT begin production without all approvals.",
+    steps:[
+      {n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT","Enterprise Declaration"],status:"par",badge:"Start immediately",dep:null,bg:"#E8E6FC",color:"#2E2880",days:"8"},
+      {n:"GMP facility certification",mins:["Ministry of Health (MoH) — Drug Regulatory Authority","WHO / international auditors"],lics:["Good Manufacturing Practice (GMP) certificate","Pharmaceutical factory operating license"],status:"seq",badge:"After Step 1 — longest step — begin immediately",dep:"GMP audit requires fully built facility meeting international pharmaceutical standards",bg:"#FBEAF0",color:"#8A2060",days:"180–365"},
+      {n:"Drug product registration",mins:["Ministry of Health (MoH) — Drug Registration Dept."],lics:["Drug registration certificate (per product)","Clinical data review approval"],status:"par",badge:"After Step 1 · can run parallel with GMP",dep:"Submit product dossiers early — review takes 6–12 months per product",bg:"#FBEAF0",color:"#8A2060",days:"180–360"},
+      {n:"Raw material import compliance",mins:["GDCE — Customs & Excise","MISTI"],lics:["Pharmaceutical ingredient import permit","Raw material quality certification"],status:"seq",badge:"After Step 2 (GMP)",dep:"Can only import API (active ingredients) after GMP facility is certified",bg:"#E6F1FB",color:"#0C447C",days:"21–30"},
+      {n:"Quality control & lab certification",mins:["Institute of Standards Cambodia (ISC)","MoH — Quality Control Lab"],lics:["National lab testing approval","Batch release certification"],status:"seq",badge:"After Steps 2 + 3",dep:"Each production batch must pass quality testing before distribution",bg:"#E8F5E8",color:"#1A5020",days:"14–30"},
+      {n:"Distribution authorization",mins:["Ministry of Health (MoH)","Ministry of Commerce (MoC)"],lics:["Pharmaceutical distribution license","Wholesale drug dealer license"],status:"seq",badge:"After all above approved",dep:"Distribution cannot begin until GMP, product registration, and batch testing all completed",bg:"#E8E6FC",color:"#2E2880",days:"14–21"},
+    ],
+    conditional:[{cond:"If product is a controlled substance or narcotic",n:"Narcotic / controlled substance special license",min:"Ministry of Health + Ministry of Interior (MoI)"}],
+    docs:[["📄","Articles of Incorporation","MoC","req","done"],["🪪","Shareholder IDs","MoC + MoH","req",""],["🏭","Full GMP facility blueprint & equipment list","MoH GMP audit","req",""],["📋","Drug product dossier (per product — CTD format)","MoH drug registration","req",""],["🔬","Clinical safety / efficacy data or literature","MoH review","req",""],["🎓","Qualified Person (QP) / pharmacist credentials","MoH — mandatory","req",""],["🌡️","Cold chain & storage conditions documentation","MoH + ISC","req",""],["📜","WHO GMP compliance checklist","MoH + WHO auditor","req",""]],
+    fees:[["Ministry of Health","GMP certification + factory license","USD 2,000–10,000"],["Ministry of Health","Drug registration (per product)","USD 500–2,000 per product"],["GDCE","Pharmaceutical ingredient import","Based on value"],["ISC","Quality control lab testing","USD 200–1,000 per batch"],["Ministry of Health","Distribution license","USD 500–1,000"]],
+  },
+};
+
+/* Map scenario IDs to domain keys for domain tile pre-selection */
+const DOMAIN_TO_SCENARIOS = {};
+Object.values(SCENARIOS).forEach(s=>{
+  s.domains.forEach(d=>{
+    if(!DOMAIN_TO_SCENARIOS[d]) DOMAIN_TO_SCENARIOS[d]=[];
+    DOMAIN_TO_SCENARIOS[d].push(s);
+  });
+});
+
+/* PKGS kept for backward compat (buildPackage uses SCENARIOS now) */
+const PKGS = {};
+Object.values(SCENARIOS).forEach(s=>{ s.domains.forEach(d=>{ if(!PKGS[d]) PKGS[d]=s; }); });
+const DEFAULT_PKG=SCENARIOS["s1_restaurant"];
+
+/* Add new domain to ACTS */
+ACTS["Logistics & Transport"]=["Trucking / road freight","Warehouse & storage","Cross-border logistics","Port / sea freight","Last-mile delivery","SEZ logistics"];
+ACTS["Energy & Mining"]=["Gold / mineral extraction","Oil & gas exploration","Solar / renewable energy","Electricity supply","Water supply utility"];
+
+let state={domains:[],activities:[],shIdx:1,scenario:null};
+
+function startFlow(){
+  document.getElementById('screen-hero').classList.remove('visible');
+  document.getElementById('screen-flow').classList.add('visible');
+  document.getElementById('topbar-steps').style.display='flex';
+  renderScenarioPicker();
+  setStep(0);
+}
+
+function renderScenarioPicker(){
+  const grid=document.getElementById('scenario-grid');
+  const all=Object.values(SCENARIOS);
+  const INITIAL=4; // 2 rows × 2 columns
+  grid.innerHTML=all.map((s,i)=>`
+    <div class="scenario-tile${i>=INITIAL?' scn-hidden':''}" id="st-${s.id}" onclick="selectScenario('${s.id}')">
+      <div class="st-em">${s.emoji}</div>
+      <div class="st-body">
+        <div class="st-label">${s.label}</div>
+        <div class="st-hint">${s.description}</div>
+        <span class="st-risk risk-${s.risk}">${s.risk==='critical'?'⚠ Critical':s.risk==='high'?'High reg.':'Normal'}</span>
+      </div>
+    </div>`).join('')+
+    `<button class="see-more-btn" id="see-more-btn" onclick="toggleScenarios(this)" style="grid-column:1/-1">
+      <span id="see-more-icon">▼</span> See all ${all.length} scenarios (${all.length-INITIAL} more)
+    </button>`;
+}
+
+function toggleScenarios(btn){
+  const INITIAL=4;
+  const isExpanded=btn.dataset.expanded==='1';
+  const all=document.querySelectorAll('.scenario-tile');
+  if(!isExpanded){
+    all.forEach(t=>t.classList.remove('scn-hidden'));
+    btn.innerHTML='<span>▲</span> Show less';
+    btn.dataset.expanded='1';
+  } else {
+    all.forEach((t,i)=>{if(i>=INITIAL) t.classList.add('scn-hidden');});
+    btn.innerHTML=`<span>▼</span> See all ${all.length} scenarios (${all.length-INITIAL} more)`;
+    btn.dataset.expanded='0';
+  }
+}
+
+function selectScenario(id){
+  const s=SCENARIOS[id];
+  if(!s) return;
+  state.scenario=s;
+
+  // Visually select this tile, deselect others
+  document.querySelectorAll('.scenario-tile').forEach(t=>t.classList.remove('sel'));
+  const selTile=document.getElementById('st-'+id);
+  if(selTile){
+    selTile.classList.add('sel');
+    // If tile is hidden, expand to show it
+    if(selTile.classList.contains('scn-hidden')){
+      const btn=document.getElementById('see-more-btn');
+      if(btn&&btn.dataset.expanded!=='1'){toggleScenarios(btn);}
+    }
+  }
+
+  // Pre-select domain tiles
+  state.domains=[...s.domains];
+  document.querySelectorAll('.dtile').forEach(t=>{
+    t.classList.toggle('sel', s.domains.includes(t.dataset.v));
+  });
+  updateDomainUI();
+
+  // Show selected banner
+  const banner=document.getElementById('scenario-selected-banner');
+  document.getElementById('ssb-emoji').textContent=s.emoji;
+  document.getElementById('ssb-title').textContent='Scenario: '+s.label;
+  document.getElementById('ssb-desc').textContent=s.description;
+  const riskEl=document.getElementById('ssb-risk');
+  riskEl.textContent=s.risk==='critical'?'⚠ Critical regulated':s.risk==='high'?'High regulation':'Standard';
+  riskEl.className='';riskEl.style.cssText='font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0;';
+  if(s.risk==='critical'){riskEl.style.background='#FDECEA';riskEl.style.color='#7A1A0A';}
+  else if(s.risk==='high'){riskEl.style.background='#FFF3CD';riskEl.style.color='#7A5000';}
+  else{riskEl.style.background='#DFF0D8';riskEl.style.color='#1A5020';}
+  banner.style.display='flex';
+
+  // Show alert if high/critical
+  const alertEl=document.getElementById('scenario-alert');
+  if(s.alert){alertEl.textContent=s.alert;alertEl.style.display='block';}
+  else{alertEl.style.display='none';}
+}
+
+function clearScenario(){
+  state.scenario=null;
+  document.querySelectorAll('.scenario-tile').forEach(t=>t.classList.remove('sel'));
+  document.getElementById('scenario-selected-banner').style.display='none';
+  document.getElementById('scenario-alert').style.display='none';
+  // Clear domain selection
+  state.domains=[];
+  document.querySelectorAll('.dtile').forEach(t=>t.classList.remove('sel'));
+  updateDomainUI();
+}
+
+function togDomain(tile){
+  const v=tile.dataset.v;
+  const idx=state.domains.indexOf(v);
+  if(idx>-1){
+    state.domains.splice(idx,1);
+    tile.classList.remove('sel');
+  } else {
+    state.domains.push(v);
+    tile.classList.add('sel');
+  }
+  updateDomainUI();
+}
+
+function removeDomain(v){
+  state.domains=state.domains.filter(d=>d!==v);
+  document.querySelectorAll('.dtile').forEach(t=>{if(t.dataset.v===v)t.classList.remove('sel');});
+  updateDomainUI();
+}
+
+function updateDomainUI(){
+  const notice=document.getElementById('domain-notice');
+  const pills=document.getElementById('domain-pills');
+  const count=document.getElementById('domain-count');
+  if(state.domains.length>0){
+    notice.classList.add('show');
+    count.textContent=state.domains.length;
+    pills.innerHTML=state.domains.map(d=>`<span class="ds-pill">${d}<button class="ds-pill-x" onclick="removeDomain('${d.replace(/'/g,"\\'")}')">×</button></span>`).join('');
+  } else {
+    notice.classList.remove('show');
+    pills.innerHTML='';
+  }
+}
+
+function loadChips(){
+  const wrap=document.getElementById('chips-wrap');
+  // Merge activities from all selected domains, deduplicated
+  const seen=new Set();
+  const merged=[];
+  state.domains.forEach(d=>{
+    (ACTS[d]||[]).forEach(a=>{if(!seen.has(a)){seen.add(a);merged.push({act:a,domain:d});}});
+  });
+  wrap.innerHTML=merged.map(({act,domain})=>
+    `<button class="chip" data-v="${act}" data-domain="${domain}" onclick="togChip(this)">${act}</button>`
+  ).join('');
+}
+
+
+function togChip(c){
+  c.classList.toggle('sel');
+  const v=c.dataset.v;
+  if(c.classList.contains('sel')){if(!state.activities.includes(v))state.activities.push(v);}
+  else state.activities=state.activities.filter(x=>x!==v);
+}
+
+function yn(btn,hidId,val){
+  const par=btn.parentElement;
+  par.querySelectorAll('.yn-btn').forEach(b=>{b.classList.remove('sel-y','sel-n')});
+  btn.classList.add(val==='y'?'sel-y':'sel-n');
+  document.getElementById(hidId).value=val;
+}
+
+let shIdx2=1;
+function addSh(){
+  const list=document.getElementById('sh-list');
+  const i=shIdx2++;
+  const d=document.createElement('div');
+  d.className='sh-item';d.id=`shi-${i}`;
+  d.innerHTML=`<input class="finput" placeholder="Full name" id="sh-nm-${i}"><input class="finput" placeholder="Nationality" id="sh-nat-${i}"><input class="finput" placeholder="Share %" id="sh-pct-${i}"><button class="sh-remove" onclick="rmSh(${i})">×</button>`;
+  list.appendChild(d);
+}
+function rmSh(i){const el=document.getElementById(`shi-${i}`);if(el&&document.querySelectorAll('.sh-item').length>1)el.remove();}
+
+function next(from){
+  if(from===0&&state.domains.length===0){alert('Please select at least one business domain.');return;}
+  if(from===0){
+    const prov=document.getElementById('biz-province').value;
+    document.getElementById('prov2').value=prov;
+    loadChips();
+  }
+  setStep(from+1);
+}
+function prev(from){setStep(from-1);}
+
+function setStep(n){
+  for(let i=0;i<=6;i++){
+    const el=document.getElementById(`step-${i}`);
+    if(el)el.style.display=i===n?'block':'none';
+    const si=document.getElementById(`si-${i}`);
+    const sl=document.getElementById(`sl-${i}`);
+    if(si){
+      si.className='ss-ind'+(i<n?' done':i===n?' active':'');
+      if(i<n)si.textContent='✓';else if(i===3)si.textContent='⚙';else si.textContent=i+1;
+    }
+    if(sl){
+      sl.className='ss-label'+(i<n?' done':i===n?' active':'');
+    }
+    const ts=document.getElementById(`ts${i}`);
+    if(ts)ts.className='tb-step'+(i<n?' done':i===n?' active':'');
+  }
+  window.scrollTo(0,0);
+}
+
+async function runAnalysis(){
+  setStep(3);
+  const delays=[500,1100,1900,2700,3400];
+  for(let i=0;i<5;i++){
+    await new Promise(r=>setTimeout(r,delays[i]-(i>0?delays[i-1]:0)));
+    for(let j=0;j<=i;j++){
+      const el=document.getElementById(`an${j}`);
+      el.classList.remove('active');el.classList.add('done');
+    }
+    if(i<4){
+      const nxt=document.getElementById(`an${i+1}`);
+      if(nxt)nxt.classList.add('active');
+    }
+  }
+  document.getElementById('spin').style.display='none';
+  document.getElementById('an-title').textContent='Package ready — all requirements identified';
+  document.getElementById('an-sub').textContent='';
+  await new Promise(r=>setTimeout(r,700));
+  buildPackage();
+  buildUnifiedForm();
+  setStep(4);
+}
+
+function buildPackage(){
+  const bizName=document.getElementById('biz-name').value||'Your Company';
+  const province=document.getElementById('biz-province').value||'Cambodia';
+
+  // Use scenario data if a scenario is selected, otherwise merge domains manually
+  let mergedSteps, mergedConditional, packageEmoji, packageLabel;
+  if(state.scenario){
+    mergedSteps=state.scenario.steps;
+    mergedConditional=state.scenario.conditional||[];
+    packageEmoji=state.scenario.emoji;
+    packageLabel=state.scenario.label;
+  } else {
+    const coreStep={n:"Core OBR package",mins:["Ministry of Commerce (MoC)","General Dept. of Taxation (GDT)","Ministry of Labour (MLVT)"],lics:["Certificate of Incorporation","Patent Tax + VAT Registration","Enterprise Declaration + Labour Registration"],status:"par",badge:"Start immediately — all 3 in parallel",dep:null,color:"#2E2880",bg:"#E8E6FC",days:"8"};
+    const seenSteps=new Set(['Core OBR package']);
+    mergedSteps=[coreStep];
+    mergedConditional=[];
+    const seenCond=new Set();
+    state.domains.forEach(d=>{
+      const scen=Object.values(SCENARIOS).find(s=>s.domains.includes(d));
+      if(scen){
+        scen.steps.slice(1).forEach(s=>{if(!seenSteps.has(s.n)){seenSteps.add(s.n);mergedSteps.push(s);}});
+        (scen.conditional||[]).forEach(c=>{if(!seenCond.has(c.n)){seenCond.add(c.n);mergedConditional.push(c);}});
+      }
+    });
+    packageEmoji=state.domains.length===1?(Object.values(SCENARIOS).find(s=>s.domains.includes(state.domains[0]))||{emoji:'📋'}).emoji:'🗂️';
+    packageLabel=state.domains.join(' + ');
+  }
+
+  const totalLics=mergedSteps.reduce((s,st)=>s+st.lics.length,0)+mergedConditional.length;
+  const mins=new Set();mergedSteps.forEach(s=>s.mins.forEach(m=>mins.add(m.split(/[-(]/)[0].trim())));
+  const totalMins=mins.size;
+  const totalDays=mergedSteps.reduce((s,st)=>s+parseInt(st.days),0);
+  const statusMap={par:'badge-par',seq:'badge-seq',chain:'badge-chain'};
+  const statusLbl={par:'Parallel',seq:'Sequential',chain:'Chained'};
+
+  const chainHtml=mergedSteps.map((s,i)=>{
+    const colors=[['#E8E6FC','#2E2880'],['#E8F5F2','#0A5040'],['#FBF0EE','#6A1808'],['#EEEDFE','#3C3489'],['#E6F1FB','#0C447C'],['#FFF4E0','#6A4400']];
+    const [bg,fg]=colors[Math.min(i,colors.length-1)];
+    return `<span class="ct-pill" style="background:${bg};color:${fg}">Step ${i+1}</span>${i<mergedSteps.length-1?'<span class="ct-arrow">→</span>':''}`;
+  }).join('');
+
+  const stepsHtml=mergedSteps.map((s,i)=>`
+    <div class="ministry-card">
+      <div class="mc-head">
+        <div class="mc-num" style="background:${s.bg};color:${s.color}">${i+1}</div>
+        <div class="mc-info">
+          <div class="mc-name">${s.n}</div>
+          <div class="mc-min">${s.mins.join(' · ')}</div>
+        </div>
+        <div class="mc-badge ${statusMap[s.status]}">${statusLbl[s.status]}</div>
+      </div>
+      <div class="mc-body">
+        ${s.dep?`<div class="dep-note"><span>⚠</span><span>${s.dep}</span></div>`:''}
+        ${s.lics.map(l=>`
+          <div class="lic-row2">
+            <div class="lic-check2 y">✓</div>
+            <div class="lr-info">
+              <div class="lr-name">${l}</div>
+              <div class="lr-dep ${s.status==='par'?'dep-go':s.status==='seq'?'dep-wait':'dep-cond'}">${s.badge}</div>
+              <div class="lr-detail">Est. ${s.days} working days</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+
+  const condHtml=mergedConditional.length?`
+    <div class="ministry-card" style="border:1.5px dashed var(--border2)">
+      <div class="mc-head" style="background:var(--surface2)">
+        <div class="mc-info"><div class="mc-name" style="font-size:13px;color:var(--ink3)">Conditional licenses (based on activities)</div></div>
+      </div>
+      <div class="mc-body">${mergedConditional.map(c=>`
+        <div class="lic-row2">
+          <div class="lic-check2 n"></div>
+          <div class="lr-info">
+            <div class="lr-name">${c.n}</div>
+            <div class="lr-detail">${c.cond} · ${c.min}</div>
+            <div class="lr-dep dep-cond">Add if applicable</div>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>` : '';
+
+  const riskBanner=state.scenario&&state.scenario.alert?`
+    <div style="background:#FDECEA;border:1.5px solid #E05050;border-left:4px solid #C03030;border-radius:var(--r);padding:14px 16px;margin-bottom:16px;font-size:13px;color:#5A0000;line-height:1.7;font-weight:500">
+      ${state.scenario.alert}
+    </div>`:
+    (state.scenario&&state.scenario.risk==='high'?`<div style="background:#FFF3CD;border:1.5px solid #E0A000;border-left:4px solid #C07800;border-radius:var(--r);padding:12px 16px;margin-bottom:16px;font-size:12px;color:#5A3A00;line-height:1.7">⚠ <strong>High-regulation sector.</strong> This business type requires specialized ministry approvals beyond the standard OBR package. All requirements are included in this package.</div>`:'');
+
+  const domainTags=(state.scenario?state.scenario.domains:state.domains).map(d=>`<span style="background:rgba(255,255,255,0.18);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid rgba(255,255,255,0.3)">${d}</span>`).join(' ');
+
+  document.getElementById('pkg-render').innerHTML=`
+    ${riskBanner}
+    <div class="pkg-header">
+      <div class="pkg-em">${packageEmoji}</div>
+      <div>
+        <div class="pkg-title">${packageLabel}</div>
+        <div class="pkg-sub">${bizName} · ${province}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">${domainTags}</div>
+      </div>
+    </div>
+    <div class="pkg-stats">
+      <div class="pstat"><div class="pstat-n">${totalLics}</div><div class="pstat-l">Total licenses</div></div>
+      <div class="pstat"><div class="pstat-n">${totalMins}</div><div class="pstat-l">Ministries</div></div>
+      <div class="pstat"><div class="pstat-n">${mergedSteps.length}</div><div class="pstat-l">Approval steps</div></div>
+      <div class="pstat"><div class="pstat-n">${totalDays}+</div><div class="pstat-l">Est. days</div></div>
+    </div>
+    <div class="alert-banner">
+      <div class="alert-icon">💡</div>
+      <div class="alert-text"><strong>Module 4 — Ministry Routing Engine.</strong> All ${totalMins} ministries across your ${state.domains.length} selected domain(s) will receive their application automatically via CamDX in the correct order. Dependency chains are enforced by the platform.</div>
+    </div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px">Dependency chain</div>
+    <div class="chain-track">${chainHtml}<span class="ct-parallel">← System enforces this order automatically</span></div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px">All ministries &amp; licenses</div>
+    ${stepsHtml}${condHtml}
+    <div class="btn-row" style="margin-top:20px">
+      <button class="btn-back" onclick="setStep(2)">← Revise answers</button>
+      <button class="btn-next green" onclick="showStep(5)">Proceed to unified form →</button>
+    </div>`;
+}
+
+function showStep(n){setStep(n);}
+
+function buildUnifiedForm(){
+  const bizName=document.getElementById('biz-name').value||'';
+  const prov=document.getElementById('biz-province').value||'';
+  const addr=document.getElementById('address').value||'';
+  document.getElementById('uf-name').value=bizName;
+  document.getElementById('uf-domain').value=state.domains.join(' + ');
+  document.getElementById('uf-prov').value=prov;
+  document.getElementById('uf-prov2').value=prov;
+  document.getElementById('uf-addr').value=addr;
+  document.getElementById('uf-desc').value=document.getElementById('biz-desc').value||'';
+  const coType=document.getElementById('co-type');
+  document.getElementById('uf-cotype').value=coType?coType.options[coType.selectedIndex].text:'';
+
+  // Shareholders
+  const shListEl=document.getElementById('uf-sh-list');
+  let shHtml='';
+  document.querySelectorAll('.sh-item').forEach((row,i)=>{
+    const nm=row.querySelector('input:nth-child(1)').value||`Shareholder ${i+1}`;
+    const nat=row.querySelector('input:nth-child(2)').value||'';
+    const pct=row.querySelector('input:nth-child(3)').value||'';
+    shHtml+=`<div class="frow tri" style="margin-bottom:10px">
+      <div class="fg"><label>Full name</label><input class="finput" value="${nm}"></div>
+      <div class="fg"><label>Nationality</label><input class="finput" value="${nat}"></div>
+      <div class="fg"><label>Share % / ID number</label><input class="finput" value="${pct}" placeholder="Add ID/passport no."></div>
+    </div>`;
+  });
+  shListEl.innerHTML=shHtml||'<div style="color:var(--ink4);font-size:13px;padding:12px 0">No shareholders added. Please go back to Step 3.</div>';
+
+  // Sector fields — merge from all selected domains
+  const sectorMap={
+    "Tourism & Hospitality":`
+      <div style="font-size:11px;font-weight:700;color:var(--navy3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding:6px 10px;background:var(--teal-pale);border-radius:var(--r);border-left:3px solid var(--navy)">Tourism & Hospitality</div>
+      <div class="frow"><div class="fg"><label>Number of seats / rooms</label><input class="finput" placeholder="e.g. 80 seats / 20 rooms"></div><div class="fg"><label>Serve alcohol?</label><select class="fselect"><option>No</option><option>Yes — on premises only</option><option>Yes — takeaway also</option></select></div></div>
+      <div class="frow"><div class="fg"><label>Hotel star rating (if applicable)</label><select class="fselect"><option>Not applicable</option><option>1 star</option><option>2 star</option><option>3 star</option><option>4 star</option><option>5 star</option></select></div><div class="fg"><label>Food safety compliance officer</label><input class="finput" placeholder="Name of responsible person"></div></div>`,
+    "Manufacturing":`
+      <div style="font-size:11px;font-weight:700;color:var(--navy3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding:6px 10px;background:var(--teal-pale);border-radius:var(--r);border-left:3px solid var(--navy)">Manufacturing</div>
+      <div class="frow"><div class="fg"><label>Type of goods produced</label><input class="finput" placeholder="e.g. food products, garments, electronics"></div><div class="fg"><label>Factory floor area (sqm)</label><input class="finput" placeholder="e.g. 500"></div></div>
+      <div class="frow"><div class="fg"><label>Monthly production capacity</label><input class="finput" placeholder="e.g. 5,000 units"></div><div class="fg"><label>Environmental impact assessment?</label><select class="fselect"><option>No — small operation</option><option>Yes — EIA required</option></select></div></div>`,
+    "Health & Pharmacy":`
+      <div style="font-size:11px;font-weight:700;color:var(--navy3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding:6px 10px;background:var(--teal-pale);border-radius:var(--r);border-left:3px solid var(--navy)">Health & Pharmacy</div>
+      <div class="frow"><div class="fg"><label>Medical specialty / pharmacy type</label><input class="finput" placeholder="e.g. general practice, pharmacy retail"></div><div class="fg"><label>Licensed doctor / pharmacist name <span class="req">*</span></label><input class="finput" placeholder="Full name + degree"></div></div>
+      <div class="frow"><div class="fg"><label>CMC registration number</label><input class="finput" placeholder="Cambodian Medical Council license no."></div><div class="fg"><label>Number of medical staff</label><input class="finput" placeholder="e.g. 3 doctors, 2 nurses"></div></div>`,
+    "Technology & Telecom":`
+      <div style="font-size:11px;font-weight:700;color:var(--navy3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding:6px 10px;background:var(--teal-pale);border-radius:var(--r);border-left:3px solid var(--navy)">Technology & Telecom</div>
+      <div class="frow"><div class="fg"><label>Service type</label><select class="fselect"><option>Internet Service Provider (ISP)</option><option>Mobile telecom</option><option>Software / app</option><option>E-commerce</option><option>Data center</option><option>Broadcast</option></select></div><div class="fg"><label>Network coverage area</label><input class="finput" placeholder="e.g. Phnom Penh, nationwide"></div></div>`,
+    "Real Estate & Construction":`
+      <div style="font-size:11px;font-weight:700;color:var(--navy3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding:6px 10px;background:var(--teal-pale);border-radius:var(--r);border-left:3px solid var(--navy)">Real Estate & Construction</div>
+      <div class="frow"><div class="fg"><label>Type of development</label><select class="fselect"><option>Residential</option><option>Commercial</option><option>Mixed-use</option><option>Industrial</option></select></div><div class="fg"><label>Total development area (sqm)</label><input class="finput" placeholder=""></div></div>
+      <div class="frow"><div class="fg"><label>Land title document</label><input class="finput" type="file" style="padding:6px 12px;font-size:12px"></div><div class="fg"><label>Estimated project value (USD)</label><input class="finput" placeholder=""></div></div>`,
+    "Finance & Insurance":`
+      <div style="font-size:11px;font-weight:700;color:var(--navy3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding:6px 10px;background:var(--teal-pale);border-radius:var(--r);border-left:3px solid var(--navy)">Finance & Insurance</div>
+      <div class="frow"><div class="fg"><label>Financial service type</label><select class="fselect"><option>Microfinance (MFI)</option><option>Money transfer</option><option>Insurance</option><option>Leasing</option><option>Pawnshop</option><option>Foreign exchange</option></select></div><div class="fg"><label>Registered capital (USD)</label><input class="finput" placeholder="NBC minimum capital requirement"></div></div>`,
+    "Education & Training":`
+      <div style="font-size:11px;font-weight:700;color:var(--navy3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding:6px 10px;background:var(--teal-pale);border-radius:var(--r);border-left:3px solid var(--navy)">Education & Training</div>
+      <div class="frow"><div class="fg"><label>Education level / type</label><select class="fselect"><option>Kindergarten / pre-school</option><option>Primary school</option><option>Secondary school</option><option>Vocational training</option><option>University / college</option><option>Language school</option></select></div><div class="fg"><label>Student capacity</label><input class="finput" placeholder="e.g. 200 students"></div></div>`,
+    "Agriculture & Food":`
+      <div style="font-size:11px;font-weight:700;color:var(--navy3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding:6px 10px;background:var(--teal-pale);border-radius:var(--r);border-left:3px solid var(--navy)">Agriculture & Food</div>
+      <div class="frow"><div class="fg"><label>Crop / product type</label><input class="finput" placeholder="e.g. rice, cassava, fish processing"></div><div class="fg"><label>Farm / processing area (hectares or sqm)</label><input class="finput" placeholder=""></div></div>`,
+    "Trade & Import/Export":`
+      <div style="font-size:11px;font-weight:700;color:var(--navy3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;padding:6px 10px;background:var(--teal-pale);border-radius:var(--r);border-left:3px solid var(--navy)">Trade & Import/Export</div>
+      <div class="frow"><div class="fg"><label>Type of goods traded</label><input class="finput" placeholder="e.g. consumer electronics, clothing, food"></div><div class="fg"><label>Primary trade markets</label><input class="finput" placeholder="e.g. Thailand, Vietnam, China"></div></div>`,
+  };
+  // Merge sector fields from all selected domains
+  const mergedSectorHtml = state.domains.map(d => sectorMap[d] || '').filter(Boolean).join('<div style="margin:14px 0;border-top:1px solid var(--border)"></div>');
+  document.getElementById('sector-fields').innerHTML = mergedSectorHtml ||
+    `<div style="color:var(--ink3);font-size:13px;padding:12px 0">Sector-specific fields will appear based on your domain selection.</div>`;
+
+  // Documents — merge and deduplicate from all selected domains
+  const docMap={
+    "Tourism & Hospitality":[["📄","Articles of Incorporation (Khmer + English)","For MoC — provided by system","req","done"],["🪪","Valid IDs / passports — all shareholders","For MoC and Tourism Ministry","req",""],["📍","Premises lease or ownership proof","For all ministries","req",""],["📐","Restaurant / hotel floor plan","For Tourism license and fire safety inspection","req",""],["🥗","Food safety compliance checklist","For Ministry of Health review","req",""],["🚒","Fire exit & equipment layout","For fire safety certificate inspection","req",""]],
+    "Manufacturing":[["📄","Articles of Incorporation","For MoC","req","done"],["🪪","Shareholder IDs / passports","For MoC","req",""],["📍","Factory premises lease / title","For MISTI","req",""],["📐","Factory floor plan","For establishment permit","req",""],["⚗️","Raw materials and production process list","For MISTI + MoH (food)","req",""],["🌿","Environmental compliance checklist","For large-scale production","opt",""]],
+    "Health & Pharmacy":[["📄","Articles of Incorporation","For MoC","req","done"],["🪪","Shareholder IDs / passports","For MoC","req",""],["🎓","Medical / pharmacy degree certificates","For Ministry of Health — mandatory","req",""],["📍","Clinic / pharmacy premises plan","For MoH inspection","req",""],["🏥","Equipment and inventory list","For health facility licensing","req",""],["💊","Medicine product list (pharmacy only)","For import permit application","opt",""]],
+    "Real Estate & Construction":[["📄","Articles of Incorporation","For MoC","req","done"],["🪪","Shareholder IDs / passports","For MoC + NBFSA","req",""],["📋","Real estate agent qualifications","For NBFSA license","req",""],["🗺️","Land title / ownership document","For MLMUPC","req",""],["📐","Site development plan","For construction permit","req",""],["💰","Project financing proof","For NBFSA review","opt",""]],
+    "Technology & Telecom":[["📄","Articles of Incorporation","For MoC","req","done"],["🪪","Shareholder IDs / passports","For MoC + MPTC","req",""],["📡","Network infrastructure plan","For MPTC license","req",""],["🔐","Cybersecurity compliance declaration","For MPTC","req",""]],
+    "Finance & Insurance":[["📄","Articles of Incorporation","For MoC","req","done"],["🪪","Shareholder IDs / passports","For MoC + NBC/NBFSA","req",""],["💼","Business plan with financial projections","For NBC / NBFSA review","req",""],["🏦","Proof of registered capital deposit","For NBC license","req",""]],
+    "Education & Training":[["📄","Articles of Incorporation","For MoC","req","done"],["🪪","Shareholder IDs / passports","For MoC + MoEYS","req",""],["🎓","Curriculum and teaching plan","For Ministry of Education","req",""],["🏫","Premises inspection report","For MoEYS license","req",""]],
+    "Agriculture & Food":[["📄","Articles of Incorporation","For MoC","req","done"],["🪪","Shareholder IDs / passports","For MoC + MAFF","req",""],["🌾","Land use certificate / farm plan","For MAFF","req",""],["🧪","Product testing certificate","For food processing","opt",""]],
+    "Trade & Import/Export":[["📄","Articles of Incorporation","For MoC","req","done"],["🪪","Shareholder IDs / passports","For MoC + GDCE","req",""],["📦","Product catalog & HS code list","For GDCE ASYCUDA registration","req",""],["🚢","Import/export agent authorization","For customs broker","opt",""]],
+  };
+  // Docs — use scenario docs if available, otherwise merge from domains
+  const seenDocs=new Set();
+  const coreDocs=[["📄","Articles of Incorporation (Khmer + English)","For MoC — provided by system","req","done"],["🪪","Valid IDs / passports — all shareholders","For all ministries","req",""],["📍","Business address proof / lease","For all ministries","req",""]];
+  coreDocs.forEach(d=>seenDocs.add(d[1]));
+  const mergedDocs=[...coreDocs];
+  if(state.scenario&&state.scenario.docs){
+    state.scenario.docs.forEach(doc=>{if(!seenDocs.has(doc[1])){seenDocs.add(doc[1]);mergedDocs.push(doc);}});
+  } else {
+    state.domains.forEach(d=>{
+      (docMap[d]||[]).forEach(doc=>{if(!seenDocs.has(doc[1])){seenDocs.add(doc[1]);mergedDocs.push(doc);}});
+    });
+  }
+  document.getElementById('doc-list').innerHTML=mergedDocs.map(([icon,nm,note,req,done])=>`
+    <div class="doc-required">
+      <div class="doc-icon">${icon}</div>
+      <div class="doc-info"><div class="doc-name">${nm}</div><div class="doc-note">${note}</div></div>
+      <div class="doc-status ${done?'doc-done':req==='req'?'doc-req':'doc-opt'}">${done?'Auto-generated':req==='req'?'Required':'Optional'}</div>
+    </div>
+    ${!done?`<div style="margin:0 0 10px 42px"><input type="file" style="font-size:11px;color:var(--ink3)"></div>`:''}`).join('');
+
+  // Fees — use scenario fees if available, otherwise merge from domains
+  const feeMap={
+    "Tourism & Hospitality":[["Ministry of Tourism","Restaurant / hotel license","USD 150–300"],["Ministry of Health","Health safety letter","USD 170"],["National Police","Fire safety certificate","USD 170"],["Municipality","Location certificate","USD 50–100"]],
+    "Manufacturing":[["MISTI","Factory establishment permit","USD 100–200"],["MISTI","Factory operating license","USD 100–300"],["Ministry of Health","Food safety certificate (food only)","USD 100–200"]],
+    "Health & Pharmacy":[["Ministry of Health","Health facility license","USD 300–600"],["Ministry of Health","Medicine import permit","USD 200–600 per category"]],
+    "Real Estate & Construction":[["NBFSA","Real estate business license","USD 300–1,000"],["MLMUPC","Construction permit","Based on project size"],["MLMUPC","Land development license","Based on project value"]],
+    "Technology & Telecom":[["MPTC","Telecom / ISP license","USD 500–2,000"]],
+    "Finance & Insurance":[["NBC / NBFSA","Financial services license","USD 1,000–10,000+"]],
+    "Education & Training":[["Ministry of Education","School / training center license","USD 200–500"]],
+    "Agriculture & Food":[["MAFF","Agri-business operating license","USD 100–400"],["Ministry of Health","Food safety (processing)","USD 100–200"]],
+    "Trade & Import/Export":[["GDCE","ASYCUDA import/export registration","USD 50–150"]],
+    "Logistics & Transport":[["MPWT","Transport operator license","USD 100–500"],["GDCE","Customs broker registration","USD 100–300"]],
+    "Energy & Mining":[["MME","Mining license","USD 5,000–50,000+"],["Ministry of Environment","EIA review","USD 2,000–10,000"]],
+  };
+  const coreFees=[["Ministry of Commerce","Certificate of Incorporation","USD 150–250"],["General Dept. of Taxation (GDT)","Patent Tax + VAT Registration","USD 50–200"],["Ministry of Labour (MLVT)","Enterprise Declaration","USD 20"]];
+  const seenFees=new Set(coreFees.map(f=>f[1]));
+  const mergedFees=[...coreFees];
+  if(state.scenario&&state.scenario.fees){
+    state.scenario.fees.forEach(fee=>{if(!seenFees.has(fee[1])){seenFees.add(fee[1]);mergedFees.push(fee);}});
+  } else {
+    state.domains.forEach(d=>{
+      (feeMap[d]||[]).forEach(fee=>{if(!seenFees.has(fee[1])){seenFees.add(fee[1]);mergedFees.push(fee);}});
+    });
+  }
+  const totalMin=mergedFees.length*50;
+  const totalMax=mergedFees.length*500;
+  document.getElementById('fees-table').innerHTML=`
+    <table class="fee-table" style="width:100%">
+      <tr><th>Ministry / Authority</th><th>License / Service</th><th>Estimated Fee</th></tr>
+      ${mergedFees.map(([m,l,f],i)=>`<tr style="${i<3?'background:var(--teal-pale)':''}"><td>${m}</td><td>${l}</td><td style="font-weight:600;color:var(--ink)">${f}</td></tr>`).join('')}
+      <tr class="total"><td colspan="2">Total estimated fees</td><td>USD ${totalMin.toLocaleString()} – ${totalMax.toLocaleString()}+</td></tr>
+    </table>
+    <div style="font-size:12px;color:var(--ink3);margin-top:10px;line-height:1.7;padding:10px 14px;background:var(--surface2);border-radius:var(--r)">
+      <strong>First 3 rows (highlighted)</strong> are the fixed Core OBR fees, required for all businesses. Remaining fees depend on sector and government schedules. All payments via ABA Pay / KHQR / card.
+    </div>`;
+}
+
+function ufTab(i,el){
+  document.querySelectorAll('.uf-tab').forEach((t,j)=>{
+    t.classList.remove('active');
+    if(j<i)t.classList.add('filled');
+  });
+  el.classList.add('active');
+  document.querySelectorAll('.form-section-block').forEach((b,j)=>{
+    b.classList.toggle('visible',j===i);
+  });
+}
+
+function buildDashboard(){
+  const bizName=document.getElementById('biz-name').value||'Your Company';
+  const refNum='OBR-2024-'+Math.floor(Math.random()*90000+10000);
+  const province=document.getElementById('biz-province').value||'Cambodia';
+  const submittedDate=new Date();
+  submittedDate.setDate(submittedDate.getDate()-8);
+  const fmtDate=d=>`${d.getDate()} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]} ${d.getFullYear()}`;
+
+  // Rebuild merged steps
+  const coreStep={n:"Core OBR package",mins:["Ministry of Commerce (MoC)","GDT","MLVT"],lics:["Certificate of Incorporation","Patent Tax + VAT Registration","Enterprise Declaration"],status:"par",days:"8",bg:"#E8E6FC",color:"#2E2880"};
+  const seenS=new Set(['Core OBR package']);
+  const mergedSteps=[coreStep];
+  if(state.scenario){
+    state.scenario.steps.slice(1).forEach(s=>{if(!seenS.has(s.n)){seenS.add(s.n);mergedSteps.push(s);}});
+  } else {
+    state.domains.forEach(d=>{
+      const scen=Object.values(SCENARIOS).find(sc=>sc.domains.includes(d));
+      if(scen) scen.steps.slice(1).forEach(s=>{if(!seenS.has(s.n)){seenS.add(s.n);mergedSteps.push(s);}});
+    });
+  }
+  const totalLics=mergedSteps.reduce((s,st)=>s+st.lics.length,0);
+  const approvedLics=mergedSteps[0].lics.length;
+  const reviewLics=mergedSteps[1]?mergedSteps[1].lics.length:0;
+  const waitingLics=totalLics-approvedLics-reviewLics;
+  const progressPct=Math.round((approvedLics/totalLics)*100);
+  const risk=state.scenario?state.scenario.risk:'normal';
+  const riskColor=risk==='critical'?'#C03030':risk==='high'?'#B86000':'#1A7A3A';
+
+  // Build step rows for all steps
+  const stepsHtml=mergedSteps.map((s,i)=>{
+    const isDone=i===0;
+    const isActive=i===1;
+    const isWait=i>1;
+    const statusLabel=isDone?'Approved':isActive?'Under review':'Waiting';
+    const statusBg=isDone?'#DFF0D8':isActive?'#FFF3CD':'var(--surface3)';
+    const statusColor=isDone?'#1A5020':isActive?'#7A5000':'var(--ink3)';
+    const dotBg=isDone?'var(--teal)':isActive?s.bg:'var(--surface3)';
+    const dotColor=isDone?'#fff':isActive?s.color:'var(--ink4)';
+    const certIcons=['🏢','📊','👷','🎫','📋','🔖','⚕️','🏭'];
+    const certCards=isDone?s.lics.map((l,ci)=>`
+      <div class="cert-card" style="margin-top:8px">
+        <div class="cert-icon">${certIcons[ci]||'📄'}</div>
+        <div><div class="cert-name">${l}</div><div class="cert-id">ID: MOC-2024-${10000+Math.floor(Math.random()*9000)}</div></div>
+        <button class="cert-dl" onclick="alert('Download ${l} as PDF')">↓ PDF</button>
+      </div>`).join(''):'';
+    const actionBtn=isActive?`<button class="tl-action" style="margin-top:8px" onclick="alert('Upload correction documents or message officer in the live system.')">📤 Upload correction →</button>`:'';
+    return `
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-dot" style="background:${dotBg};border-color:${dotBg};color:${dotColor};${isDone||isActive?'':'opacity:0.4'}">${isDone?'✓':i+1}</div>
+        </div>
+        <div class="tl-content">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap">
+            <div>
+              <div class="tl-ministry">${s.n}</div>
+              <div class="tl-lic">${s.mins.join(' · ')}</div>
+            </div>
+            <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:${statusBg};color:${statusColor};white-space:nowrap;flex-shrink:0">${statusLabel}</span>
+          </div>
+          <div class="tl-days" style="margin-top:4px">⏱ Est. ${s.days} working days${isDone?' · Completed '+fmtDate(submittedDate):''}</div>
+          ${certCards}
+          ${actionBtn}
+        </div>
+      </div>`;
+  }).join('');
+
+  // All 20 scenarios overview grid
+  const allScenariosHtml=Object.values(SCENARIOS).map((s,i)=>{
+    const isSelected=state.scenario?state.scenario.id===s.id:state.domains.some(d=>s.domains.includes(d));
+    const scStatus=isSelected?'active':'idle';
+    const statusLabel=isSelected?'In Progress':'Not registered';
+    const statusBg=isSelected?'#FFF3CD':'var(--surface3)';
+    const statusColor=isSelected?'#7A5000':'var(--ink4)';
+    const stepCount=s.steps.length;
+    const licCount=s.steps.reduce((t,st)=>t+st.lics.length,0)+(s.conditional?s.conditional.length:0);
+    return `
+      <div style="background:var(--white);border:1.5px solid ${isSelected?'var(--navy)':'var(--border)'};border-radius:var(--r2);padding:14px 16px;transition:all 0.15s;cursor:default;${isSelected?'box-shadow:0 2px 12px rgba(91,82,200,0.12)':''}">
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px">
+          <span style="font-size:22px;flex-shrink:0">${s.emoji}</span>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:700;color:var(--ink);word-break:break-word">${s.label}</div>
+            <div style="font-size:11px;color:var(--ink3);margin-top:2px">${s.domains.join(' · ')}</div>
+          </div>
+          <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:${statusBg};color:${statusColor};flex-shrink:0;white-space:nowrap">${statusLabel}</span>
+        </div>
+        <div style="display:flex;gap:12px;margin-bottom:10px">
+          <div style="font-size:11px;color:var(--ink3)">📋 <strong style="color:var(--ink)">${licCount}</strong> licenses</div>
+          <div style="font-size:11px;color:var(--ink3)">🔗 <strong style="color:var(--ink)">${stepCount}</strong> steps</div>
+          <div style="font-size:11px;color:var(--ink3)"><span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;background:${s.risk==='critical'?'#FDECEA':s.risk==='high'?'#FFF3CD':'#DFF0D8'};color:${s.risk==='critical'?'#7A1A0A':s.risk==='high'?'#7A5000':'#1A5020'}">${s.risk}</span></div>
+        </div>
+        ${isSelected?`
+        <div style="background:var(--surface2);border-radius:6px;height:6px;overflow:hidden;margin-bottom:8px">
+          <div style="background:var(--navy);height:100%;width:${progressPct}%;transition:width 0.6s;border-radius:6px"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink3)">
+          <span style="color:var(--navy3);font-weight:600">${progressPct}% complete</span>
+          <span>${approvedLics}/${totalLics} licenses approved</span>
+        </div>`:`
+        <div style="background:var(--surface3);border-radius:6px;height:6px;overflow:hidden;margin-bottom:8px"><div style="background:var(--border2);height:100%;width:0%;border-radius:6px"></div></div>
+        <div style="font-size:10px;color:var(--ink4)">Not started</div>`}
+      </div>`;
+  }).join('');
+
+  document.getElementById('dashboard-render').innerHTML=`
+
+    <!-- HEADER BANNER -->
+    <div class="dash-header" style="margin-bottom:16px">
+      <div style="flex:1;min-width:0">
+        <div class="dash-title">${bizName}</div>
+        <div class="dash-ref">Bundle: ${refNum} · ${province} · Submitted ${fmtDate(submittedDate)} · CamDigiKey</div>
+      </div>
+      <div class="dash-status-pill">In Progress</div>
+    </div>
+
+    <!-- SUMMARY STATS -->
+    <div class="dash-grid" style="margin-bottom:20px">
+      <div class="dstat-card">
+        <div class="dstat-num">${totalLics}</div>
+        <div class="dstat-label">Total licenses</div>
+      </div>
+      <div class="dstat-card">
+        <div class="dstat-num" style="color:#1A7A3A">${approvedLics}</div>
+        <div class="dstat-label">Approved ✓</div>
+      </div>
+      <div class="dstat-card">
+        <div class="dstat-num" style="color:#B86000">${reviewLics}</div>
+        <div class="dstat-label">Under review</div>
+      </div>
+      <div class="dstat-card">
+        <div class="dstat-num" style="color:var(--ink3)">${waitingLics}</div>
+        <div class="dstat-label">Pending</div>
+      </div>
+    </div>
+
+    <!-- OVERALL PROGRESS BAR -->
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r2);padding:18px 20px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+        <div style="font-size:14px;font-weight:700;color:var(--ink)">Overall registration progress</div>
+        <div style="font-size:13px;font-weight:700;color:var(--navy)">${progressPct}%</div>
+      </div>
+      <div style="background:var(--surface3);border-radius:20px;height:10px;overflow:hidden;margin-bottom:8px">
+        <div style="background:linear-gradient(90deg,var(--navy),var(--navy2));height:100%;width:${progressPct}%;border-radius:20px;transition:width 0.8s"></div>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink3)"><div style="width:10px;height:10px;border-radius:50%;background:#1A7A3A"></div>Approved (${approvedLics})</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink3)"><div style="width:10px;height:10px;border-radius:50%;background:#B86000"></div>Under review (${reviewLics})</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink3)"><div style="width:10px;height:10px;border-radius:50%;background:var(--surface3);border:1px solid var(--border2)"></div>Pending (${waitingLics})</div>
+      </div>
+      ${risk!=='normal'?`<div style="margin-top:12px;padding:8px 12px;background:${risk==='critical'?'#FDECEA':'#FFF3CD'};border-radius:var(--r);font-size:12px;color:${risk==='critical'?'#7A1A0A':'#7A5000'};font-weight:500">
+        ${risk==='critical'?'🚨':'⚠'} This is a <strong>${risk}-regulation</strong> business. Ensure all documents are complete before the officer review deadline.
+      </div>`:''}
+    </div>
+
+    <!-- 2-COL: TIMELINE + ALERTS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+
+      <!-- APPROVAL TIMELINE -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px">📊</span>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--ink)">Approval timeline</div>
+            <div style="font-size:11px;color:var(--ink3);margin-top:1px">Step-by-step ministry chain</div>
+          </div>
+        </div>
+        <div style="padding:14px 18px">
+          <div class="timeline">${stepsHtml}</div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: ALERTS + ACTIONS + RENEWAL -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+
+        <!-- ACTION REQUIRED CARD -->
+        <div style="background:var(--white);border:1.5px solid #E0A000;border-radius:var(--r2);overflow:hidden">
+          <div style="padding:12px 16px;background:#FFF8E6;border-bottom:1px solid #E8D080;display:flex;align-items:center;gap:8px">
+            <span style="font-size:16px">⚡</span>
+            <span style="font-size:13px;font-weight:700;color:#5A3A00">Action required</span>
+          </div>
+          <div style="padding:14px 16px">
+            <div style="font-size:12px;color:var(--ink2);line-height:1.7;margin-bottom:10px">
+              Ministry of ${mergedSteps[1]?mergedSteps[1].mins[0].split('(')[0].trim():'Tourism'} has requested additional documents for your application.
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2)"><span style="color:#E05050">●</span> Floor plan (updated version required)</div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2)"><span style="color:#E05050">●</span> Hygiene compliance checklist</div>
+            </div>
+            <button style="margin-top:12px;width:100%;padding:9px;background:var(--navy);color:#fff;border:none;border-radius:var(--r);font-family:inherit;font-size:12px;font-weight:700;cursor:pointer" onclick="alert('Upload documents in the live system')">📤 Upload documents →</button>
+          </div>
+        </div>
+
+        <!-- UPCOMING DEADLINES -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden">
+          <div style="padding:12px 16px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
+            <span style="font-size:16px">📅</span>
+            <span style="font-size:13px;font-weight:700;color:var(--ink)">Upcoming deadlines</span>
+          </div>
+          <div style="padding:12px 16px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+              <span style="color:var(--ink2)">Upload missing docs</span>
+              <span style="color:#C03030;font-weight:700">3 days left</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+              <span style="color:var(--ink2)">Core OBR cert renewal</span>
+              <span style="color:#B86000;font-weight:700">45 days</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px">
+              <span style="color:var(--ink2)">Labour declaration renewal</span>
+              <span style="color:var(--ink3)">Dec 31, 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden">
+          <div style="padding:12px 16px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
+            <span style="font-size:16px">🔔</span>
+            <span style="font-size:13px;font-weight:700;color:var(--ink)">Notifications</span>
+          </div>
+          <div style="padding:0 16px">
+            ${[['MoC certificate issued — download available','8 days ago','#1A7A3A'],['GDT VAT registration approved','8 days ago','#1A7A3A'],['Tourism license under review — officer assigned','2 days ago','#B86000'],['Document correction requested — action needed','Today','#C03030']].map(([msg,time,col])=>`
+              <div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:flex-start">
+                <div style="width:8px;height:8px;border-radius:50%;background:${col};flex-shrink:0;margin-top:5px"></div>
+                <div style="flex:1"><div style="font-size:12px;color:var(--ink2);line-height:1.5">${msg}</div><div style="font-size:10px;color:var(--ink4);margin-top:2px">${time}</div></div>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATES READY -->
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-bottom:16px">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">📜</span>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:var(--ink)">Approved certificates</div>
+          <div style="font-size:11px;color:var(--ink3)">Legally valid digital certificates · Sub-Decree No. 84</div>
+        </div>
+        <span style="font-size:11px;font-weight:700;color:#1A7A3A">${approvedLics} ready</span>
+      </div>
+      <div style="padding:14px 18px">
+        <div class="cert-grid">
+          ${mergedSteps[0].lics.map((l,i)=>`
+            <div class="cert-card">
+              <div class="cert-icon">${['🏢','📊','👷'][i]||'📄'}</div>
+              <div style="flex:1;min-width:0">
+                <div class="cert-name">${l}</div>
+                <div class="cert-id">ID: MOC-2024-${10000+Math.floor(Math.random()*9000)}</div>
+              </div>
+              <button class="cert-dl" onclick="alert('Download ${l}')">↓ PDF</button>
+            </div>`).join('')}
+        </div>
+        <div style="margin-top:12px;padding:10px 14px;background:var(--teal-pale);border-radius:var(--r);font-size:12px;color:var(--ink2);line-height:1.7;border-left:3px solid var(--navy)">
+          🔄 <strong>Unified renewal</strong> — when licenses expire, the system automatically renews them in the correct dependency order. You never need to manage each ministry separately.
+        </div>
+      </div>
+    </div>
+
+    <!-- ALL 20 SCENARIOS OVERVIEW -->
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-bottom:16px">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">🗂️</span>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:var(--ink)">All 20 business scenarios — registration overview</div>
+          <div style="font-size:11px;color:var(--ink3)">Your active registration is highlighted. Other scenarios can be added to your bundle.</div>
+        </div>
+      </div>
+      <div style="padding:16px 18px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">
+          ${allScenariosHtml}
+        </div>
+      </div>
+    </div>
+
+    <!-- IMPROVEMENT SUGGESTIONS -->
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-bottom:16px">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">💡</span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--ink)">Suggested improvements for this dashboard</div>
+          <div style="font-size:11px;color:var(--ink3)">Research proposal recommendations · Smart Unified OBR System</div>
+        </div>
+      </div>
+      <div style="padding:16px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
+        ${[
+          ['📱','Push notifications','Send SMS + app alerts when each ministry approves or requests documents — reducing average user response time from days to hours.'],
+          ['🤖','AI document checker','Before submission, AI scans uploaded documents for missing fields, wrong formats, or expiry — reducing rejection rates.'],
+          ['🔗','Cross-ministry data sync','CamDX should auto-fill MoH / MISTI forms using data already in the MoC certificate — eliminating re-entry for fields like address, shareholders, and tax ID.'],
+          ['📊','Ministry performance SLA','Show average processing time per ministry so applicants know expected wait times and can plan accordingly.'],
+          ['🔄','One-click renewal','Single renewal button that renews all linked licenses in the correct dependency order — MoT license cannot renew before MoH health letter is renewed first.'],
+          ['👁️','Inspector verification portal','Ministry officers and banks can verify the bundle QR code in real time — replacing paper document checks with live database verification.'],
+          ['📅','Renewal calendar','Automated calendar that shows all upcoming expiry dates across the bundle — with 60/30/7 day advance reminders.'],
+          ['🌍','Multi-language support','Khmer and English full interface — critical for local SMEs who are not familiar with English legal terminology.'],
+        ].map(([icon,title,desc])=>`
+          <div style="background:var(--surface2);border-radius:var(--r);padding:14px;border:1px solid var(--border)">
+            <div style="font-size:20px;margin-bottom:8px">${icon}</div>
+            <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:5px">${title}</div>
+            <div style="font-size:11px;color:var(--ink3);line-height:1.6">${desc}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- BOTTOM ACTIONS -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;padding-bottom:20px">
+      <button class="btn-back" onclick="setStep(5)">← Back to form</button>
+      <button class="btn-next" style="flex:1;justify-content:center" onclick="alert('Generate shareable link for inspectors, banks or partners.')">🔗 Share bundle link</button>
+      <button class="btn-next" style="background:var(--navy3)" onclick="alert('Export full registration bundle as PDF report.')">📥 Export PDF</button>
+    </div>`;
+}
+
+// Override showStep(6) to also build dashboard
+const _origSetStep=setStep;
+function setStep(n){
+  for(let i=0;i<=6;i++){
+    const el=document.getElementById(`step-${i}`);
+    if(el)el.style.display=i===n?'block':'none';
+    const si=document.getElementById(`si-${i}`);
+    const sl=document.getElementById(`sl-${i}`);
+    if(si){
+      si.className='ss-ind'+(i<n?' done':i===n?' active':'');
+      if(i<n)si.textContent='✓';else if(i===3)si.textContent='⚙';else si.textContent=i+1;
+    }
+    if(sl)sl.className='ss-label'+(i<n?' done':i===n?' active':'');
+    const ts=document.getElementById(`ts${i}`);
+    if(ts)ts.className='tb-step'+(i<n?' done':i===n?' active':'');
+  }
+  if(n===6)buildDashboard();
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
